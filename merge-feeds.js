@@ -4,8 +4,8 @@
  * Merge individual RSS feeds into a combined feed with proper links
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const FEEDS = [
   'funfacts.xml',
