@@ -19,3 +19,7 @@ Thumbs.db
 # Environment variables
 .env
 
+# Documentation (keep only README.md)
+*.md
+!README.md
+
