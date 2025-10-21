@@ -52,12 +52,29 @@ export function extractItemData(item, isAtom) {
     const link = item.querySelector('link')
     const linkHref = link?.getAttribute('href') || ''
     
+    // Extract content from summary, content, or media:description
+    const contentEl = item.querySelector('content')
+    const summaryEl = item.querySelector('summary')
+    const mediaDescEl = item.getElementsByTagName('media:description')[0]
+    const content = contentEl?.textContent || summaryEl?.textContent || mediaDescEl?.textContent || ''
+    
+    // Extract YouTube-specific metadata (for media namespace elements, use getElementsByTagName)
+    const mediaThumbnail = item.getElementsByTagName('media:thumbnail')[0]
+    const thumbnailUrl = mediaThumbnail?.getAttribute('url') || ''
+    
+    const mediaGroup = item.getElementsByTagName('media:group')[0]
+    const mediaCommunity = mediaGroup?.getElementsByTagName('media:community')[0]
+    const mediaStats = mediaCommunity?.getElementsByTagName('media:statistics')[0]
+    const views = mediaStats?.getAttribute('views') || ''
+    
     return {
       title: item.querySelector('title')?.textContent || 'Untitled',
       link: linkHref,
-      content: item.querySelector('summary, content')?.textContent || '',
+      content,
       pubDate: item.querySelector('published, updated')?.textContent || '',
-      source: detectFeedSource(linkHref)
+      source: detectFeedSource(linkHref),
+      thumbnailUrl,
+      views
     }
   } else {
     // RSS feed format

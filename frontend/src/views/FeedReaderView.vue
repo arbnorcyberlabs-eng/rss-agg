@@ -140,36 +140,12 @@ export default {
             const youtubeXml = await fetchYouTubeFeed(forceUpdate)
             const parsed = parseFeed(youtubeXml)
             
-            // Extract YouTube-specific metadata
-            const youtubeItems = parsed.items.map(item => {
-              // Parse the raw XML to get media elements
-              const parser = new DOMParser()
-              const doc = parser.parseFromString(youtubeXml, 'text/xml')
-              const entries = doc.querySelectorAll('entry')
-              
-              // Find matching entry by title
-              let thumbnailUrl = ''
-              let views = ''
-              
-              entries.forEach(entry => {
-                const entryTitle = entry.querySelector('title')?.textContent
-                if (entryTitle === item.title) {
-                  const mediaThumbnail = entry.querySelector('media\\:thumbnail, thumbnail')
-                  thumbnailUrl = mediaThumbnail?.getAttribute('url') || ''
-                  
-                  const mediaStats = entry.querySelector('media\\:statistics, statistics')
-                  views = mediaStats?.getAttribute('views') || ''
-                }
-              })
-              
-              return {
-                ...item,
-                feedId: 'youtube_economy',
-                source: 'Economy Media YouTube',
-                thumbnailUrl,
-                views
-              }
-            })
+            // Add feedId and override source for YouTube items
+            const youtubeItems = parsed.items.map(item => ({
+              ...item,
+              feedId: 'youtube_economy',
+              source: 'Economy Media YouTube'
+            }))
             
             allItems.push(...youtubeItems)
             console.log(`Loaded ${youtubeItems.length} items from YouTube`)
