@@ -34,6 +34,8 @@
 import { ref, computed, onMounted } from 'vue'
 import { useUIStore } from '../stores/uiStore'
 import { useFeedStore } from '../stores/feedStore'
+import { parseFeed } from '../services/xmlParser'
+import { useYouTubeFeed } from '../composables/useYouTubeFeed'
 import Header from '../components/common/Header.vue'
 import Footer from '../components/common/Footer.vue'
 import FeedSelector from '../components/FeedReader/FeedSelector.vue'
@@ -52,10 +54,14 @@ export default {
   setup() {
     const uiStore = useUIStore()
     const feedStore = useFeedStore()
+    const { fetchYouTubeFeed } = useYouTubeFeed()
     
     const loading = ref(false)
     const loadingMessage = ref('Loading...')
     const isUpdating = ref(false)
+    
+    // Get base URL from environment
+    const baseUrl = import.meta.env.VITE_BASE_URL || window.location.origin + '/'
     
     const feedOptions = computed(() => {
       const options = [
@@ -80,7 +86,7 @@ export default {
       return options
     })
     
-    async function loadAllFeeds() {
+    async function loadAllFeeds(forceUpdate = false) {
       loading.value = true
       loadingMessage.value = 'Loading feeds...'
       
@@ -88,8 +94,105 @@ export default {
         // Load feed configuration from Supabase
         await feedStore.loadFeeds()
         
-        // TODO: Implement actual RSS feed fetching
-        // For now, add comprehensive test data so we can see the UI
+        const allItems = []
+        
+        // Fetch scraped feeds (from XML files on GitHub Pages)
+        const scrapedFeeds = feedStore.feeds.filter(f => f.type === 'scraped' && f.enabled)
+        
+        for (const feed of scrapedFeeds) {
+          try {
+            loadingMessage.value = `Loading ${feed.title}...`
+            const timestamp = forceUpdate ? `?t=${Date.now()}` : ''
+            const feedUrl = `${baseUrl}${feed.id}.xml${timestamp}`
+            
+            console.log(`Fetching feed: ${feedUrl}`)
+            const response = await fetch(feedUrl, {
+              cache: forceUpdate ? 'reload' : 'default'
+            })
+            
+            if (!response.ok) {
+              console.warn(`Failed to fetch ${feed.id}: ${response.status}`)
+              continue
+            }
+            
+            const xmlText = await response.text()
+            const parsed = parseFeed(xmlText)
+            
+            // Add feedId to each item for filtering
+            const items = parsed.items.map(item => ({
+              ...item,
+              feedId: feed.id,
+              source: feed.title.split(' — ')[0].split(' - ')[0] // Get short source name
+            }))
+            
+            allItems.push(...items)
+            console.log(`Loaded ${items.length} items from ${feed.id}`)
+          } catch (error) {
+            console.error(`Error loading feed ${feed.id}:`, error)
+          }
+        }
+        
+        // Fetch YouTube feed (native RSS with CORS proxy)
+        const youtubeFeed = feedStore.feeds.find(f => f.type === 'native_rss' && f.enabled && f.id === 'youtube_economy')
+        if (youtubeFeed) {
+          try {
+            loadingMessage.value = 'Loading YouTube videos...'
+            const youtubeXml = await fetchYouTubeFeed(forceUpdate)
+            const parsed = parseFeed(youtubeXml)
+            
+            // Extract YouTube-specific metadata
+            const youtubeItems = parsed.items.map(item => {
+              // Parse the raw XML to get media elements
+              const parser = new DOMParser()
+              const doc = parser.parseFromString(youtubeXml, 'text/xml')
+              const entries = doc.querySelectorAll('entry')
+              
+              // Find matching entry by title
+              let thumbnailUrl = ''
+              let views = ''
+              
+              entries.forEach(entry => {
+                const entryTitle = entry.querySelector('title')?.textContent
+                if (entryTitle === item.title) {
+                  const mediaThumbnail = entry.querySelector('media\\:thumbnail, thumbnail')
+                  thumbnailUrl = mediaThumbnail?.getAttribute('url') || ''
+                  
+                  const mediaStats = entry.querySelector('media\\:statistics, statistics')
+                  views = mediaStats?.getAttribute('views') || ''
+                }
+              })
+              
+              return {
+                ...item,
+                feedId: 'youtube_economy',
+                source: 'Economy Media YouTube',
+                thumbnailUrl,
+                views
+              }
+            })
+            
+            allItems.push(...youtubeItems)
+            console.log(`Loaded ${youtubeItems.length} items from YouTube`)
+          } catch (error) {
+            console.warn('YouTube feed failed, continuing without it:', error)
+          }
+        }
+        
+        // Sort by date (newest first)
+        allItems.sort((a, b) => {
+          const dateA = new Date(a.pubDate || 0)
+          const dateB = new Date(b.pubDate || 0)
+          return dateB - dateA
+        })
+        
+        feedStore.setFeedItems(allItems)
+        uiStore.setAllItems(allItems)
+        console.log(`✓ Loaded total of ${allItems.length} items from all feeds`)
+        
+      } catch (error) {
+        console.error('Error loading feeds:', error)
+        
+        // Fallback to test data if production feeds fail
         const testItems = [
           // Wikipedia "Did you know?" items (5 items)
           {
@@ -304,11 +407,7 @@ export default {
         
         feedStore.setFeedItems(testItems)
         uiStore.setAllItems(testItems)
-        console.log('Loaded test feeds:', feedStore.feeds.length, 'feed configurations')
-        console.log('Displaying', testItems.length, 'test items')
-        
-      } catch (error) {
-        console.error('Error loading feeds:', error)
+        console.log('⚠ Using fallback test data:', testItems.length, 'items')
       } finally {
         loading.value = false
       }
@@ -329,7 +428,7 @@ export default {
     async function handleUpdate() {
       isUpdating.value = true
       try {
-        await loadAllFeeds()
+        await loadAllFeeds(true) // Force update, bypass cache
       } finally {
         isUpdating.value = false
       }
