@@ -5,18 +5,18 @@ To enable automatic feed generation and deployment, you need to add the followin
 ## Required Secrets
 
 ### 1. SUPABASE_URL
-- **Value**: `https://godeglzovkxzhwxyxbdd.supabase.co`
+- **Value**: ``
 - **Description**: Your Supabase project URL
 
 ### 2. SUPABASE_ANON_KEY
-- **Value**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZGVnbHpvdmt4emh3eHl4YmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDE2ODAsImV4cCI6MjA3NjYxNzY4MH0.VJ8rpKqRkWyL6DYiViV6_MLdyhkWweUPcSHcPuvmVXg`
+- **Value**: ``
 - **Description**: Supabase anonymous/public key (used by frontend)
 
 ### 3. SUPABASE_SERVICE_KEY
 - **Value**: Get from Supabase Dashboard
 - **Description**: Supabase service role key (for backend/admin operations)
 - **How to get**:
-  1. Go to https://supabase.com/dashboard/project/godeglzovkxzhwxyxbdd
+  1. Go to https://supabase.com/dashboard/project/***
   2. Click on Settings (gear icon) → API
   3. Scroll down to "Project API keys"
   4. Copy the `service_role` key (NOT the anon key)
@@ -29,7 +29,7 @@ To enable automatic feed generation and deployment, you need to add the followin
 4. Click **New repository secret**
 5. Add each secret:
    - Name: `SUPABASE_URL`
-   - Secret: `https://godeglzovkxzhwxyxbdd.supabase.co`
+   - Secret: `https://****.supabase.co`
    - Click **Add secret**
 6. Repeat for `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_KEY`
 
