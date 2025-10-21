@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Reader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 0;
+            color: #000000;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 20px;
+            padding: 30px 20px 20px;
+            border-bottom: 2px solid #000000;
+        }
+
+        header::after {
+            display: none;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 6px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.75em;
+            opacity: 0.5;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .feed-selector {
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+            border: 2px solid #000000;
+            width: fit-content;
+        }
+
+        .feed-selector-mobile {
+            display: none;
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+            color: #000000;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23000000' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            padding-right: 35px;
+        }
+
+        .feed-selector-mobile:focus {
+            outline: none;
+            background-color: #f5f5f5;
+        }
+
+        .update-button {
+            padding: 8px 16px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            cursor: pointer;
+            font-size: 0.75em;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+
+        .update-button:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .update-button:active {
+            transform: scale(0.96);
+        }
+
+        .update-button.updating {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feed-button {
+            padding: 8px 16px;
+            background: #ffffff;
+            border: none;
+            border-right: 2px solid #000000;
+            cursor: pointer;
+            font-size: 0.75em;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+
+        .feed-button:last-child {
+            border-right: none;
+        }
+
+        .feed-button:hover {
+            background: #f5f5f5;
+        }
+
+        .feed-button.active {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid #000000;
+            background: #ffffff;
+            padding: 0;
+            max-width: 400px;
+            flex: 1;
+        }
+
+        .search-input {
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.85em;
+            font-family: inherit;
+            flex: 1;
+            outline: none;
+            min-width: 200px;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .clear-search {
+            padding: 8px 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #666;
+            transition: all 0.15s ease;
+            display: none;
+        }
+
+        .clear-search.visible {
+            display: block;
+        }
+
+        .clear-search:hover {
+            color: #000000;
+        }
+
+        .stats-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            font-size: 0.75em;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .stats-inline .stat-number {
+            font-weight: 700;
+            color: #000000;
+            font-size: 1.1em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            color: #666;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .error {
+            background: #000000;
+            color: #ffffff;
+            padding: 15px;
+            border: 2px solid #000000;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.8em;
+        }
+
+        .feed-items {
+            display: grid;
+            gap: 0;
+        }
+
+        .feed-item {
+            background: #ffffff;
+            padding: 18px 0;
+            border-bottom: 1px solid #e8e8e8;
+            transition: all 0.15s ease;
+        }
+
+        .feed-item:last-child {
+            border-bottom: 2px solid #000000;
+        }
+
+        .feed-item:hover {
+            background: #fafafa;
+            padding-left: 12px;
+        }
+
+        .feed-item h3 {
+            font-size: 1.15em;
+            margin-bottom: 6px;
+            color: #000000;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .feed-item h3 a {
+            color: #000000;
+            text-decoration: none;
+            transition: opacity 0.15s ease;
+        }
+
+        .feed-item h3 a:hover {
+            opacity: 0.6;
+        }
+
+        .feed-source {
+            display: inline-block;
+            background: #000000;
+            color: #ffffff;
+            padding: 3px 8px;
+            font-size: 0.6em;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feed-date {
+            color: #888888;
+            font-size: 0.7em;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+         .feed-content {
+             color: #555555;
+             line-height: 1.5;
+             margin-top: 6px;
+             font-size: 0.85em;
+             max-width: 100%;
+             word-wrap: break-word;
+             display: -webkit-box;
+             -webkit-line-clamp: 2;
+             line-clamp: 2;
+             -webkit-box-orient: vertical;
+             overflow: hidden;
+         }
+
+         .feed-content img {
+             display: none;
+         }
+
+        .video-indicator {
+            display: inline-block;
+            background: #e53935;
+            color: #ffffff;
+            padding: 2px 6px;
+            font-size: 0.55em;
+            margin-left: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feed-item.video {
+            background: #fafafa;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .feed-item.video:hover {
+            background: #f0f0f0;
+        }
+
+        .video-thumbnail {
+            flex-shrink: 0;
+            width: 180px;
+            height: auto;
+            border: 1px solid #ddd;
+            transition: all 0.15s ease;
+        }
+
+        .video-thumbnail:hover {
+            border-color: #000000;
+        }
+
+        .video-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-stats {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .video-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7em;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .video-stat-value {
+            color: #000000;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .feed-item.video {
+                flex-direction: column;
+            }
+
+            .video-thumbnail {
+                width: 100%;
+            }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 25px 0;
+        }
+
+        .pagination-button {
+            padding: 6px 12px;
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .pagination-button:hover:not(:disabled) {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination-button.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .pagination-info {
+            padding: 6px 12px;
+            font-weight: 500;
+            font-size: 0.75em;
+            color: #666666;
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+        }
+
+        footer p {
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.7em;
+            color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 13px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .subtitle {
+                font-size: 0.7em;
+            }
+
+            header {
+                padding: 25px 15px 15px;
+                margin-bottom: 15px;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .feed-selector {
+                display: none;
+            }
+
+            .feed-selector-mobile {
+                display: block;
+            }
+
+            .search-container {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .search-input {
+                min-width: 0;
+                font-size: 0.8em;
+            }
+
+            .stats-inline {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.7em;
+            }
+
+            .feed-button {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #000000;
+                padding: 8px 15px;
+                font-size: 0.7em;
+            }
+
+            .feed-button:last-child {
+                border-bottom: none;
+            }
+
+            .update-button {
+                width: 100%;
+                padding: 8px 15px;
+                font-size: 0.7em;
+            }
+
+            .feed-item {
+                padding: 15px 0;
+            }
+
+            .feed-item h3 {
+                font-size: 1.05em;
+            }
+
+            .feed-source {
+                font-size: 0.58em;
+                padding: 2px 6px;
+            }
+
+            .feed-date {
+                font-size: 0.68em;
+            }
+
+            .feed-content {
+                font-size: 0.8em;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 4px;
+                margin: 20px 0;
+            }
+
+            .pagination-button {
+                padding: 6px 10px;
+                font-size: 0.7em;
+            }
+
+            .pagination-info {
+                width: 100%;
+                text-align: center;
+                padding: 6px;
+                font-size: 0.7em;
+            }
+
+            footer {
+                padding: 20px 15px;
+                margin-top: 25px;
+            }
+
+            footer p {
+                font-size: 0.65em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RSS</h1>
+            <p class="subtitle">Real Simple Syndication</p>
+        </header>
+
+        <div class="controls">
+            <div class="feed-selector">
+                <button class="feed-button active" data-feed="all">All Feeds</button>
+                <button class="feed-button" data-feed="funfacts">Wikipedia</button>
+                <button class="feed-button" data-feed="wikivoyage">Wikivoyage</button>
+                <button class="feed-button" data-feed="hackernews">Hacker News</button>
+                <button class="feed-button" data-feed="medium_matteo">Medium</button>
+                <button class="feed-button" data-feed="economymedia">Economy Media</button>
+            </div>
+            <select class="feed-selector-mobile" id="feedSelectorMobile" onchange="handleMobileFeedChange()">
+                <option value="all">All Feeds</option>
+                <option value="funfacts">Wikipedia</option>
+                <option value="wikivoyage">Wikivoyage</option>
+                <option value="hackernews">Hacker News</option>
+                <option value="medium_matteo">Medium</option>
+                <option value="economymedia">Economy Media</option>
+            </select>
+            <button class="update-button" id="updateButton" onclick="updateFeed()">↻ Update</button>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search feeds..."
+                    oninput="handleSearch()"
+                />
+                <button class="clear-search" id="clearSearch" onclick="clearSearch()">✕</button>
+            </div>
+            <div class="stats-inline" id="stats">
+                <span class="stat-number">0</span>
+                <span>items</span>
+            </div>
+        </div>
+
+        <div id="feedContent">
+            <div class="loading">Loading feeds...</div>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'https://arbnorcyberlabs-eng.github.io/rss-agg/';
+        let currentFeed = 'all';
+        let allFeeds = {};
+        
+        // Pagination state
+        let currentPage = 1;
+        let itemsPerPage = 15;
+        let allCurrentItems = [];
+        let filteredItems = [];
+        let searchQuery = '';
+
+        const feedNames = {
+            'all': 'Combined Feed',
+            'funfacts': 'Wikipedia — did you know?',
+            'wikivoyage': 'Wikivoyage recommendations',
+            'hackernews': 'Hacker News - Front Page',
+            'medium_matteo': 'Medium - Matteo\'s Articles',
+            'economymedia': 'Economy Media YouTube'
+        };
+
+        // YouTube RSS feed URL
+        const youtubeRssFeed = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCc8q4B1bj-668LMHyNXnTxQ';
+        
+        // Multiple CORS proxies with fallback
+        const corsProxies = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url=',
+            'https://cors-anywhere.herokuapp.com/'
+        ];
+        
+        // Cache settings
+        const YOUTUBE_CACHE_KEY = 'youtube_feed_cache';
+        const YOUTUBE_CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+        // Initialize
+        document.querySelectorAll('.feed-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.feed-button').forEach(b => b.classList.remove('active'));
+                button.classList.add('active');
+                currentFeed = button.dataset.feed;
+                
+                // Update mobile dropdown to stay in sync
+                const mobileSelect = document.getElementById('feedSelectorMobile');
+                if (mobileSelect) {
+                    mobileSelect.value = currentFeed;
+                }
+                
+                loadFeed(currentFeed);
+            });
+        });
+
+        let isUpdating = false;
+
+        function updateFeed() {
+            if (isUpdating) return;
+            loadFeed(currentFeed, true);
+        }
+
+        function handleMobileFeedChange() {
+            const select = document.getElementById('feedSelectorMobile');
+            const selectedFeed = select.value;
+            
+            // Update desktop buttons to stay in sync
+            document.querySelectorAll('.feed-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.feed-button').forEach(button => {
+                if (button.dataset.feed === selectedFeed) {
+                    button.classList.add('active');
+                }
+            });
+            
+            currentFeed = selectedFeed;
+            loadFeed(currentFeed);
+        }
+
+        // Helper: Truncate text to specified length
+        function truncateText(text, maxLength = 200) {
+            if (!text) return '';
+            // Strip HTML tags first
+            const stripped = text.replace(/<[^>]*>/g, '');
+            if (stripped.length <= maxLength) return stripped;
+            return stripped.substring(0, maxLength).trim() + '...';
+        }
+
+        // Helper: Get cached YouTube feed
+        function getCachedYouTubeFeed() {
+            try {
+                const cached = localStorage.getItem(YOUTUBE_CACHE_KEY);
+                if (!cached) return null;
+                
+                const { data, timestamp } = JSON.parse(cached);
+                const age = Date.now() - timestamp;
+                
+                if (age < YOUTUBE_CACHE_DURATION) {
+                    console.log('Using cached YouTube feed');
+                    return data;
+                }
+                
+                localStorage.removeItem(YOUTUBE_CACHE_KEY);
+                return null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Helper: Cache YouTube feed
+        function cacheYouTubeFeed(data) {
+            try {
+                localStorage.setItem(YOUTUBE_CACHE_KEY, JSON.stringify({
+                    data,
+                    timestamp: Date.now()
+                }));
+            } catch (e) {
+                console.warn('Failed to cache YouTube feed:', e);
+            }
+        }
+
+        // Helper: Fetch YouTube with fallback proxies
+        async function fetchYouTubeFeed(forceUpdate = false) {
+            // Check cache first
+            if (!forceUpdate) {
+                const cached = getCachedYouTubeFeed();
+                if (cached) return cached;
+            }
+
+            // Try each proxy in order
+            for (let i = 0; i < corsProxies.length; i++) {
+                try {
+                    console.log(`Trying proxy ${i + 1}/${corsProxies.length}`);
+                    const proxyUrl = corsProxies[i] + encodeURIComponent(youtubeRssFeed);
+                    const response = await fetch(proxyUrl, {
+                        cache: forceUpdate ? 'reload' : 'default',
+                        signal: AbortSignal.timeout(10000) // 10 second timeout
+                    });
+                    
+                    if (response.ok) {
+                        const text = await response.text();
+                        cacheYouTubeFeed(text);
+                        return text;
+                    }
+                } catch (error) {
+                    console.warn(`Proxy ${i + 1} failed:`, error.message);
+                    if (i === corsProxies.length - 1) throw error;
+                }
+            }
+            
+            throw new Error('All proxies failed');
+        }
+
+        async function loadAllFeeds(forceUpdate = false) {
+            const feedContent = document.getElementById('feedContent');
+            feedContent.innerHTML = '<div class="loading">Loading main feeds...</div>';
+
+            try {
+                const timestamp = forceUpdate ? `?t=${Date.now()}` : '';
+                const parser = new DOMParser();
+                
+                // Step 1: Load main combined feed first (fast)
+                const combinedResponse = await fetch(`${baseUrl}all.xml${timestamp}`, {
+                    cache: forceUpdate ? 'reload' : 'default'
+                });
+
+                if (!combinedResponse.ok) throw new Error('Failed to load combined feed');
+                
+                const combinedText = await combinedResponse.text();
+                const combinedXml = parser.parseFromString(combinedText, 'text/xml');
+                let allItems = Array.from(combinedXml.getElementsByTagName('entry'));
+                
+                // Display main feeds immediately
+                displayFeedItems(allItems, true);
+                updateStats(allItems.length);
+                
+                // Step 2: Load YouTube feed asynchronously (slower, optional)
+                feedContent.innerHTML = '<div class="loading">Loading YouTube videos...</div>';
+                
+                try {
+                    const youtubeText = await fetchYouTubeFeed(forceUpdate);
+                    const youtubeXml = parser.parseFromString(youtubeText, 'text/xml');
+                    const youtubeItems = Array.from(youtubeXml.getElementsByTagName('entry'));
+                    
+                    if (youtubeItems.length > 0) {
+                        allItems = allItems.concat(youtubeItems);
+                        
+                        // Sort by date (newest first)
+                        allItems.sort((a, b) => {
+                            const dateA = a.getElementsByTagName('updated')[0]?.textContent || 
+                                          a.getElementsByTagName('published')[0]?.textContent || '';
+                            const dateB = b.getElementsByTagName('updated')[0]?.textContent || 
+                                          b.getElementsByTagName('published')[0]?.textContent || '';
+                            return new Date(dateB) - new Date(dateA);
+                        });
+                        
+                        // Re-display with YouTube included
+                        displayFeedItems(allItems, true);
+                        updateStats(allItems.length);
+                    }
+                } catch (ytError) {
+                    console.warn('YouTube feed failed, showing without it:', ytError.message);
+                    // Keep showing main feeds even if YouTube fails
+                }
+                
+            } catch (error) {
+                console.error('Error loading feeds:', error);
+                feedContent.innerHTML = `
+                    <div class="error">
+                        <strong>Error loading feeds</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            } finally {
+                if (forceUpdate) {
+                    isUpdating = false;
+                    const updateButton = document.getElementById('updateButton');
+                    updateButton.classList.remove('updating');
+                    updateButton.textContent = '↻ Update';
+                }
+            }
+        }
+
+        // Helper: Format large numbers (e.g., 1234567 -> 1.2M)
+        function formatNumber(num) {
+            if (!num) return '0';
+            const n = parseInt(num);
+            if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+            if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+            return n.toString();
+        }
+
+        // Render pagination controls
+        function renderPagination() {
+            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            const totalPages = Math.ceil(itemsToDisplay.length / itemsPerPage);
+            if (totalPages <= 1) return ''; // No pagination needed
+            
+            let html = '<div class="pagination">';
+            
+            // Previous button
+            html += `<button class="pagination-button" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>`;
+            
+            // Page numbers (show max 5 pages)
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+            
+            if (endPage - startPage < maxPagesToShow - 1) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-button ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            // Next button
+            html += `<button class="pagination-button" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>`;
+            
+            // Page info
+            html += `<span class="pagination-info">Page ${currentPage} of ${totalPages}</span>`;
+            
+            html += '</div>';
+            return html;
+        }
+
+        // Change page
+        function changePage(page) {
+            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            const totalPages = Math.ceil(itemsToDisplay.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            displayCurrentPage();
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Display current page of items
+        function displayCurrentPage() {
+            const feedContent = document.getElementById('feedContent');
+            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageItems = itemsToDisplay.slice(startIndex, endIndex);
+            
+            let html = '<div class="feed-items">';
+            
+            pageItems.forEach(item => {
+                let title, link, content, pubDate;
+                
+                // Atom format
+                const titleEl = item.getElementsByTagName('title')[0];
+                title = titleEl?.textContent || 'No title';
+                
+                // Handle Atom link element - can be in different formats
+                const linkElements = item.getElementsByTagName('link');
+                link = '#';
+                
+                // Try to find the actual content link (not self or alternate that's XML)
+                for (let i = 0; i < linkElements.length; i++) {
+                    const linkEl = linkElements[i];
+                    const href = linkEl.getAttribute('href');
+                    const rel = linkEl.getAttribute('rel');
+                    const type = linkEl.getAttribute('type');
+                    
+                    // Skip self-referencing or XML links
+                    if (rel === 'self' || (type && type.includes('xml'))) {
+                        continue;
+                    }
+                    
+                    // Prefer alternate links or any link with href
+                    if (href && !href.endsWith('.xml')) {
+                        link = href;
+                        // If it's explicitly marked as alternate, use it immediately
+                        if (rel === 'alternate' || !rel) {
+                            break;
+                        }
+                    }
+                }
+                
+                // Fallback to textContent if no href found
+                if (link === '#' && linkElements.length > 0) {
+                    link = linkElements[0]?.textContent || '#';
+                }
+                
+                // Final fallback: try the id element (often contains the URL in Atom feeds)
+                if (link === '#' || !link || link.endsWith('.xml')) {
+                    const idEl = item.getElementsByTagName('id')[0];
+                    const idContent = idEl?.textContent || '';
+                    // Check if id looks like a URL
+                    if (idContent && (idContent.startsWith('http://') || idContent.startsWith('https://'))) {
+                        link = idContent;
+                    }
+                }
+                
+                // Extra fallback: extract data-href from content HTML (for Medium articles)
+                if (link === '#' || !link || link.endsWith('.xml') || link.endsWith('/@matteo28') || link.endsWith('medium.com/@matteo28')) {
+                    const contentEl = item.getElementsByTagName('content')[0];
+                    const summaryEl = item.getElementsByTagName('summary')[0];
+                    const htmlContent = contentEl?.textContent || summaryEl?.textContent || '';
+                    
+                    // Try to extract data-href from HTML content
+                    const dataHrefMatch = htmlContent.match(/data-href=["'](https?:\/\/[^"']+)["']/);
+                    if (dataHrefMatch && dataHrefMatch[1]) {
+                        link = dataHrefMatch[1];
+                    } else {
+                        // Try to extract any Medium article URL pattern
+                        const mediumUrlMatch = htmlContent.match(/https?:\/\/medium\.com\/@[^\/]+\/[a-z0-9-]+/);
+                        if (mediumUrlMatch && mediumUrlMatch[0]) {
+                            link = mediumUrlMatch[0];
+                        }
+                    }
+                }
+                
+                // Debug logging for troubleshooting
+                if (link === '#' || !link || link.endsWith('.xml')) {
+                    console.warn('No valid link found for item:', title, 'Link elements:', linkElements.length);
+                }
+                const contentEl = item.getElementsByTagName('content')[0];
+                const summaryEl = item.getElementsByTagName('summary')[0];
+                const mediaDesc = item.getElementsByTagName('media:description')[0];
+                content = contentEl?.textContent || summaryEl?.textContent || mediaDesc?.textContent || '';
+                const updatedEl = item.getElementsByTagName('updated')[0];
+                const publishedEl = item.getElementsByTagName('published')[0];
+                pubDate = updatedEl?.textContent || publishedEl?.textContent || '';
+                
+                // Extract YouTube-specific metadata
+                const mediaThumbnail = item.getElementsByTagName('media:thumbnail')[0];
+                const thumbnailUrl = mediaThumbnail?.getAttribute('url') || '';
+                const mediaGroup = item.getElementsByTagName('media:group')[0];
+                const mediaCommunity = mediaGroup?.getElementsByTagName('media:community')[0];
+                const mediaStats = mediaCommunity?.getElementsByTagName('media:statistics')[0];
+                const views = mediaStats?.getAttribute('views') || '';
+                
+                // Try to extract feed source from title or content
+                let source = 'RSS Feed';
+                const titleMatch = title.match(/\(([^)]+)\)$/);
+                if (titleMatch) {
+                    source = titleMatch[1];
+                } else if (link.includes('youtube.com') || link.includes('youtu.be')) {
+                    source = 'Economy Media YouTube';
+                } else if (link.includes('wikipedia.org')) {
+                    source = 'Wikipedia';
+                } else if (link.includes('wikivoyage.org')) {
+                    source = 'Wikivoyage';
+                } else if (link.includes('news.ycombinator.com')) {
+                    source = 'Hacker News';
+                }
+
+                const date = pubDate ? new Date(pubDate).toLocaleString() : '';
+                
+                // Check if it's a YouTube video
+                const isVideo = link.includes('youtube.com') || link.includes('youtu.be');
+                
+                // Truncate content to 200 characters
+                const truncatedContent = truncateText(content, 200);
+
+                if (isVideo && thumbnailUrl) {
+                    // Enhanced YouTube video display with thumbnail and stats
+                    html += `
+                        <div class="feed-item video">
+                            <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">
+                                <img src="${escapeHtml(thumbnailUrl)}" alt="${escapeHtml(title)}" class="video-thumbnail">
+                            </a>
+                            <div class="video-content">
+                                <span class="feed-source">${escapeHtml(source)}</span>
+                                <h3>
+                                    <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
+                                    <span class="video-indicator">▶ Video</span>
+                                </h3>
+                                ${date ? `<div class="feed-date">${escapeHtml(date)}</div>` : ''}
+                                ${truncatedContent ? `<div class="feed-content">${escapeHtml(truncatedContent)}</div>` : ''}
+                                ${views ? `
+                                    <div class="video-stats">
+                                        <div class="video-stat">
+                                            <span>👁 Views:</span>
+                                            <span class="video-stat-value">${formatNumber(views)}</span>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Regular feed item display
+                    html += `
+                        <div class="feed-item">
+                            <span class="feed-source">${escapeHtml(source)}</span>
+                            <h3>
+                                <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
+                            </h3>
+                            ${date ? `<div class="feed-date">${escapeHtml(date)}</div>` : ''}
+                            ${truncatedContent ? `<div class="feed-content">${escapeHtml(truncatedContent)}</div>` : ''}
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+            
+            // Add pagination controls
+            html += renderPagination();
+            
+            feedContent.innerHTML = html;
+        }
+
+        // Main function to display feed items with pagination
+        function displayFeedItems(itemsArray, isAtom) {
+            // Store all items for pagination
+            allCurrentItems = itemsArray;
+            filteredItems = [...itemsArray]; // Initialize filtered items
+            currentPage = 1; // Reset to first page
+            
+            // Clear search when loading new feed
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value) {
+                searchInput.value = '';
+                searchQuery = '';
+                document.getElementById('clearSearch').classList.remove('visible');
+            }
+            
+            // Display first page
+            displayCurrentPage();
+        }
+
+        async function loadFeed(feedName, forceUpdate = false) {
+            const feedContent = document.getElementById('feedContent');
+            const updateButton = document.getElementById('updateButton');
+            
+            if (forceUpdate) {
+                isUpdating = true;
+                updateButton.classList.add('updating');
+                updateButton.textContent = '⟳ Updating...';
+            }
+            
+            feedContent.innerHTML = '<div class="loading">Loading feeds...</div>';
+
+            try {
+                let url, response;
+                
+                // Handle YouTube feed specially
+                if (feedName === 'economymedia') {
+                    const youtubeText = await fetchYouTubeFeed(forceUpdate);
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(youtubeText, 'text/xml');
+                    const items = xml.getElementsByTagName('entry');
+                    
+                    if (items.length === 0) {
+                        feedContent.innerHTML = '<div class="error">No YouTube videos found.</div>';
+                        return;
+                    }
+                    
+                    const itemsArray = Array.from(items);
+                    updateStats(itemsArray.length);
+                    displayFeedItems(itemsArray, true);
+                    return;
+                } else if (feedName === 'all') {
+                    // For 'all', we'll fetch both our feeds and YouTube
+                    await loadAllFeeds(forceUpdate);
+                    return;
+                } else {
+                    // Regular feeds from our GitHub Pages
+                    const timestamp = forceUpdate ? `?t=${Date.now()}` : '';
+                    url = `${baseUrl}${feedName}.xml${timestamp}`;
+                    response = await fetch(url, {
+                        cache: forceUpdate ? 'reload' : 'default'
+                    });
+                }
+                
+                if (!response.ok) throw new Error('Failed to load feed');
+                
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                
+                // Support both RSS (item) and Atom (entry) formats
+                // Use getElementsByTagName which works better with namespaces
+                let items = xml.getElementsByTagName('item');
+                let isAtom = false;
+                if (items.length === 0) {
+                    items = xml.getElementsByTagName('entry');
+                    isAtom = true;
+                }
+                
+                if (items.length === 0) {
+                    feedContent.innerHTML = '<div class="error">No feed items found.</div>';
+                    return;
+                }
+
+                // Convert HTMLCollection to Array
+                const itemsArray = Array.from(items);
+
+                // Update stats
+                updateStats(itemsArray.length);
+
+                // Display items
+                displayFeedItems(itemsArray, isAtom);
+                
+            } catch (error) {
+                console.error('Error loading feed:', error);
+                feedContent.innerHTML = `
+                    <div class="error">
+                        <strong>Error loading feed</strong><br>
+                        ${error.message}<br>
+                        <small>Make sure the feed is accessible and CORS is enabled.</small>
+                    </div>
+                `;
+            } finally {
+                // Reset update button state
+                if (forceUpdate) {
+                    isUpdating = false;
+                    const updateButton = document.getElementById('updateButton');
+                    updateButton.classList.remove('updating');
+                    updateButton.textContent = '↻ Update';
+                }
+            }
+        }
+
+        function updateStats(itemCount) {
+            const stats = document.getElementById('stats');
+            stats.innerHTML = `
+                <span class="stat-number">${itemCount}</span>
+                <span>item${itemCount !== 1 ? 's' : ''}</span>
+            `;
+        }
+
+        function handleSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearSearch');
+            searchQuery = searchInput.value.toLowerCase().trim();
+            
+            // Show/hide clear button
+            if (searchQuery) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
+            
+            // Filter items
+            if (searchQuery) {
+                filteredItems = allCurrentItems.filter(item => {
+                    const titleEl = item.getElementsByTagName('title')[0];
+                    const title = titleEl?.textContent || '';
+                    const contentEl = item.getElementsByTagName('content')[0];
+                    const summaryEl = item.getElementsByTagName('summary')[0];
+                    const content = contentEl?.textContent || summaryEl?.textContent || '';
+                    
+                    return title.toLowerCase().includes(searchQuery) || 
+                           content.toLowerCase().includes(searchQuery);
+                });
+            } else {
+                filteredItems = [...allCurrentItems];
+            }
+            
+            // Reset to first page
+            currentPage = 1;
+            
+            // Update display
+            updateStats(filteredItems.length);
+            displayCurrentPage();
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            handleSearch();
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Load initial feed
+        loadFeed(currentFeed);
+    </script>
+
+    <footer>
+        <p>Automated RSS Feed Aggregator · Updates twice daily</p>
+    </footer>
+    </div>
+</body>
+</html>
+
