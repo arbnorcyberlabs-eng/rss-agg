@@ -42,25 +42,38 @@ const router = createRouter({
 
 let authInitPromise = null
 
-router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore()
-  const needsProtectedAccess = Boolean(to.meta.requiresAuth || to.meta.requiresAdmin)
-
-  if (!authStore.isReady || needsProtectedAccess) {
+async function ensureAuthInitialized(authStore, needsProtectedAccess) {
+  if (!authStore.isReady) {
     if (!authInitPromise) {
       authInitPromise = authStore
         .checkAuth()
         .catch((error) => {
           console.error('[RouteGuard] Failed to initialize auth state', error)
+          throw error
+        })
+        .finally(() => {
+          authInitPromise = null
         })
     }
 
-    try {
-      await authInitPromise
-    } finally {
-      authInitPromise = null
+    if (needsProtectedAccess) {
+      try {
+        await authInitPromise
+      } catch (_) {
+        // Swallow errors; route guard will handle redirects below
+      }
+    } else {
+      // Avoid unhandled rejection when we don't await
+      authInitPromise.catch(() => {})
     }
   }
+}
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore()
+  const needsProtectedAccess = Boolean(to.meta.requiresAuth || to.meta.requiresAdmin)
+
+  await ensureAuthInitialized(authStore, needsProtectedAccess)
 
   // Check if route requires authentication
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {

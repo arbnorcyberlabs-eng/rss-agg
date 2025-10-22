@@ -1,15 +1,20 @@
 <template>
   <div id="app">
     <div class="container">
-      <router-view />
+      <div v-if="showInitialLoader" class="app-loading">
+        <p class="loading-text">Initializing...</p>
+      </div>
+      <router-view v-else />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from './stores/authStore'
+
+const authStore = useAuthStore()
+const showInitialLoader = computed(() => !authStore.isReady && authStore.loading)
 </script>
 
 <style>
@@ -38,6 +43,20 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.app-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 40px 20px;
+}
+
+.loading-text {
+  font-size: 1.1em;
+  color: #666666;
+  font-weight: 500;
 }
 
 a {
