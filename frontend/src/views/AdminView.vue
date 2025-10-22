@@ -3,11 +3,7 @@
     <Header />
     
     <!-- Auth Form (if not authenticated) -->
-    <AuthForm 
-      v-if="!authStore.isAuthenticated" 
-      @login="handleLogin"
-      @signup="handleSignup"
-    />
+    <AuthForm v-if="!authStore.isAuthenticated" />
     
     <!-- Admin Panel (if authenticated) -->
     <div v-else class="admin-panel">
@@ -82,30 +78,6 @@ export default {
     const showForm = ref(false)
     const editingFeed = ref(null)
     
-    async function handleLogin(credentials) {
-      try {
-        await authStore.login(credentials.email, credentials.password)
-        await feedStore.loadFeeds()
-      } catch (error) {
-        console.error('Login failed:', error)
-        throw error
-      }
-    }
-
-    async function handleSignup(credentials) {
-      try {
-        await authStore.signup(credentials.email, credentials.password, credentials.fullName)
-        await feedStore.loadFeeds()
-        // Redirect to home for regular users after signup
-        if (!authStore.isAdmin) {
-          router.push('/')
-        }
-      } catch (error) {
-        console.error('Signup failed:', error)
-        throw error
-      }
-    }
-    
     async function handleLogout() {
       await authStore.logout()
     }
@@ -167,7 +139,6 @@ export default {
       feedStore,
       showForm,
       editingFeed,
-      handleLogin,
       handleLogout,
       handleAdd,
       handleEdit,

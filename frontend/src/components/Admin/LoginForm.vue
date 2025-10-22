@@ -67,8 +67,16 @@
 </template>
 
 <script>
+import { useAuthStore } from '../../stores/authStore'
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'AuthForm',
+  setup() {
+    const authStore = useAuthStore()
+    const router = useRouter()
+    return { authStore, router }
+  },
   data() {
     return {
       isSignup: false,
@@ -80,7 +88,6 @@ export default {
       success: null
     }
   },
-  emits: ['login', 'signup'],
   methods: {
     async handleSubmit() {
       this.error = null
@@ -89,19 +96,24 @@ export default {
 
       try {
         if (this.isSignup) {
-          await this.$emit('signup', {
-            email: this.email,
-            password: this.password,
-            fullName: this.fullName
-          })
-          this.success = 'Account created! You can now use all features.'
+          const result = await this.authStore.signup(this.email, this.password, this.fullName)
+          
+          // Check if email confirmation is required
+          if (result.user && !result.user.email_confirmed_at && result.user.identities?.length === 0) {
+            this.success = 'Account created! Please check your email to confirm your account.'
+          } else {
+            this.success = 'Account created! You can now use all features.'
+            // Redirect to home after successful signup
+            setTimeout(() => {
+              this.router.push('/')
+            }, 1500)
+          }
         } else {
-          await this.$emit('login', {
-            email: this.email,
-            password: this.password
-          })
+          await this.authStore.login(this.email, this.password)
+          // Login successful, redirect will happen via auth state change
         }
       } catch (err) {
+        console.error('Auth error:', err)
         this.error = err.message || (this.isSignup ? 'Signup failed' : 'Login failed')
       } finally {
         this.loading = false
