@@ -99,11 +99,13 @@ export default {
     
     async function handleSubmit(feedData) {
       try {
+        console.log('[Admin] handleSubmit received', feedData)
         if (editingFeed.value) {
           await feedStore.updateFeed(feedData.id, feedData)
         } else {
           await feedStore.addFeed(feedData)
         }
+        await feedStore.loadFeeds()
         handleCancel()
       } catch (error) {
         console.error('Error saving feed:', error)

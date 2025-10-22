@@ -40,12 +40,20 @@ const router = createRouter({
   ]
 })
 
+let didInitAuth = false
+
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   
-  // Check auth state if not loaded
-  if (authStore.user === null && !authStore.loading) {
-    await authStore.checkAuth()
+  // Initialize auth state once on first navigation (fixes refresh white-screen)
+  if (!didInitAuth) {
+    didInitAuth = true
+    try {
+      await authStore.checkAuth()
+    } catch (e) {
+      // Swallow errors to avoid breaking navigation
+      // authStore handles clearing bad state internally
+    }
   }
 
   // Check if route requires authentication

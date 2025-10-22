@@ -237,7 +237,7 @@ export const useAuthStore = defineStore('auth', () => {
         } catch (profileError) {
           console.error('Failed to load profile during auth check:', profileError)
           // If profile loading fails, clear everything and log out
-          await supabase.auth.signOut()
+          try { await supabase.auth.signOut() } catch {}
           user.value = null
           profile.value = null
         }
@@ -269,7 +269,9 @@ export const useAuthStore = defineStore('auth', () => {
         await loadProfile()
       } catch (error) {
         console.error('Error loading profile in auth state change:', error)
-        // Don't clear user state here, let the calling function handle it
+        // Clear to avoid white screen if profile cannot be loaded
+        user.value = null
+        profile.value = null
       }
     } else {
       profile.value = null

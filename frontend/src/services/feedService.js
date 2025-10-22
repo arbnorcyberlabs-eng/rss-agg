@@ -33,11 +33,21 @@ export async function createFeed(feedData) {
     if (!feedData.rss_url) {
       throw new Error('RSS URL is required for native RSS feeds')
     }
+    // Normalize and validate
+    const id = String(feedData.id || '').trim().toLowerCase()
+    const title = String(feedData.title || '').trim()
+    const rss_url = String(feedData.rss_url || '').trim()
+    const display_order = Number.isFinite(feedData.display_order) ? feedData.display_order : 0
+    if (!/^[a-z][a-z0-9_\-]{2,31}$/.test(id)) {
+      throw new Error('Invalid ID. Start with a letter, 3-32 chars, lowercase, 0-9, _ or -')
+    }
+    if (!title) throw new Error('Title is required')
+    try { new URL(rss_url) } catch { throw new Error('Invalid RSS URL') }
 
     const { data, error } = await supabase
       .from('feeds')
-      .insert([feedData])
-      .select()
+      .insert([{ id, title, type: 'native_rss', rss_url, display_order }])
+      .select('*')
       .single()
 
     if (error) throw error

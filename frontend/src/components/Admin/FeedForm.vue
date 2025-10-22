@@ -57,7 +57,7 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="submit-button" @click="handleSubmit">
+        <button type="submit" class="submit-button">
           {{ isEdit ? 'Update' : 'Create' }}
         </button>
         <button type="button" class="cancel-button" @click="$emit('cancel')">
@@ -115,11 +115,14 @@ export default {
       // Enforce only native_rss creation
       data.type = 'native_rss'
       data.config = null
+      if (typeof data.id === 'string') data.id = data.id.trim().toLowerCase()
+      if (typeof data.title === 'string') data.title = data.title.trim()
+      if (typeof data.rss_url === 'string') data.rss_url = data.rss_url.trim()
 
       // Basic required fields
-      if (!data.id || !/^[a-z0-9_\-]+$/.test(data.id)) {
+      if (!data.id || !/^[a-z][a-z0-9_\-]{2,31}$/.test(data.id)) {
         console.warn('[FeedForm] Invalid ID')
-        alert('Feed ID is required (lowercase letters, numbers, dashes or underscores)')
+        alert('Feed ID is required (start with a letter, 3-32 chars, lowercase letters, numbers, dashes or underscores)')
         return
       }
       if (!data.title) {
@@ -144,7 +147,7 @@ export default {
       }
 
       console.log('[FeedForm] Emitting submit', data)
-      this.$emit('submit', data)
+      this.$emit('submit', { ...data })
     }
   }
 }
