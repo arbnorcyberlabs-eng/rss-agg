@@ -29,7 +29,6 @@
       <div class="form-group">
         <label for="feedType">Feed Type *</label>
         <select id="feedType" v-model="formData.type" required>
-          <option value="scraped">Scraped (Web Scraping)</option>
           <option value="native_rss">Native RSS (Existing Feed URL)</option>
         </select>
       </div>
@@ -45,15 +44,7 @@
         />
       </div>
 
-      <div v-if="formData.type === 'scraped'" class="form-group">
-        <label for="config">Configuration (JSON) *</label>
-        <textarea
-          id="config"
-          v-model="configText"
-          rows="10"
-          placeholder='{"url": "https://example.com", "entrySelector": ".item"}'
-        ></textarea>
-      </div>
+      <!-- Scraped feeds are not allowed for creation via UI -->
 
       <div class="form-group">
         <label for="displayOrder">Display Order</label>
@@ -92,7 +83,7 @@ export default {
       formData: {
         id: '',
         title: '',
-        type: 'scraped',
+        type: 'native_rss',
         config: null,
         rss_url: null,
         display_order: 0
@@ -119,19 +110,25 @@ export default {
   methods: {
     handleSubmit() {
       const data = { ...this.formData }
-      
-      if (data.type === 'scraped') {
-        try {
-          data.config = JSON.parse(this.configText)
-          data.rss_url = null
-        } catch (e) {
-          alert('Invalid JSON configuration')
-          return
-        }
-      } else {
-        data.config = null
+
+      // Enforce only native_rss creation
+      data.type = 'native_rss'
+      data.config = null
+
+      if (!data.rss_url) {
+        alert('RSS Feed URL is required for native RSS feeds')
+        return
       }
-      
+
+      // Basic validation for YouTube feed support (allow any valid URL including YouTube RSS)
+      try {
+        // Throws if invalid
+        new URL(data.rss_url)
+      } catch (e) {
+        alert('Please provide a valid RSS feed URL')
+        return
+      }
+
       this.$emit('submit', data)
     }
   }

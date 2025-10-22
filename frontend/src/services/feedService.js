@@ -26,6 +26,14 @@ export async function fetchFeeds() {
  */
 export async function createFeed(feedData) {
   try {
+    // Enforce only native_rss feeds are creatable via UI
+    if (feedData.type !== 'native_rss') {
+      throw new Error('Only native RSS feeds can be created')
+    }
+    if (!feedData.rss_url) {
+      throw new Error('RSS URL is required for native RSS feeds')
+    }
+
     const { data, error } = await supabase
       .from('feeds')
       .insert([feedData])

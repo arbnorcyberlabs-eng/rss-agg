@@ -58,6 +58,13 @@ export const useUIStore = defineStore('ui', () => {
     currentPage.value = 1
   }
 
+  function resetUI() {
+    searchQuery.value = ''
+    currentPage.value = 1
+    itemsPerPage.value = 15
+    allItems.value = []
+  }
+
   function setPage(page) {
     if (page >= 1 && page <= totalPages.value) {
       currentPage.value = page
@@ -101,6 +108,7 @@ export const useUIStore = defineStore('ui', () => {
     currentItemRange,
     setSearch,
     clearSearch,
+    resetUI,
     setPage,
     nextPage,
     previousPage,

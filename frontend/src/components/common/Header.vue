@@ -26,24 +26,35 @@
 
 <script>
 import { useAuthStore } from '../../stores/authStore'
+import { useUIStore } from '../../stores/uiStore'
+import { useUserPreferenceStore } from '../../stores/userPreferenceStore'
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'Header',
   setup() {
     const authStore = useAuthStore()
+    const uiStore = useUIStore()
+    const userPrefStore = useUserPreferenceStore()
     const router = useRouter()
 
     async function handleLogout() {
       try {
         console.log('Header: Starting logout process...')
         await authStore.logout()
+        // Reset client-side state to avoid stale data after logout
+        try { uiStore.clearSearch && uiStore.clearSearch() } catch {}
+        try { uiStore.setPage && uiStore.setPage(1) } catch {}
+        try { userPrefStore.clearPreferences && userPrefStore.clearPreferences() } catch {}
+
         console.log('Header: Logout successful, redirecting to home...')
-        router.push('/')
+        router.replace('/')
       } catch (error) {
         console.error('Header: Logout error:', error)
         // Even if logout fails, redirect to home and clear any local state
-        router.push('/')
+        try { userPrefStore.clearPreferences && userPrefStore.clearPreferences() } catch {}
+        try { uiStore.clearSearch && uiStore.clearSearch() } catch {}
+        router.replace('/')
       }
     }
 
@@ -57,6 +68,8 @@ export default {
 
     return {
       authStore,
+      uiStore,
+      userPrefStore,
       handleLogout,
       handleLogin,
       handleSignup

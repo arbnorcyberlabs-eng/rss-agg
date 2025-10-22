@@ -19,7 +19,8 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'admin',
-      component: () => import('../views/AdminView.vue')
+      component: () => import('../views/AdminView.vue'),
+      meta: { requiresAdmin: true }
     },
     {
       path: '/auth',
@@ -51,6 +52,20 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/')
     return
+  }
+
+  // Check if route requires admin
+  if (to.meta.requiresAdmin) {
+    if (!authStore.isAuthenticated) {
+      console.warn('[RouteGuard] Admin route blocked: unauthenticated user')
+      next('/')
+      return
+    }
+    if (!authStore.isAdmin) {
+      console.warn('[RouteGuard] Admin route blocked: non-admin user')
+      next('/')
+      return
+    }
   }
 
   next()
