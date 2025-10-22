@@ -48,12 +48,8 @@ router.beforeEach(async (to, from, next) => {
   // Initialize auth state once on first navigation (fixes refresh white-screen)
   if (!didInitAuth) {
     didInitAuth = true
-    try {
-      await authStore.checkAuth()
-    } catch (e) {
-      // Swallow errors to avoid breaking navigation
-      // authStore handles clearing bad state internally
-    }
+    // Fire-and-forget to avoid blocking navigation on refresh
+    authStore.checkAuth().catch(() => {})
   }
 
   // Check if route requires authentication
