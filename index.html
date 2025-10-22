@@ -919,6 +919,7 @@
                     id="authEmail" 
                     class="auth-input" 
                     placeholder="Email address" 
+                    autocomplete="email"
                     required
                 />
                 <input 
@@ -926,6 +927,7 @@
                     id="authPassword" 
                     class="auth-input" 
                     placeholder="Password" 
+                    autocomplete="current-password"
                     required
                 />
                 <input 
@@ -933,6 +935,7 @@
                     id="authFullName" 
                     class="auth-input" 
                     placeholder="Full name (signup only)" 
+                    autocomplete="name"
                     style="display: none;"
                 />
                 <button type="submit" id="authSubmitButton" class="auth-button">
@@ -998,12 +1001,11 @@
         // Authentication Functions
         async function initializeAuth() {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session?.user) {
-                    await loadUserProfile(session.user);
-                }
+                // Clear any existing session on startup to ensure clean state
+                await supabase.auth.signOut();
+                console.log('Cleared existing session on startup');
             } catch (error) {
-                console.error('Error initializing auth:', error);
+                console.error('Error clearing session on startup:', error);
             }
             
             // Listen for auth changes
@@ -1011,8 +1013,8 @@
                 console.log('Auth state change:', event, session?.user?.email || 'no user');
                 if (event === 'SIGNED_IN' && session?.user) {
                     await loadUserProfile(session.user);
-                } else if (event === 'SIGNED_OUT') {
-                    console.log('User signed out, updating UI');
+                } else if (event === 'SIGNED_OUT' || event === 'INITIAL_SESSION') {
+                    console.log('User signed out or initial session cleared, updating UI');
                     currentUser = null;
                     updateUIForAuthState();
                 }
