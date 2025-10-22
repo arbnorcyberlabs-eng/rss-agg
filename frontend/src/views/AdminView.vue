@@ -2,8 +2,12 @@
   <div class="admin-view">
     <Header />
     
-    <!-- Login Form (if not authenticated) -->
-    <LoginForm v-if="!authStore.isAuthenticated" @login="handleLogin" />
+    <!-- Auth Form (if not authenticated) -->
+    <AuthForm 
+      v-if="!authStore.isAuthenticated" 
+      @login="handleLogin"
+      @signup="handleSignup"
+    />
     
     <!-- Admin Panel (if authenticated) -->
     <div v-else class="admin-panel">
@@ -11,30 +15,39 @@
         <h2>Feed Management</h2>
         <button class="logout-button" @click="handleLogout">Logout</button>
       </div>
-      
-      <!-- Add/Edit Feed Form -->
-      <FeedForm
-        v-if="showForm"
-        :feed="editingFeed"
-        @submit="handleSubmit"
-        @cancel="handleCancel"
-      />
-      
-      <button 
-        v-if="!showForm"
-        class="add-button" 
-        @click="handleAdd"
-      >
-        + Add New Feed
-      </button>
-      
-      <!-- Feed Manager -->
-      <FeedManager
-        :feeds="feedStore.feeds"
-        @toggle="handleToggle"
-        @edit="handleEdit"
-        @delete="handleDelete"
-      />
+
+      <!-- Show restriction message if not admin -->
+      <div v-if="!authStore.isAdmin" class="restriction-message">
+        <p>⚠️ You don't have admin access to manage feeds.</p>
+        <p>You can still customize your feed preferences in the <router-link to="/preferences">Preferences</router-link> page.</p>
+      </div>
+
+      <!-- Admin-only section -->
+      <div v-else>
+        <!-- Add/Edit Feed Form -->
+        <FeedForm
+          v-if="showForm"
+          :feed="editingFeed"
+          @submit="handleSubmit"
+          @cancel="handleCancel"
+        />
+        
+        <button 
+          v-if="!showForm"
+          class="add-button" 
+          @click="handleAdd"
+        >
+          + Add New Feed
+        </button>
+        
+        <!-- Feed Manager -->
+        <FeedManager
+          :feeds="feedStore.feeds"
+          @toggle="handleToggle"
+          @edit="handleEdit"
+          @delete="handleDelete"
+        />
+      </div>
     </div>
     
     <Footer />
@@ -43,11 +56,12 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import { useFeedStore } from '../stores/feedStore'
 import Header from '../components/common/Header.vue'
 import Footer from '../components/common/Footer.vue'
-import LoginForm from '../components/Admin/LoginForm.vue'
+import AuthForm from '../components/Admin/LoginForm.vue'
 import FeedForm from '../components/Admin/FeedForm.vue'
 import FeedManager from '../components/Admin/FeedManager.vue'
 
@@ -56,11 +70,12 @@ export default {
   components: {
     Header,
     Footer,
-    LoginForm,
+    AuthForm,
     FeedForm,
     FeedManager
   },
   setup() {
+    const router = useRouter()
     const authStore = useAuthStore()
     const feedStore = useFeedStore()
     
@@ -73,6 +88,20 @@ export default {
         await feedStore.loadFeeds()
       } catch (error) {
         console.error('Login failed:', error)
+        throw error
+      }
+    }
+
+    async function handleSignup(credentials) {
+      try {
+        await authStore.signup(credentials.email, credentials.password, credentials.fullName)
+        await feedStore.loadFeeds()
+        // Redirect to home for regular users after signup
+        if (!authStore.isAdmin) {
+          router.push('/')
+        }
+      } catch (error) {
+        console.error('Signup failed:', error)
         throw error
       }
     }
@@ -172,6 +201,29 @@ export default {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.5px;
+}
+
+.restriction-message {
+  padding: 20px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.restriction-message p {
+  margin: 10px 0;
+  font-size: 0.95em;
+}
+
+.restriction-message a {
+  color: #000000;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.restriction-message a:hover {
+  color: #666666;
 }
 
 .logout-button {

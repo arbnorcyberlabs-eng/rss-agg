@@ -1,15 +1,26 @@
 <template>
-  <div class="login-form">
-    <h2>Admin Login</h2>
+  <div class="auth-form">
+    <h2>{{ isSignup ? 'Create Account' : 'Login' }}</h2>
     
     <form @submit.prevent="handleSubmit">
+      <div v-if="isSignup" class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          v-model="fullName"
+          type="text"
+          placeholder="John Doe"
+          required
+        />
+      </div>
+
       <div class="form-group">
         <label for="email">Email</label>
         <input
           id="email"
           v-model="email"
           type="email"
-          placeholder="admin@example.com"
+          :placeholder="isSignup ? 'you@example.com' : 'admin@example.com'"
           required
         />
       </div>
@@ -21,6 +32,7 @@
           v-model="password"
           type="password"
           placeholder="••••••••"
+          :minlength="isSignup ? 6 : undefined"
           required
         />
       </div>
@@ -29,51 +41,86 @@
         {{ error }}
       </div>
 
+      <div v-if="success" class="success-message">
+        {{ success }}
+      </div>
+
       <button 
         type="submit"
         class="submit-button"
         :disabled="loading"
       >
-        {{ loading ? 'Logging in...' : 'Login' }}
+        {{ loading ? 'Processing...' : (isSignup ? 'Sign Up' : 'Login') }}
       </button>
     </form>
+
+    <div class="toggle-mode">
+      <button 
+        type="button"
+        class="toggle-button" 
+        @click="toggleMode"
+      >
+        {{ isSignup ? 'Already have an account? Login' : 'Need an account? Sign up' }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'AuthForm',
   data() {
     return {
+      isSignup: false,
       email: '',
       password: '',
+      fullName: '',
       loading: false,
-      error: null
+      error: null,
+      success: null
     }
   },
-  emits: ['login'],
+  emits: ['login', 'signup'],
   methods: {
     async handleSubmit() {
       this.error = null
+      this.success = null
       this.loading = true
 
       try {
-        await this.$emit('login', {
-          email: this.email,
-          password: this.password
-        })
+        if (this.isSignup) {
+          await this.$emit('signup', {
+            email: this.email,
+            password: this.password,
+            fullName: this.fullName
+          })
+          this.success = 'Account created! You can now use all features.'
+        } else {
+          await this.$emit('login', {
+            email: this.email,
+            password: this.password
+          })
+        }
       } catch (err) {
-        this.error = err.message || 'Login failed'
+        this.error = err.message || (this.isSignup ? 'Signup failed' : 'Login failed')
       } finally {
         this.loading = false
       }
+    },
+    toggleMode() {
+      this.isSignup = !this.isSignup
+      this.error = null
+      this.success = null
+      this.email = ''
+      this.password = ''
+      this.fullName = ''
     }
   }
 }
 </script>
 
 <style scoped>
-.login-form {
+.auth-form {
   max-width: 400px;
   margin: 40px auto;
   padding: 30px;
@@ -81,7 +128,7 @@ export default {
   background: #ffffff;
 }
 
-.login-form h2 {
+.auth-form h2 {
   margin-bottom: 20px;
   text-align: center;
   font-size: 1.5em;
@@ -125,6 +172,15 @@ export default {
   margin-bottom: 15px;
 }
 
+.success-message {
+  padding: 10px;
+  background: #e8f5e9;
+  border: 1px solid #4caf50;
+  color: #2e7d32;
+  font-size: 0.85em;
+  margin-bottom: 15px;
+}
+
 .submit-button {
   width: 100%;
   padding: 12px;
@@ -148,6 +204,28 @@ export default {
 .submit-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.toggle-mode {
+  margin-top: 20px;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 0.85em;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 5px;
+}
+
+.toggle-button:hover {
+  color: #666666;
 }
 </style>
 

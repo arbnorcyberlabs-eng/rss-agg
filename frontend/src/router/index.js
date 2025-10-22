@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/authStore'
 import FeedReaderView from '../views/FeedReaderView.vue'
 
 const router = createRouter({
@@ -10,11 +11,34 @@ const router = createRouter({
       component: FeedReaderView
     },
     {
+      path: '/preferences',
+      name: 'preferences',
+      component: () => import('../views/PreferencesView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue')
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore()
+  
+  // Check auth state if not loaded
+  if (authStore.user === null && !authStore.loading) {
+    await authStore.checkAuth()
+  }
+
+  // Check if route requires authentication
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/')
+    return
+  }
+
+  next()
 })
 
 export default router

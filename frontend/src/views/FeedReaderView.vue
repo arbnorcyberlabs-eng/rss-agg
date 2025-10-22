@@ -18,12 +18,18 @@
     />
 
     <FeedList
-      :items="uiStore.paginatedItems"
+      :items="displayItems"
       :loading="loading"
       :loading-message="loadingMessage"
       :current-page="uiStore.currentPage"
       :total-pages="uiStore.totalPages"
       @page-change="uiStore.setPage"
+    />
+
+    <SignupTeaser
+      v-if="shouldShowTeaser"
+      @signup="handleSignup"
+      @login="handleLogin"
     />
 
     <Footer />
@@ -32,8 +38,11 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUIStore } from '../stores/uiStore'
 import { useFeedStore } from '../stores/feedStore'
+import { useAuthStore } from '../stores/authStore'
+import { useUserPreferenceStore } from '../stores/userPreferenceStore'
 import { parseFeed } from '../services/xmlParser'
 import { useYouTubeFeed } from '../composables/useYouTubeFeed'
 import Header from '../components/common/Header.vue'
@@ -41,6 +50,7 @@ import Footer from '../components/common/Footer.vue'
 import FeedSelector from '../components/FeedReader/FeedSelector.vue'
 import SearchBar from '../components/FeedReader/SearchBar.vue'
 import FeedList from '../components/FeedReader/FeedList.vue'
+import SignupTeaser from '../components/FeedReader/SignupTeaser.vue'
 
 export default {
   name: 'FeedReaderView',
@@ -49,11 +59,15 @@ export default {
     Footer,
     FeedSelector,
     SearchBar,
-    FeedList
+    FeedList,
+    SignupTeaser
   },
   setup() {
+    const router = useRouter()
     const uiStore = useUIStore()
     const feedStore = useFeedStore()
+    const authStore = useAuthStore()
+    const userPrefStore = useUserPreferenceStore()
     const { fetchYouTubeFeed } = useYouTubeFeed()
     
     const loading = ref(false)
@@ -85,6 +99,19 @@ export default {
       
       return options
     })
+
+    // Computed: items to display (limited for public users)
+    const displayItems = computed(() => {
+      const items = uiStore.paginatedItems
+      if (!authStore.isAuthenticated) {
+        return items.slice(0, 5)
+      }
+      return items
+    })
+
+    const shouldShowTeaser = computed(() => {
+      return !authStore.isAuthenticated && uiStore.allItems.length > 5
+    })
     
     async function loadAllFeeds(forceUpdate = false) {
       loading.value = true
@@ -93,11 +120,29 @@ export default {
       try {
         // Load feed configuration from Supabase
         await feedStore.loadFeeds()
+
+        // Load user preferences if authenticated
+        let enabledFeedIds = []
+        if (authStore.isAuthenticated) {
+          await userPrefStore.loadPreferences()
+          enabledFeedIds = userPrefStore.enabledFeedIds
+        }
         
         const allItems = []
         
         // Fetch scraped feeds (from XML files on GitHub Pages)
-        const scrapedFeeds = feedStore.feeds.filter(f => f.type === 'scraped' && f.enabled)
+        // Filter by user preferences if authenticated
+        const scrapedFeeds = feedStore.feeds.filter(f => {
+          if (f.type !== 'scraped' || !f.enabled) return false
+          
+          // For authenticated users, check preferences
+          if (authStore.isAuthenticated) {
+            return enabledFeedIds.includes(f.id)
+          }
+          
+          // For public users, show all enabled feeds
+          return true
+        })
         
         for (const feed of scrapedFeeds) {
           try {
@@ -133,7 +178,18 @@ export default {
         }
         
         // Fetch YouTube feed (native RSS with CORS proxy)
-        const youtubeFeed = feedStore.feeds.find(f => f.type === 'native_rss' && f.enabled && f.id === 'youtube_economy')
+        // Filter by user preferences if authenticated
+        const youtubeFeed = feedStore.feeds.find(f => {
+          if (f.type !== 'native_rss' || !f.enabled || f.id !== 'youtube_economy') return false
+          
+          // For authenticated users, check preferences
+          if (authStore.isAuthenticated) {
+            return enabledFeedIds.includes(f.id)
+          }
+          
+          // For public users, show if enabled
+          return true
+        })
         if (youtubeFeed) {
           try {
             loadingMessage.value = 'Loading YouTube videos...'
@@ -409,6 +465,14 @@ export default {
         isUpdating.value = false
       }
     }
+
+    function handleSignup() {
+      router.push('/admin')
+    }
+
+    function handleLogin() {
+      router.push('/admin')
+    }
     
     onMounted(() => {
       loadAllFeeds()
@@ -417,12 +481,17 @@ export default {
     return {
       uiStore,
       feedStore,
+      authStore,
       feedOptions,
       loading,
       loadingMessage,
       isUpdating,
+      displayItems,
+      shouldShowTeaser,
       handleFeedChange,
-      handleUpdate
+      handleUpdate,
+      handleSignup,
+      handleLogin
     }
   }
 }
