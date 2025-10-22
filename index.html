@@ -852,7 +852,7 @@
             <div id="userInfo" class="user-info" style="display: none;">
                 <span class="user-name" id="userName"></span>
                 <span class="user-role" id="userRole"></span>
-                <button class="logout-button" onclick="logout()">Logout</button>
+                <button class="logout-button" onclick="logout()" type="button">Logout</button>
             </div>
         </header>
 
@@ -1008,9 +1008,11 @@
             
             // Listen for auth changes
             supabase.auth.onAuthStateChange(async (event, session) => {
+                console.log('Auth state change:', event, session?.user?.email || 'no user');
                 if (event === 'SIGNED_IN' && session?.user) {
                     await loadUserProfile(session.user);
                 } else if (event === 'SIGNED_OUT') {
+                    console.log('User signed out, updating UI');
                     currentUser = null;
                     updateUIForAuthState();
                 }
@@ -1043,21 +1045,30 @@
         }
 
         function updateUIForAuthState() {
+            console.log('Updating UI for auth state, currentUser:', currentUser?.email || 'null');
             const userInfo = document.getElementById('userInfo');
             const userName = document.getElementById('userName');
             const userRole = document.getElementById('userRole');
             const articleLimitNotice = document.getElementById('articleLimitNotice');
+            const searchContainer = document.querySelector('.search-container');
+            const updateButton = document.getElementById('updateButton');
 
             if (currentUser) {
                 // User is logged in
+                console.log('Showing logged in UI');
                 userInfo.style.display = 'flex';
                 userName.textContent = currentUser.full_name || currentUser.email;
                 userRole.textContent = currentUser.role;
                 articleLimitNotice.style.display = 'none';
+                searchContainer.style.display = 'flex';
+                updateButton.style.display = 'block';
             } else {
                 // User is not logged in
+                console.log('Showing logged out UI');
                 userInfo.style.display = 'none';
                 articleLimitNotice.style.display = 'block';
+                searchContainer.style.display = 'none';
+                updateButton.style.display = 'none';
             }
             
             // Reload current feed to apply article limits
@@ -1175,7 +1186,13 @@
 
         async function logout() {
             try {
-                await supabase.auth.signOut();
+                console.log('Logging out...');
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.error('Logout error:', error);
+                } else {
+                    console.log('Logout successful');
+                }
             } catch (error) {
                 console.error('Error signing out:', error);
             }
@@ -1185,6 +1202,18 @@
         document.getElementById('authContainer').addEventListener('click', (e) => {
             if (e.target.id === 'authContainer') {
                 hideAuthModal();
+            }
+        });
+
+        // Add event listener for logout button (backup to onclick)
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutButton = document.querySelector('.logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Logout button clicked via event listener');
+                    logout();
+                });
             }
         });
 
