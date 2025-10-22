@@ -2,14 +2,20 @@
   <div class="feed-reader">
     <Header />
     
-    <FeedSelector
-      :current-feed="feedStore.currentFeed"
-      :feed-options="feedOptions"
-      :is-updating="isUpdating"
-      :show-update="authStore.isAuthenticated"
-      @feed-change="handleFeedChange"
-      @update="handleUpdate"
-    />
+    <!-- Show loading while auth is initializing -->
+    <div v-if="authStore.loading" class="loading-container">
+      <div class="loading-message">Initializing...</div>
+    </div>
+    
+    <template v-else>
+      <FeedSelector
+        :current-feed="feedStore.currentFeed"
+        :feed-options="feedOptions"
+        :is-updating="isUpdating"
+        :show-update="authStore.isAuthenticated"
+        @feed-change="handleFeedChange"
+        @update="handleUpdate"
+      />
 
     <SearchBar
       v-if="authStore.isAuthenticated"
@@ -35,7 +41,8 @@
       @login="handleLogin"
     />
 
-    <Footer />
+      <Footer />
+    </template>
   </div>
 </template>
 
@@ -502,8 +509,19 @@ export default {
       router.push('/auth')
     }
     
-    onMounted(() => {
-      loadAllFeeds()
+    onMounted(async () => {
+      // Wait for auth to complete before loading feeds
+      if (authStore.loading) {
+        // Wait for auth loading to finish
+        const unwatch = watch(() => authStore.loading, (loading) => {
+          if (!loading) {
+            unwatch()
+            loadAllFeeds()
+          }
+        })
+      } else {
+        loadAllFeeds()
+      }
     })
     
     // Watch for navigation - reload feeds when returning from preferences
@@ -554,6 +572,20 @@ export default {
 <style scoped>
 .feed-reader {
   width: 100%;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 40px 20px;
+}
+
+.loading-message {
+  font-size: 1.1em;
+  color: #666666;
+  font-weight: 500;
 }
 </style>
 
