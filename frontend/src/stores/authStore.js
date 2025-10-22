@@ -29,22 +29,59 @@ export const useAuthStore = defineStore('auth', () => {
         .eq('id', user.value.id)
         .single()
 
-      if (error) {
-        console.error('Profile query error:', error)
-        throw error
-      }
-      
-      if (!data) {
-        console.warn('No profile found for user:', user.value.id)
-        profile.value = null
+      // Handle "no rows" error (profile doesn't exist)
+      if (error && error.code === 'PGRST116') {
+        console.warn('⚠️ No profile found for user, creating one:', user.value.id)
+        
+        // Try to create the profile
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            id: user.value.id,
+            email: user.value.email,
+            full_name: user.value.user_metadata?.full_name || '',
+            role: 'user'
+          })
+          .select()
+          .single()
+        
+        if (createError) {
+          console.error('❌ Failed to create profile:', createError)
+          // Clear user state
+          user.value = null
+          profile.value = null
+          throw new Error('Failed to create user profile. Please try logging in again or contact support.')
+        }
+        
+        profile.value = newProfile
+        console.log('✓ Profile created successfully:', newProfile)
         return
       }
       
+      if (error) {
+        console.error('❌ Profile query error:', error)
+        // Clear user state
+        user.value = null
+        profile.value = null
+        throw new Error('Failed to load profile. Please try logging in again.')
+      }
+      
+      if (!data) {
+        console.warn('⚠️ No profile data returned for user:', user.value.id)
+        // Clear user state
+        user.value = null
+        profile.value = null
+        throw new Error('Profile not found. Please contact support.')
+      }
+      
       profile.value = data
-      console.log('Profile loaded successfully:', data)
+      console.log('✓ Profile loaded successfully:', data)
     } catch (error) {
       console.error('Error loading profile:', error)
       profile.value = null
+      user.value = null
+      // Rethrow to be handled by calling function
+      throw error
     }
   }
 
@@ -174,7 +211,15 @@ export const useAuthStore = defineStore('auth', () => {
       const { data: { user: currentUser } } = await supabase.auth.getUser()
       user.value = currentUser
       if (currentUser) {
-        await loadProfile()
+        try {
+          await loadProfile()
+        } catch (profileError) {
+          console.error('Failed to load profile during auth check:', profileError)
+          // If profile loading fails, clear everything and log out
+          await supabase.auth.signOut()
+          user.value = null
+          profile.value = null
+        }
       }
     } catch (error) {
       console.error('Auth check error:', error)
