@@ -1,154 +1,136 @@
-# RSS Feed Aggregator
+# 📰 RSS Feed Aggregator
 
-A modern RSS feed aggregator with dynamic feed management powered by Supabase and Vue 3.
+A modern **RSS feed aggregator** built with **Vue 3** and **Supabase**, featuring automated feed generation and deployment via **GitHub Actions**.
 
-## 🎯 Features
+---
 
-- **Dynamic Feed Management**: Add, edit, and manage feeds through an admin panel
-- **Supabase Backend**: Feeds stored in Supabase database with Row Level Security
-- **Automated Generation**: GitHub Actions automatically generates and updates feeds twice daily
-- **Modern UI**: Vue 3 frontend with search, pagination, and responsive design
-- **Web Scraping**: Uses [Feed me up, Scotty!](https://feed-me-up-scotty.vincenttunru.com/) to create RSS feeds from any website
-- **Native RSS Support**: Can also aggregate existing RSS/Atom feeds
+## 🚀 Features
 
-## 🏗️ Architecture
+- **Dynamic Feed Management** — Add, edit, and manage feeds via an admin panel  
+- **Supabase Backend** — Feeds stored in Supabase with **Row Level Security (RLS)**  
+- **Automated Feed Generation** — **GitHub Actions** auto-updates feeds twice daily  
+- **Modern Vue 3 Frontend** — Search, pagination, and fully responsive design  
+- **Web Scraping Support** — Integrates with [Feed Me Up, Scotty!](https://feed-me-up-scotty.vincenttunru.com/) for scraping any site  
+- **Native RSS/Atom Support** — Aggregate existing feeds seamlessly  
 
-```
+---
+
+## 🧱 Architecture
+
+```text
 ┌─────────────────┐
-│   Admin Panel   │ (Add/Edit/Delete Feeds)
-│    (Vue 3)      │
+│   Admin Panel   │  (Add/Edit/Delete Feeds)
+│     Vue 3       │
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│ Supabase DB     │ (Feed Configuration)
+│ Supabase DB     │  (Feed Config)
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│ GitHub Actions  │ (Fetch Config → Generate Feeds)
+│ GitHub Actions  │  (Fetch → Generate → Publish)
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│  GitHub Pages   │ (Serve Feeds + Vue Frontend)
+│  GitHub Pages   │  (Serve Feeds + UI)
 └─────────────────┘
 ```
 
-## 🚀 Quick Start
+---
+
+## ⚡ Quick Start
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) 20+ installed
+- [Node.js](https://nodejs.org/) ≥ 20
 - Supabase account
 - GitHub account
 
-## 📦 Installation
-
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/arbnorcyberlabs-eng/rss-agg.git
 cd rss-agg
 ```
 
-### 2. Set Up Supabase
-
-The Supabase database is already configured with:
-- ✅ `feeds` table created
-- ✅ Row Level Security (RLS) enabled
-- ✅ Sample feeds migrated
-
-### 3. Install Dependencies
-
+### 2. Install Dependencies
 ```bash
-# Install root dependencies
 npm install
-
-# Install frontend dependencies
 cd frontend
 npm install
 ```
 
-### 4. Configure Environment Variables
-
+### 3. Configure Environment Variables
 Create `frontend/.env`:
-
-```env
+```bash
 VITE_SUPABASE_URL=https://godeglzovkxzhwxyxbdd.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 VITE_BASE_URL=https://arbnorcyberlabs-eng.github.io/rss-agg/
 ```
 
-### 5. Set Up GitHub Secrets
-
-See **[GITHUB-SECRETS-SETUP.md](./GITHUB-SECRETS-SETUP.md)** for detailed instructions.
+### 4. Set Up GitHub Secrets
+See [`GITHUB-SECRETS-SETUP.md`](./GITHUB-SECRETS-SETUP.md).
 
 Required secrets:
-- `SUPABASE_URL`
-- `SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_KEY`
+```
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_KEY
+```
 
-## 💻 Development
+---
 
-### Run Frontend Locally
+## 💻 Local Development
 
+### Run Frontend
 ```bash
 cd frontend
 npm run dev
 ```
+Access at: [http://localhost:5173](http://localhost:5173)
 
-Visit http://localhost:5173/
-
-### Access Admin Panel
-
-Visit http://localhost:5173/admin
-
-**Note**: You'll need to enable Email/Password authentication in Supabase Dashboard and create an admin user.
+### Admin Panel
+- URL: [http://localhost:5173/admin](http://localhost:5173/admin)  
+- Enable Email/Password Auth in Supabase  
+- Create an admin user manually in your Supabase project
 
 ### Manual Feed Generation
-
-Generate feeds locally for testing:
-
 ```bash
 npx feed-me-up-scotty
 ```
-
 Debug mode:
-
-```powershell
-$env:DEBUG="info"; npx feed-me-up-scotty
-```
-
-On Unix/Mac:
-
 ```bash
 DEBUG="info" npx feed-me-up-scotty
 ```
 
-## Configuration
+---
 
-Edit the `feeds.toml` file to configure your feeds. Each feed requires:
+## ⚙️ Configuration
+
+Each feed is defined in `feeds.toml`.
 
 ### Required Fields
-
-- **`title`**: A descriptive title for your feed
-- **`url`**: The URL of the page to scrape
-- **`entrySelector`**: CSS selector matching individual feed entries
-- **`titleSelector`**: CSS selector for the title within each entry
-- **`linkSelector`**: CSS selector for the link within each entry
+| Field | Description |
+|-------|--------------|
+| `title` | Feed title |
+| `url` | Source URL |
+| `entrySelector` | CSS selector for entries |
+| `titleSelector` | Selector for titles |
+| `linkSelector` | Selector for links |
 
 ### Optional Fields
+| Field | Description |
+|-------|--------------|
+| `contentSelector` | Selector for content (defaults to entry) |
+| `dateSelector` | Selector for date |
+| `dateFormat` | Format string for date (date-fns) |
+| `timeout` | Seconds to wait (default: 60) |
+| `filters` | Exclude entries containing these strings |
+| `matchOneOf` | Include entries matching one |
+| `matchAllOf` | Include entries matching all |
 
-- **`contentSelector`**: CSS selector for the content (defaults to full entry)
-- **`dateSelector`**: CSS selector for the publication date
-- **`dateFormat`**: Format string for the date (using date-fns format)
-- **`timeout`**: Seconds to wait for page load (default: 60)
-- **`filters`**: Array of strings - exclude entries containing these strings
-- **`matchOneOf`**: Array of strings - only include entries with at least one match
-- **`matchAllOf`**: Array of strings - only include entries matching all strings
-
-### Example Configuration
-
+#### Example:
 ```toml
 [default]
 timeout = 30
@@ -164,120 +146,79 @@ dateSelector = "time"
 filters = ["Advertisement", "Sponsored"]
 ```
 
-## Output
+---
 
-Generated feeds will be saved in the `public/` folder:
-- Individual feeds: `public/{feed-name}.xml`
-- Combined feed: `public/all.xml` (contains all posts from all feeds)
+## 🧩 Output
 
-## Tips for Finding CSS Selectors
+Feeds are generated into the `public/` directory:
+- Individual feeds → `public/{feed-name}.xml`
+- Combined feed → `public/all.xml`
 
-1. **Open Developer Tools** in your browser (F12)
-2. **Right-click** on the element you want to select
-3. **Select "Inspect"** to see the HTML structure
-4. **Identify unique selectors** like classes, IDs, or element combinations
-5. **Test your selectors** in the browser console:
-   ```javascript
-   document.querySelectorAll('your-selector-here')
+---
+
+## 🕵️ Debugging
+
+If feeds don’t appear:
+1. Run with `DEBUG="info"`
+2. Use `:root` as `entrySelector` to inspect full HTML
+3. Ensure content isn’t dynamically loaded (may need `waitUntil`)
+4. Validate selectors in the browser console:
+   ```js
+   document.querySelectorAll('your-selector')
    ```
 
-## Debugging
-
-If entries aren't being captured correctly:
-
-1. Run with `DEBUG="info"` environment variable
-2. Use `:root` as the `entrySelector` to see the full HTML dump
-3. Check if the page uses JavaScript to load content (may need `waitUntil` option)
-4. Verify selectors in your browser's developer console
-
-### Advanced Options for JavaScript-Heavy Sites
-
+For JS-heavy pages:
 ```toml
 [dynamic-site]
 title = "JavaScript-loaded content"
 url = "https://example.com"
-waitUntil = "networkidle"  # or "load" or "domcontentloaded"
-waitForSelector = ".content-loaded"  # wait for this element to appear
+waitUntil = "networkidle"
+waitForSelector = ".content-loaded"
 entrySelector = "article"
 titleSelector = "h2"
 linkSelector = "a"
 ```
 
-## Automation
+---
 
-This project includes automation configurations for:
-- **GitHub Actions + GitHub Pages** - Automatic hosting and updates
-- **GitLab CI/CD + GitLab Pages** - Alternative automatic hosting
-- **Manual automation** - Cron jobs, Task Scheduler, etc.
+## 🤖 Automation
 
-### GitHub Actions Setup (Recommended)
+### GitHub Actions (Recommended)
+Feeds auto-generate and deploy twice daily.
 
-This repository is pre-configured to automatically generate and host your feeds using GitHub Actions and GitHub Pages.
+**Steps:**
+1. Push repo to GitHub  
+2. Create a `gh-pages` branch  
+3. Enable **Pages** → `gh-pages` branch  
+4. Enable **Actions** in the repository  
 
-**Setup Steps:**
+Your feeds will:
+- Regenerate **5:30 AM / 5:30 PM UTC**
+- Publish to:  
+  `https://YOUR-USERNAME.github.io/YOUR-REPO/feedname.xml`
 
-1. **Push this repository to GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-   git push -u origin main
-   ```
+---
 
-2. **Create the gh-pages branch**
-   ```bash
-   git checkout --orphan gh-pages
-   git reset --hard
-   git commit --allow-empty -m "Initial gh-pages commit"
-   git push origin gh-pages
-   git checkout main
-   ```
+## 🧩 Alternative CI/CD Options
 
-3. **Enable GitHub Pages**
-   - Go to your repository Settings → Pages
-   - Set Source to "Deploy from a branch"
-   - Select `gh-pages` branch and `/ (root)` folder
-   - Click Save
+### GitLab CI/CD
+Use a scheduled pipeline (`30 5,17 * * *`).
 
-4. **Enable GitHub Actions**
-   - Go to the Actions tab in your repository
-   - Click "I understand my workflows, go ahead and enable them"
-
-**That's it!** Your feeds will:
-- Auto-generate twice daily (5:30 AM and 5:30 PM UTC)
-- Be available at: `https://YOUR-USERNAME.github.io/YOUR-REPO/feedname.xml`
-- Update on every push to main branch
-- Can be manually triggered from the Actions tab
-
-### GitLab CI/CD Setup
-
-If you prefer GitLab:
-
-1. **Push this repository to GitLab**
-2. **Create a Pipeline Schedule**
-   - Go to Build → Pipeline schedules
-   - Click "New schedule"
-   - Set interval: `30 5,17 * * *` (5:30 AM and 5:30 PM)
-   - Save
-
-Your feeds will be at: `https://YOUR-USERNAME.gitlab.io/YOUR-REPO/feedname.xml`
+Resulting URL:  
+`https://YOUR-USERNAME.gitlab.io/YOUR-REPO/feedname.xml`
 
 ### Manual Automation
+Use cron, Task Scheduler, or other job runners for custom intervals.
 
-You can also run this on your own server or computer using cron jobs or Task Scheduler
+---
 
-## Resources
-
-- [Official Documentation](https://feed-me-up-scotty.vincenttunru.com/docs/setup)
+## 📚 Resources
+- [Feed Me Up, Scotty! Docs](https://feed-me-up-scotty.vincenttunru.com/docs/setup)
 - [Source Code](https://github.com/Vincentdegroot/feed-me-up-scotty)
 - [CSS Selectors Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
 
-## License
+---
 
-This project configuration is open source. Feed me up, Scotty! is created by Vincent Tunru.
-
-#   T r i g g e r   b u i l d 
- 
- 
+## 🪪 License
+Open source project setup.  
+**Feed Me Up, Scotty!** by [Vincent Tunru](https://vincenttunru.com/).
