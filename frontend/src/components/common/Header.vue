@@ -47,14 +47,17 @@ export default {
         try { uiStore.setPage && uiStore.setPage(1) } catch {}
         try { userPrefStore.clearPreferences && userPrefStore.clearPreferences() } catch {}
 
-        console.log('Header: Logout successful, redirecting to home...')
-        router.replace('/')
+        // Absolute redirect to base URL to avoid incorrect cached paths
+        const base = import.meta.env.VITE_BASE_URL || '/'
+        console.log('Header: Logout successful, redirecting to base:', base)
+        window.location.assign(base)
       } catch (error) {
         console.error('Header: Logout error:', error)
         // Even if logout fails, redirect to home and clear any local state
         try { userPrefStore.clearPreferences && userPrefStore.clearPreferences() } catch {}
         try { uiStore.clearSearch && uiStore.clearSearch() } catch {}
-        router.replace('/')
+        const base = import.meta.env.VITE_BASE_URL || '/'
+        window.location.assign(base)
       }
     }
 
