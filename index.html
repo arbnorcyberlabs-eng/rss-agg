@@ -461,29 +461,34 @@
 
         .auth-modal {
             background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 24px 24px 18px;
+            border: 2px solid #000000;
+            border-radius: 0;
+            box-shadow: none;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             margin: 20px;
         }
 
         .auth-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
         }
 
         .auth-header h2 {
-            font-size: 1.5em;
-            margin-bottom: 8px;
+            font-size: 1.35em;
+            margin-bottom: 6px;
             color: #000000;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
         }
 
         .auth-header p {
             color: #666666;
-            font-size: 0.9em;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .auth-form {
@@ -494,9 +499,9 @@
 
         .auth-input {
             padding: 12px 15px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #000000;
             border-radius: 4px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-family: inherit;
             transition: border-color 0.15s ease;
         }
@@ -511,9 +516,9 @@
             background: #000000;
             color: #ffffff;
             border: 2px solid #000000;
-            border-radius: 4px;
+            border-radius: 0;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -542,9 +547,9 @@
 
         .auth-switch {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 2px solid #000000;
         }
 
         .auth-switch button {
@@ -562,21 +567,27 @@
         }
 
         .auth-error {
-            background: #ffebee;
-            color: #c62828;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            margin-bottom: 15px;
+            background: #ffffff;
+            color: #000000;
+            padding: 10px 12px;
+            border: 2px solid #000000;
+            border-radius: 0;
+            font-size: 0.75em;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .auth-success {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            margin-bottom: 15px;
+            background: #ffffff;
+            color: #000000;
+            padding: 10px 12px;
+            border: 2px solid #000000;
+            border-radius: 0;
+            font-size: 0.75em;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .user-info {
@@ -620,14 +631,16 @@
         }
 
         .article-limit-notice {
-            background: #fff3cd;
-            color: #856404;
-            padding: 10px 15px;
-            border: 1px solid #ffeaa7;
-            border-radius: 4px;
+            background: #fafafa;
+            color: #000000;
+            padding: 12px 15px;
+            border: 2px solid #000000;
+            border-radius: 0;
             margin-bottom: 15px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .article-limit-notice a {
@@ -638,6 +651,59 @@
 
         .article-limit-notice a:hover {
             opacity: 0.7;
+        }
+
+        /* Locked section for guests */
+        .locked-section {
+            border-top: 2px solid #000000;
+            padding-top: 12px;
+            margin-top: 6px;
+        }
+
+        .locked-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 10px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+        }
+
+        .locked-actions {
+            display: inline-flex;
+            gap: 8px;
+        }
+
+        .locked-button {
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .locked-button.secondary {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .locked-item {
+            padding: 12px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            opacity: 0.55;
+        }
+
+        .locked-item-title {
+            font-size: 1em;
+            color: #000000;
         }
 
 
@@ -1377,16 +1443,13 @@
         // Display current page of items
         function displayCurrentPage() {
             const feedContent = document.getElementById('feedContent');
-            let itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
-            
-            // Apply article limit for non-authenticated users
-            if (!currentUser) {
-                itemsToDisplay = itemsToDisplay.slice(0, ARTICLE_LIMIT);
-            }
+            const allItems = searchQuery ? filteredItems : allCurrentItems;
+            const visibleCount = currentUser ? allItems.length : Math.min(ARTICLE_LIMIT, allItems.length);
+            const lockedCount = currentUser ? 0 : Math.max(0, allItems.length - visibleCount);
             
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
-            const pageItems = itemsToDisplay.slice(startIndex, endIndex);
+            const pageItems = allItems.slice(startIndex, endIndex).slice(0, visibleCount - startIndex);
             
             let html = '<div class="feed-items">';
             
@@ -1542,6 +1605,35 @@
             });
             html += '</div>';
             
+            // Locked section for guests (show preview of remaining titles)
+            if (!currentUser && lockedCount > 0 && startIndex < visibleCount) {
+                const lockedStart = visibleCount; // start after visible
+                const lockedItems = allItems.slice(lockedStart, Math.min(lockedStart + 5, allItems.length));
+                
+                html += `
+                <div class="locked-section">
+                    <div class="locked-header">
+                        <span>More items are locked (${lockedCount} hidden)</span>
+                        <div class="locked-actions">
+                            <button class="locked-button" onclick="showAuthModal('signup')">Sign Up</button>
+                            <button class="locked-button secondary" onclick="showAuthModal('login')">Login</button>
+                        </div>
+                    </div>
+                `;
+
+                lockedItems.forEach(item => {
+                    const titleEl = item.getElementsByTagName('title')[0];
+                    const title = titleEl?.textContent || 'Untitled';
+                    html += `
+                        <div class="locked-item">
+                            <div class="locked-item-title">${escapeHtml(title)}</div>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+            }
+
             // Add pagination controls
             html += renderPagination();
             
