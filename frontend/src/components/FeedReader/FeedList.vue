@@ -18,9 +18,9 @@
     <!-- Loading state -->
     <Loading v-if="loading" :message="loadingMessage" />
 
-    <!-- Pagination -->
+    <!-- Pagination (authenticated users only) -->
     <Pagination
-      v-if="!loading && totalPages > 1"
+      v-if="isAuthenticated && !loading && totalPages > 1"
       :current-page="currentPage"
       :total-pages="totalPages"
       @page-change="$emit('page-change', $event)"
@@ -44,6 +44,10 @@ export default {
     items: {
       type: Array,
       default: () => []
+    },
+    isAuthenticated: {
+      type: Boolean,
+      default: false
     },
     loading: {
       type: Boolean,

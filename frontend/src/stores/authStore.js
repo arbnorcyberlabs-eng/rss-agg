@@ -201,13 +201,25 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     loading.value = true
     try {
-      const { error } = await supabase.auth.signOut()
-      if (error) throw error
-
+      console.log('Attempting logout...')
+      
+      // Clear local state first
       user.value = null
       profile.value = null
+      
+      // Sign out from Supabase
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        console.error('Supabase logout error:', error)
+        throw error
+      }
+      
+      console.log('✓ Logout successful')
     } catch (error) {
       console.error('Logout error:', error)
+      // Even if Supabase logout fails, clear local state
+      user.value = null
+      profile.value = null
       throw error
     } finally {
       loading.value = false
@@ -241,9 +253,24 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Initialize auth state listener
   supabase.auth.onAuthStateChange(async (event, session) => {
+    console.log('Auth state change:', event, session?.user?.email || 'no user')
+    
+    if (event === 'SIGNED_OUT') {
+      // Explicitly handle sign out
+      user.value = null
+      profile.value = null
+      console.log('✓ User signed out via auth state change')
+      return
+    }
+    
     user.value = session?.user || null
     if (session?.user) {
-      await loadProfile()
+      try {
+        await loadProfile()
+      } catch (error) {
+        console.error('Error loading profile in auth state change:', error)
+        // Don't clear user state here, let the calling function handle it
+      }
     } else {
       profile.value = null
     }

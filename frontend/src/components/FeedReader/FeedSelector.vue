@@ -28,8 +28,9 @@
       </option>
     </select>
 
-    <!-- Update button -->
+    <!-- Update button (authenticated users only) -->
     <button 
+      v-if="showUpdate"
       class="update-button"
       :class="{ updating: isUpdating }"
       :disabled="isUpdating"
@@ -55,6 +56,10 @@ export default {
     isUpdating: {
       type: Boolean,
       default: false
+    },
+    showUpdate: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['feed-change', 'update'],

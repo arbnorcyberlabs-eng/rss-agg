@@ -36,10 +36,14 @@ export default {
 
     async function handleLogout() {
       try {
+        console.log('Header: Starting logout process...')
         await authStore.logout()
+        console.log('Header: Logout successful, redirecting to home...')
         router.push('/')
       } catch (error) {
-        console.error('Logout error:', error)
+        console.error('Header: Logout error:', error)
+        // Even if logout fails, redirect to home and clear any local state
+        router.push('/')
       }
     }
 

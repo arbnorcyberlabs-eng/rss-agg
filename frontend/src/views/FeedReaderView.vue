@@ -6,11 +6,13 @@
       :current-feed="feedStore.currentFeed"
       :feed-options="feedOptions"
       :is-updating="isUpdating"
+      :show-update="authStore.isAuthenticated"
       @feed-change="handleFeedChange"
       @update="handleUpdate"
     />
 
     <SearchBar
+      v-if="authStore.isAuthenticated"
       :search-query="uiStore.searchQuery"
       :total-items="uiStore.currentItemRange.total"
       @search="uiStore.setSearch"
@@ -19,6 +21,7 @@
 
     <FeedList
       :items="displayItems"
+      :is-authenticated="authStore.isAuthenticated"
       :loading="loading"
       :loading-message="loadingMessage"
       :current-page="uiStore.currentPage"
