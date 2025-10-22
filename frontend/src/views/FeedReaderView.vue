@@ -492,11 +492,11 @@ export default {
     }
 
     function handleSignup() {
-      router.push('/admin')
+      router.push('/auth')
     }
 
     function handleLogin() {
-      router.push('/admin')
+      router.push('/auth')
     }
     
     onMounted(() => {

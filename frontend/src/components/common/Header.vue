@@ -44,11 +44,11 @@ export default {
     }
 
     function handleLogin() {
-      router.push('/admin')
+      router.push('/auth')
     }
 
     function handleSignup() {
-      router.push('/admin')
+      router.push('/auth')
     }
 
     return {

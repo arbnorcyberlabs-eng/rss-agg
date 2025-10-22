@@ -129,7 +129,7 @@ export default {
           errorMessage = '⚠️ Please confirm your email address before logging in. Check your inbox for the confirmation link.'
         } else if (errorMessage.includes('Invalid login credentials')) {
           errorMessage = '⚠️ Invalid email or password. Please try again.'
-        } else if (errorMessage.includes('User already registered')) {
+        } else if (errorMessage.includes('already registered') || errorMessage.includes('User already registered')) {
           errorMessage = '⚠️ This email is already registered. Please login instead.'
         }
         

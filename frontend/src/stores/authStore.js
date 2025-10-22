@@ -113,6 +113,15 @@ export const useAuthStore = defineStore('auth', () => {
 
       console.log('User created:', data.user.id, data.user.email)
       
+      // Check if email already exists (Supabase security feature)
+      // If identities array is empty, the email is already registered
+      if (data.user.identities && data.user.identities.length === 0) {
+        console.log('⚠️ Email already registered - identities array is empty')
+        user.value = null
+        profile.value = null
+        throw new Error('This email is already registered. Please login instead.')
+      }
+      
       // Check if email confirmation is required
       // If session is null, it means email confirmation is enabled
       const needsConfirmation = data.session === null
