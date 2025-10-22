@@ -616,6 +616,24 @@
             letter-spacing: 0.5px;
         }
 
+        .admin-link {
+            background: #000000;
+            color: #ffffff;
+            padding: 4px 8px;
+            text-decoration: none;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #000000;
+            transition: all 0.15s ease;
+        }
+
+        .admin-link:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
         .logout-button {
             background: none;
             border: none;
@@ -852,6 +870,7 @@
             <div id="userInfo" class="user-info" style="display: none;">
                 <span class="user-name" id="userName"></span>
                 <span class="user-role" id="userRole"></span>
+                <a href="admin.html" id="adminLink" class="admin-link" style="display: none;">Admin</a>
                 <button class="logout-button" onclick="logout()" type="button">Logout</button>
             </div>
         </header>
@@ -1051,6 +1070,7 @@
             const userInfo = document.getElementById('userInfo');
             const userName = document.getElementById('userName');
             const userRole = document.getElementById('userRole');
+            const adminLink = document.getElementById('adminLink');
             const articleLimitNotice = document.getElementById('articleLimitNotice');
             const searchContainer = document.querySelector('.search-container');
             const updateButton = document.getElementById('updateButton');
@@ -1061,6 +1081,14 @@
                 userInfo.style.display = 'flex';
                 userName.textContent = currentUser.full_name || currentUser.email;
                 userRole.textContent = currentUser.role;
+                
+                // Show admin link only for admin users
+                if (currentUser.role === 'admin') {
+                    adminLink.style.display = 'inline-block';
+                } else {
+                    adminLink.style.display = 'none';
+                }
+                
                 articleLimitNotice.style.display = 'none';
                 searchContainer.style.display = 'flex';
                 updateButton.style.display = 'block';
@@ -1068,6 +1096,7 @@
                 // User is not logged in
                 console.log('Showing logged out UI');
                 userInfo.style.display = 'none';
+                adminLink.style.display = 'none';
                 articleLimitNotice.style.display = 'block';
                 searchContainer.style.display = 'none';
                 updateButton.style.display = 'none';
