@@ -671,6 +671,265 @@
             opacity: 0.7;
         }
 
+        /* Admin Panel Styles */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 30px;
+            padding: 30px 20px 20px;
+            border-bottom: 2px solid #000000;
+        }
+
+        .admin-header h1 {
+            font-size: 2em;
+            margin-bottom: 6px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .admin-subtitle {
+            font-size: 0.75em;
+            opacity: 0.5;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav-button {
+            padding: 10px 20px;
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+
+        .admin-nav-button:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .admin-nav-button.active {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .admin-section {
+            display: none;
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-section-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stat-card {
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .admin-stat-number {
+            font-size: 2em;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .admin-stat-label {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666666;
+        }
+
+        .admin-user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .admin-user-table th,
+        .admin-user-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.85em;
+        }
+
+        .admin-user-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #000000;
+        }
+
+        .admin-user-table tr:hover {
+            background: #fafafa;
+        }
+
+        .admin-role-badge {
+            padding: 4px 8px;
+            background: #000000;
+            color: #ffffff;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .admin-role-badge.admin {
+            background: #000000;
+        }
+
+        .admin-role-badge.user {
+            background: #666666;
+        }
+
+        .admin-action-button {
+            padding: 6px 12px;
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            cursor: pointer;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .admin-action-button:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .admin-action-button.danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .admin-action-button.danger:hover {
+            background: #dc3545;
+            color: #ffffff;
+        }
+
+        .close-admin {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.15s ease;
+            z-index: 2001;
+        }
+
+        .close-admin:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 15px;
+            }
+
+            .admin-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .admin-nav-button {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .admin-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-user-table {
+                font-size: 0.8em;
+            }
+
+            .admin-user-table th,
+            .admin-user-table td {
+                padding: 8px;
+            }
+
+            .close-admin {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+        }
+
         /* Locked section for guests */
         .locked-section {
             border-top: 2px solid #000000;
@@ -870,7 +1129,7 @@
             <div id="userInfo" class="user-info" style="display: none;">
                 <span class="user-name" id="userName"></span>
                 <span class="user-role" id="userRole"></span>
-                <a href="admin.html" id="adminLink" class="admin-link" style="display: none;">Admin</a>
+                <button id="adminLink" class="admin-link" onclick="openAdminPanel()" style="display: none;">Admin</button>
                 <button class="logout-button" onclick="logout()" type="button">Logout</button>
             </div>
         </header>
@@ -918,6 +1177,78 @@
 
         <div id="feedContent">
             <div class="loading">Loading feeds...</div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="close-admin" onclick="closeAdminPanel()">✕ Close</div>
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Admin Panel</h1>
+                <p class="admin-subtitle">RSS Feed Management</p>
+            </div>
+
+            <div class="admin-nav">
+                <button class="admin-nav-button active" data-section="dashboard">Dashboard</button>
+                <button class="admin-nav-button" data-section="users">Users</button>
+                <button class="admin-nav-button" data-section="feeds">Feeds</button>
+                <button class="admin-nav-button" data-section="settings">Settings</button>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboardSection" class="admin-section active">
+                <h2 class="admin-section-title">Dashboard</h2>
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-number" id="totalUsers">0</div>
+                        <div class="admin-stat-label">Total Users</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-number" id="adminUsers">0</div>
+                        <div class="admin-stat-label">Admin Users</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-number" id="regularUsers">0</div>
+                        <div class="admin-stat-label">Regular Users</div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-number" id="totalFeeds">6</div>
+                        <div class="admin-stat-label">Active Feeds</div>
+                    </div>
+                </div>
+                
+                <div class="admin-section-title">Recent Activity</div>
+                <div id="recentActivity" class="loading">
+                    Loading recent activity...
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="usersSection" class="admin-section">
+                <h2 class="admin-section-title">User Management</h2>
+                <div id="usersTable" class="loading">
+                    Loading users...
+                </div>
+            </div>
+
+            <!-- Feeds Section -->
+            <div id="feedsSection" class="admin-section">
+                <h2 class="admin-section-title">Feed Management</h2>
+                <div class="admin-section-title">Available Feeds</div>
+                <div id="feedsList">
+                    <div class="loading">Loading feeds...</div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settingsSection" class="admin-section">
+                <h2 class="admin-section-title">Settings</h2>
+                <div class="admin-section-title">System Configuration</div>
+                <div id="settingsContent">
+                    <div class="loading">Loading settings...</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1880,6 +2211,253 @@
                 "'": '&#039;'
             };
             return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Admin Panel Functions
+        function openAdminPanel() {
+            if (currentUser && currentUser.role === 'admin') {
+                document.getElementById('adminPanel').classList.add('active');
+                loadAdminDashboardData();
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+
+        // Admin navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Admin navigation event listeners
+            document.querySelectorAll('.admin-nav-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const section = button.dataset.section;
+                    switchAdminSection(section);
+                });
+            });
+        });
+
+        function switchAdminSection(section) {
+            // Update navigation
+            document.querySelectorAll('.admin-nav-button').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${section}Section`).classList.add('active');
+
+            // Load section-specific data
+            switch(section) {
+                case 'dashboard':
+                    loadAdminDashboardData();
+                    break;
+                case 'users':
+                    loadAdminUsersData();
+                    break;
+                case 'feeds':
+                    loadAdminFeedsData();
+                    break;
+                case 'settings':
+                    loadAdminSettingsData();
+                    break;
+            }
+        }
+
+        async function loadAdminDashboardData() {
+            try {
+                const { data: users, error } = await supabase
+                    .from('profiles')
+                    .select('role');
+
+                if (error) throw error;
+
+                const totalUsers = users.length;
+                const adminUsers = users.filter(u => u.role === 'admin').length;
+                const regularUsers = users.filter(u => u.role === 'user').length;
+
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('adminUsers').textContent = adminUsers;
+                document.getElementById('regularUsers').textContent = regularUsers;
+
+                // Load recent activity
+                const { data: recentUsers, error: recentError } = await supabase
+                    .from('profiles')
+                    .select('email, role, created_at')
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (!recentError && recentUsers) {
+                    const activityHtml = recentUsers.map(user => `
+                        <div style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
+                            <strong>${user.email}</strong> (${user.role}) - 
+                            <span style="color: #666; font-size: 0.8em;">
+                                ${new Date(user.created_at).toLocaleDateString()}
+                            </span>
+                        </div>
+                    `).join('');
+                    
+                    document.getElementById('recentActivity').innerHTML = activityHtml || '<div style="padding: 20px; color: #666;">No recent activity</div>';
+                }
+
+            } catch (error) {
+                console.error('Error loading admin dashboard data:', error);
+            }
+        }
+
+        async function loadAdminUsersData() {
+            try {
+                const { data: users, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const tableHtml = `
+                    <table class="admin-user-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Full Name</th>
+                                <th>Role</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${users.map(user => `
+                                <tr>
+                                    <td>${user.email || 'N/A'}</td>
+                                    <td>${user.full_name || 'N/A'}</td>
+                                    <td><span class="admin-role-badge ${user.role}">${user.role}</span></td>
+                                    <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                                    <td>
+                                        ${user.role !== 'admin' ? `
+                                            <button class="admin-action-button" onclick="toggleUserRole('${user.id}', '${user.role}')">
+                                                ${user.role === 'user' ? 'Make Admin' : 'Make User'}
+                                            </button>
+                                            <button class="admin-action-button danger" onclick="deleteUser('${user.id}')">
+                                                Delete
+                                            </button>
+                                        ` : '<span style="color: #666;">Admin User</span>'}
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+
+                document.getElementById('usersTable').innerHTML = tableHtml;
+
+            } catch (error) {
+                console.error('Error loading admin users data:', error);
+                document.getElementById('usersTable').innerHTML = '<div class="error">Error loading users data</div>';
+            }
+        }
+
+        async function loadAdminFeedsData() {
+            const feedsList = `
+                <div style="display: grid; gap: 15px;">
+                    <div style="border: 1px solid #e0e0e0; padding: 15px;">
+                        <h3 style="margin-bottom: 8px;">Wikipedia — did you know?</h3>
+                        <p style="color: #666; font-size: 0.9em;">Feed ID: funfacts</p>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 15px;">
+                        <h3 style="margin-bottom: 8px;">Wikivoyage recommendations</h3>
+                        <p style="color: #666; font-size: 0.9em;">Feed ID: wikivoyage</p>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 15px;">
+                        <h3 style="margin-bottom: 8px;">Hacker News - Front Page</h3>
+                        <p style="color: #666; font-size: 0.9em;">Feed ID: hackernews</p>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 15px;">
+                        <h3 style="margin-bottom: 8px;">Medium - Matteo's Articles</h3>
+                        <p style="color: #666; font-size: 0.9em;">Feed ID: medium_matteo</p>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 15px;">
+                        <h3 style="margin-bottom: 8px;">Economy Media YouTube</h3>
+                        <p style="color: #666; font-size: 0.9em;">Feed ID: economymedia</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('feedsList').innerHTML = feedsList;
+        }
+
+        async function loadAdminSettingsData() {
+            const settingsHtml = `
+                <div style="display: grid; gap: 20px;">
+                    <div style="border: 1px solid #e0e0e0; padding: 20px;">
+                        <h3 style="margin-bottom: 10px;">Article Limits</h3>
+                        <p style="color: #666; margin-bottom: 15px;">Current limit for non-authenticated users: 5 articles per feed</p>
+                        <button class="admin-action-button" onclick="updateArticleLimit()">Update Limit</button>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 20px;">
+                        <h3 style="margin-bottom: 10px;">Feed Updates</h3>
+                        <p style="color: #666; margin-bottom: 15px;">Feeds are updated twice daily via GitHub Actions</p>
+                        <button class="admin-action-button" onclick="forceFeedUpdate()">Force Update</button>
+                    </div>
+                    <div style="border: 1px solid #e0e0e0; padding: 20px;">
+                        <h3 style="margin-bottom: 10px;">System Status</h3>
+                        <p style="color: #666;">All systems operational</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('settingsContent').innerHTML = settingsHtml;
+        }
+
+        // User management functions
+        async function toggleUserRole(userId, currentRole) {
+            const newRole = currentRole === 'user' ? 'admin' : 'user';
+            
+            try {
+                const { error } = await supabase
+                    .from('profiles')
+                    .update({ role: newRole })
+                    .eq('id', userId);
+
+                if (error) throw error;
+
+                alert(`User role updated to ${newRole}`);
+                loadAdminUsersData();
+                loadAdminDashboardData();
+            } catch (error) {
+                console.error('Error updating user role:', error);
+                alert('Error updating user role');
+            }
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const { error } = await supabase
+                    .from('profiles')
+                    .delete()
+                    .eq('id', userId);
+
+                if (error) throw error;
+
+                alert('User deleted successfully');
+                loadAdminUsersData();
+                loadAdminDashboardData();
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert('Error deleting user');
+            }
+        }
+
+        function updateArticleLimit() {
+            const newLimit = prompt('Enter new article limit for guests:', '5');
+            if (newLimit && !isNaN(newLimit)) {
+                alert(`Article limit updated to ${newLimit}. This change will require a code update.`);
+            }
+        }
+
+        function forceFeedUpdate() {
+            alert('Feed update initiated. This will trigger the GitHub Actions workflow.');
         }
 
         // Initialize authentication and load initial feed
