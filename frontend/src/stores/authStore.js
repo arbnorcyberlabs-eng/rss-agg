@@ -7,11 +7,15 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const profile = ref(null)
   const loading = ref(false)
+  const initialized = ref(false)
 
   // Computed
   const isAuthenticated = computed(() => !!user.value)
   const isAdmin = computed(() => profile.value?.role === 'admin')
   const userRole = computed(() => profile.value?.role || 'public')
+  const isReady = computed(() => initialized.value)
+
+  let checkAuthPromise = null
 
   // Actions
   async function loadProfile() {
@@ -226,34 +230,63 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function checkAuth() {
+  async function checkAuth(options = {}) {
+    const { force = false } = options
+
+    if (checkAuthPromise && !force) {
+      return checkAuthPromise
+    }
+
+    if (initialized.value && !force && !checkAuthPromise) {
+      return
+    }
+
     loading.value = true
-    try {
-      const { data: { user: currentUser } } = await supabase.auth.getUser()
-      user.value = currentUser
-      if (currentUser) {
-        try {
-          await loadProfile()
-        } catch (profileError) {
-          console.error('Failed to load profile during auth check:', profileError)
-          // If profile loading fails, clear everything and log out
-          try { await supabase.auth.signOut() } catch {}
-          user.value = null
+
+    const runner = (async () => {
+      try {
+        const { data: { user: currentUser } } = await supabase.auth.getUser()
+        user.value = currentUser || null
+
+        if (currentUser) {
+          try {
+            await loadProfile()
+          } catch (profileError) {
+            console.error('Failed to load profile during auth check:', profileError)
+            // If profile loading fails, clear everything and log out
+            try { await supabase.auth.signOut() } catch {}
+            user.value = null
+            profile.value = null
+          }
+        } else {
           profile.value = null
         }
+      } catch (error) {
+        console.error('Auth check error:', error)
+        user.value = null
+        profile.value = null
+        throw error
+      } finally {
+        loading.value = false
+        initialized.value = true
       }
-    } catch (error) {
-      console.error('Auth check error:', error)
-      user.value = null
-      profile.value = null
+    })()
+
+    checkAuthPromise = runner
+
+    try {
+      await runner
     } finally {
-      loading.value = false
+      if (checkAuthPromise === runner) {
+        checkAuthPromise = null
+      }
     }
   }
 
   // Initialize auth state listener
   supabase.auth.onAuthStateChange(async (event, session) => {
     console.log('Auth state change:', event, session?.user?.email || 'no user')
+    initialized.value = true
     
     if (event === 'SIGNED_OUT') {
       // Explicitly handle sign out
@@ -282,6 +315,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     profile,
     loading,
+    isReady,
     isAuthenticated,
     isAdmin,
     userRole,

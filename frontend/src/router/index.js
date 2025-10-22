@@ -40,16 +40,26 @@ const router = createRouter({
   ]
 })
 
-let didInitAuth = false
+let authInitPromise = null
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  
-  // Initialize auth state once on first navigation (fixes refresh white-screen)
-  if (!didInitAuth) {
-    didInitAuth = true
-    // Fire-and-forget to avoid blocking navigation on refresh
-    authStore.checkAuth().catch(() => {})
+  const needsProtectedAccess = Boolean(to.meta.requiresAuth || to.meta.requiresAdmin)
+
+  if (!authStore.isReady || needsProtectedAccess) {
+    if (!authInitPromise) {
+      authInitPromise = authStore
+        .checkAuth()
+        .catch((error) => {
+          console.error('[RouteGuard] Failed to initialize auth state', error)
+        })
+    }
+
+    try {
+      await authInitPromise
+    } finally {
+      authInitPromise = null
+    }
   }
 
   // Check if route requires authentication
