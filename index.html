@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSS Feed Reader</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -444,6 +445,201 @@
             color: #666666;
         }
 
+        /* Authentication Styles */
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .auth-modal {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .auth-header h2 {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .auth-header p {
+            color: #666666;
+            font-size: 0.9em;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-input {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: inherit;
+            transition: border-color 0.15s ease;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .auth-button {
+            padding: 12px 20px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .auth-button:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .auth-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .auth-button.secondary {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .auth-button.secondary:hover {
+            background: #f5f5f5;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .auth-switch button {
+            background: none;
+            border: none;
+            color: #000000;
+            cursor: pointer;
+            font-size: 0.9em;
+            text-decoration: underline;
+            font-family: inherit;
+        }
+
+        .auth-switch button:hover {
+            opacity: 0.7;
+        }
+
+        .auth-error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+
+        .auth-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .user-info .user-name {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .user-info .user-role {
+            background: #000000;
+            color: #ffffff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logout-button {
+            background: none;
+            border: none;
+            color: #666666;
+            cursor: pointer;
+            font-size: 0.8em;
+            text-decoration: underline;
+            margin-left: auto;
+        }
+
+        .logout-button:hover {
+            color: #000000;
+        }
+
+        .article-limit-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px 15px;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            text-align: center;
+        }
+
+        .article-limit-notice a {
+            color: #000000;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .article-limit-notice a:hover {
+            opacity: 0.7;
+        }
+
 
         footer {
             text-align: center;
@@ -587,6 +783,11 @@
         <header>
             <h1>RSS</h1>
             <p class="subtitle">Real Simple Syndication</p>
+            <div id="userInfo" class="user-info" style="display: none;">
+                <span class="user-name" id="userName"></span>
+                <span class="user-role" id="userRole"></span>
+                <button class="logout-button" onclick="logout()">Logout</button>
+            </div>
         </header>
 
         <div class="controls">
@@ -626,12 +827,74 @@
             </div>
         </div>
 
+        <div id="articleLimitNotice" class="article-limit-notice" style="display: none;">
+            You're viewing limited articles. <a href="#" onclick="showAuthModal('signup')">Sign up</a> or <a href="#" onclick="showAuthModal('login')">login</a> for unlimited access!
+        </div>
+
         <div id="feedContent">
             <div class="loading">Loading feeds...</div>
         </div>
     </div>
 
+    <!-- Authentication Modal -->
+    <div id="authContainer" class="auth-container" style="display: none;">
+        <div class="auth-modal">
+            <div class="auth-header">
+                <h2 id="authTitle">Sign In</h2>
+                <p id="authSubtitle">Access your RSS feed account</p>
+            </div>
+            
+            <div id="authError" class="auth-error" style="display: none;"></div>
+            <div id="authSuccess" class="auth-success" style="display: none;"></div>
+            
+            <form id="authForm" class="auth-form" onsubmit="handleAuthSubmit(event)">
+                <input 
+                    type="email" 
+                    id="authEmail" 
+                    class="auth-input" 
+                    placeholder="Email address" 
+                    required
+                />
+                <input 
+                    type="password" 
+                    id="authPassword" 
+                    class="auth-input" 
+                    placeholder="Password" 
+                    required
+                />
+                <input 
+                    type="text" 
+                    id="authFullName" 
+                    class="auth-input" 
+                    placeholder="Full name (signup only)" 
+                    style="display: none;"
+                />
+                <button type="submit" id="authSubmitButton" class="auth-button">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="auth-switch">
+                <button type="button" id="authSwitchButton" onclick="switchAuthMode()">
+                    Don't have an account? Sign up
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://godeglzovkxzhwxyxbdd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZGVnbHpvdmt4emh3eHl4YmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDE2ODAsImV4cCI6MjA3NjYxNzY4MH0.VJ8rpKqRkWyL6DYiViV6_MLdyhkWweUPcSHcPuvmVXg';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Authentication state
+        let currentUser = null;
+        let isSignUpMode = false;
+        const ARTICLE_LIMIT = 5; // Limit for non-authenticated users
+        
+        // RSS Feed Configuration
         const baseUrl = 'https://arbnorcyberlabs-eng.github.io/rss-agg/';
         let currentFeed = 'all';
         let allFeeds = {};
@@ -665,6 +928,199 @@
         // Cache settings
         const YOUTUBE_CACHE_KEY = 'youtube_feed_cache';
         const YOUTUBE_CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+        // Authentication Functions
+        async function initializeAuth() {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user) {
+                    await loadUserProfile(session.user);
+                }
+            } catch (error) {
+                console.error('Error initializing auth:', error);
+            }
+            
+            // Listen for auth changes
+            supabase.auth.onAuthStateChange(async (event, session) => {
+                if (event === 'SIGNED_IN' && session?.user) {
+                    await loadUserProfile(session.user);
+                } else if (event === 'SIGNED_OUT') {
+                    currentUser = null;
+                    updateUIForAuthState();
+                }
+            });
+        }
+
+        async function loadUserProfile(user) {
+            try {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    console.error('Error loading profile:', error);
+                    return;
+                }
+
+                currentUser = {
+                    id: user.id,
+                    email: user.email,
+                    ...profile
+                };
+                
+                updateUIForAuthState();
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+            }
+        }
+
+        function updateUIForAuthState() {
+            const userInfo = document.getElementById('userInfo');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            const articleLimitNotice = document.getElementById('articleLimitNotice');
+
+            if (currentUser) {
+                // User is logged in
+                userInfo.style.display = 'flex';
+                userName.textContent = currentUser.full_name || currentUser.email;
+                userRole.textContent = currentUser.role;
+                articleLimitNotice.style.display = 'none';
+            } else {
+                // User is not logged in
+                userInfo.style.display = 'none';
+                articleLimitNotice.style.display = 'block';
+            }
+            
+            // Reload current feed to apply article limits
+            if (allCurrentItems.length > 0) {
+                displayCurrentPage();
+            }
+        }
+
+        function showAuthModal(mode = 'login') {
+            isSignUpMode = mode === 'signup';
+            const authContainer = document.getElementById('authContainer');
+            const authTitle = document.getElementById('authTitle');
+            const authSubtitle = document.getElementById('authSubtitle');
+            const authSubmitButton = document.getElementById('authSubmitButton');
+            const authSwitchButton = document.getElementById('authSwitchButton');
+            const authFullName = document.getElementById('authFullName');
+            const authError = document.getElementById('authError');
+            const authSuccess = document.getElementById('authSuccess');
+
+            // Clear previous messages
+            authError.style.display = 'none';
+            authSuccess.style.display = 'none';
+
+            if (isSignUpMode) {
+                authTitle.textContent = 'Sign Up';
+                authSubtitle.textContent = 'Create your RSS feed account';
+                authSubmitButton.textContent = 'Sign Up';
+                authSwitchButton.textContent = 'Already have an account? Sign in';
+                authFullName.style.display = 'block';
+                authFullName.required = true;
+            } else {
+                authTitle.textContent = 'Sign In';
+                authSubtitle.textContent = 'Access your RSS feed account';
+                authSubmitButton.textContent = 'Sign In';
+                authSwitchButton.textContent = "Don't have an account? Sign up";
+                authFullName.style.display = 'none';
+                authFullName.required = false;
+            }
+
+            authContainer.style.display = 'flex';
+        }
+
+        function hideAuthModal() {
+            document.getElementById('authContainer').style.display = 'none';
+        }
+
+        function switchAuthMode() {
+            showAuthModal(isSignUpMode ? 'login' : 'signup');
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const fullName = document.getElementById('authFullName').value;
+            const authError = document.getElementById('authError');
+            const authSuccess = document.getElementById('authSuccess');
+            const authSubmitButton = document.getElementById('authSubmitButton');
+
+            // Clear previous messages
+            authError.style.display = 'none';
+            authSuccess.style.display = 'none';
+            authSubmitButton.disabled = true;
+            authSubmitButton.textContent = isSignUpMode ? 'Signing Up...' : 'Signing In...';
+
+            try {
+                if (isSignUpMode) {
+                    // Sign up
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                full_name: fullName
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+
+                    if (data.user && !data.user.email_confirmed_at) {
+                        authSuccess.textContent = 'Please check your email to confirm your account.';
+                        authSuccess.style.display = 'block';
+                    } else {
+                        authSuccess.textContent = 'Account created successfully!';
+                        authSuccess.style.display = 'block';
+                        setTimeout(() => {
+                            hideAuthModal();
+                        }, 1500);
+                    }
+                } else {
+                    // Sign in
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (error) throw error;
+
+                    authSuccess.textContent = 'Signed in successfully!';
+                    authSuccess.style.display = 'block';
+                    setTimeout(() => {
+                        hideAuthModal();
+                    }, 1000);
+                }
+            } catch (error) {
+                authError.textContent = error.message;
+                authError.style.display = 'block';
+            } finally {
+                authSubmitButton.disabled = false;
+                authSubmitButton.textContent = isSignUpMode ? 'Sign Up' : 'Sign In';
+            }
+        }
+
+        async function logout() {
+            try {
+                await supabase.auth.signOut();
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('authContainer').addEventListener('click', (e) => {
+            if (e.target.id === 'authContainer') {
+                hideAuthModal();
+            }
+        });
 
         // Initialize
         document.querySelectorAll('.feed-button').forEach(button => {
@@ -861,7 +1317,13 @@
 
         // Render pagination controls
         function renderPagination() {
-            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            let itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            
+            // Apply article limit for non-authenticated users
+            if (!currentUser) {
+                itemsToDisplay = itemsToDisplay.slice(0, ARTICLE_LIMIT);
+            }
+            
             const totalPages = Math.ceil(itemsToDisplay.length / itemsPerPage);
             if (totalPages <= 1) return ''; // No pagination needed
             
@@ -895,7 +1357,13 @@
 
         // Change page
         function changePage(page) {
-            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            let itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            
+            // Apply article limit for non-authenticated users
+            if (!currentUser) {
+                itemsToDisplay = itemsToDisplay.slice(0, ARTICLE_LIMIT);
+            }
+            
             const totalPages = Math.ceil(itemsToDisplay.length / itemsPerPage);
             if (page < 1 || page > totalPages) return;
             
@@ -909,7 +1377,13 @@
         // Display current page of items
         function displayCurrentPage() {
             const feedContent = document.getElementById('feedContent');
-            const itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            let itemsToDisplay = searchQuery ? filteredItems : allCurrentItems;
+            
+            // Apply article limit for non-authenticated users
+            if (!currentUser) {
+                itemsToDisplay = itemsToDisplay.slice(0, ARTICLE_LIMIT);
+            }
+            
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const pageItems = itemsToDisplay.slice(startIndex, endIndex);
@@ -1188,9 +1662,18 @@
 
         function updateStats(itemCount) {
             const stats = document.getElementById('stats');
+            let displayCount = itemCount;
+            let displayText = `item${itemCount !== 1 ? 's' : ''}`;
+            
+            // Show limited count for non-authenticated users
+            if (!currentUser && itemCount > ARTICLE_LIMIT) {
+                displayCount = ARTICLE_LIMIT;
+                displayText = `items (${ARTICLE_LIMIT} of ${itemCount} shown)`;
+            }
+            
             stats.innerHTML = `
-                <span class="stat-number">${itemCount}</span>
-                <span>item${itemCount !== 1 ? 's' : ''}</span>
+                <span class="stat-number">${displayCount}</span>
+                <span>${displayText}</span>
             `;
         }
 
@@ -1247,8 +1730,10 @@
             return text.replace(/[&<>"']/g, m => map[m]);
         }
 
-        // Load initial feed
-        loadFeed(currentFeed);
+        // Initialize authentication and load initial feed
+        initializeAuth().then(() => {
+            loadFeed(currentFeed);
+        });
     </script>
 
     <footer>
