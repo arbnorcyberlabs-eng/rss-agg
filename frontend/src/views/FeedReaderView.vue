@@ -127,10 +127,13 @@ export default {
         await feedStore.loadFeeds()
         console.log(`Total feeds in database: ${feedStore.feeds.length}`)
 
-        // Load user preferences if authenticated
+        // Load user preferences if authenticated (only if not already loaded)
         let enabledFeedIds = []
         if (authStore.isAuthenticated) {
-          await userPrefStore.loadPreferences()
+          // Only load preferences if they're not already loaded to prevent infinite loop
+          if (userPrefStore.preferences.length === 0) {
+            await userPrefStore.loadPreferences()
+          }
           enabledFeedIds = userPrefStore.enabledFeedIds
           console.log(`User enabled feeds: ${enabledFeedIds.length}`, enabledFeedIds)
         }
@@ -513,7 +516,7 @@ export default {
       }
     )
     
-    // Watch for preference changes (deep watch)
+    // Watch for preference changes (deep watch) - now safe from infinite loop
     watch(
       () => userPrefStore.preferences,
       (newPrefs, oldPrefs) => {
