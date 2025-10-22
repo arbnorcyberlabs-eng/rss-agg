@@ -30,15 +30,6 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Install root dependencies
-        run: npm install @supabase/supabase-js
-      
-      - name: Fetch feed configuration from Supabase
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: node fetch-feeds-config.js
-      
       - name: Install Playwright browsers
         run: npx playwright install --with-deps firefox
       
@@ -50,30 +41,15 @@ jobs:
       - name: Merge feeds into combined all.xml
         run: node merge-feeds.js
       
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
-      
-      - name: Build Vue frontend
-        working-directory: ./frontend
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          VITE_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-        run: npm run build
-      
-      - name: Copy RSS feeds to public-frontend
-        run: cp -r public/* public-frontend/
-      
-      - name: Add SPA fallback (404.html)
-        run: cp public-frontend/index.html public-frontend/404.html
+      - name: Copy index.html to public folder
+        run: cp index.html public/index.html
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public-frontend
+          publish_dir: ./public
           publish_branch: gh-pages
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'Update RSS feeds and frontend'
+          commit_message: 'Update RSS feeds'

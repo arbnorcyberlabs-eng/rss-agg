@@ -19,14 +19,7 @@ Thumbs.db
 # Environment variables
 .env
 
-# Documentation (keep only specific MD files)
+# Documentation (keep only README.md)
 *.md
 !README.md
-
-
-# Frontend
-frontend/node_modules/
-frontend/dist/
-public-frontend/
-frontend/.env
 
