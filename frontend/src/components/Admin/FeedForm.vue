@@ -2,7 +2,7 @@
   <div class="feed-form">
     <h3>{{ isEdit ? 'Edit Feed' : 'Add New Feed' }}</h3>
     
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit" novalidate>
       <div class="form-group">
         <label for="feedId">Feed ID *</label>
         <input
@@ -11,7 +11,7 @@
           type="text"
           :disabled="isEdit"
           placeholder="e.g., my-feed"
-          required
+          autocomplete="off"
         />
       </div>
 
@@ -22,7 +22,7 @@
           v-model="formData.title"
           type="text"
           placeholder="e.g., My Awesome Feed"
-          required
+          autocomplete="off"
         />
       </div>
 
@@ -40,7 +40,7 @@
           v-model="formData.rss_url"
           type="url"
           placeholder="https://example.com/feed.xml"
-          required
+          autocomplete="off"
         />
       </div>
 
@@ -115,6 +115,15 @@ export default {
       data.type = 'native_rss'
       data.config = null
 
+      // Basic required fields
+      if (!data.id || !/^[a-z0-9_\-]+$/.test(data.id)) {
+        alert('Feed ID is required (lowercase letters, numbers, dashes or underscores)')
+        return
+      }
+      if (!data.title) {
+        alert('Title is required')
+        return
+      }
       if (!data.rss_url) {
         alert('RSS Feed URL is required for native RSS feeds')
         return
