@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Auth Test</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>RSS Feed Authentication Test</h1>
+    <div id="status">Testing authentication...</div>
+    <div id="userInfo"></div>
+    <button onclick="testLogin()">Test Login</button>
+    <button onclick="testLogout()">Test Logout</button>
+    <button onclick="testSignup()">Test Signup</button>
+
+    <script>
+        const SUPABASE_URL = 'https://godeglzovkxzhwxyxbdd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZGVnbHpvdmt4emh3eHl4YmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDE2ODAsImV4cCI6MjA3NjYxNzY4MH0.VJ8rpKqRkWyL6DYiViV6_MLdyhkWweUPcSHcPuvmVXg';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        async function testLogin() {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: 'admin@test.com',
+                    password: 'testpassword123'
+                });
+                
+                if (error) {
+                    document.getElementById('status').innerHTML = 'Login Error: ' + error.message;
+                } else {
+                    document.getElementById('status').innerHTML = 'Login Success!';
+                    await loadUserProfile(data.user);
+                }
+            } catch (err) {
+                document.getElementById('status').innerHTML = 'Login Exception: ' + err.message;
+            }
+        }
+        
+        async function testSignup() {
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: 'test@example.com',
+                    password: 'testpassword123',
+                    options: {
+                        data: {
+                            full_name: 'Test User'
+                        }
+                    }
+                });
+                
+                if (error) {
+                    document.getElementById('status').innerHTML = 'Signup Error: ' + error.message;
+                } else {
+                    document.getElementById('status').innerHTML = 'Signup Success! Check email for confirmation.';
+                }
+            } catch (err) {
+                document.getElementById('status').innerHTML = 'Signup Exception: ' + err.message;
+            }
+        }
+        
+        async function testLogout() {
+            try {
+                await supabase.auth.signOut();
+                document.getElementById('status').innerHTML = 'Logged out successfully!';
+                document.getElementById('userInfo').innerHTML = '';
+            } catch (err) {
+                document.getElementById('status').innerHTML = 'Logout Exception: ' + err.message;
+            }
+        }
+        
+        async function loadUserProfile(user) {
+            try {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    document.getElementById('userInfo').innerHTML = 'Profile Error: ' + error.message;
+                } else {
+                    document.getElementById('userInfo').innerHTML = `
+                        <h3>User Profile:</h3>
+                        <p>Email: ${user.email}</p>
+                        <p>Full Name: ${profile.full_name || 'Not set'}</p>
+                        <p>Role: ${profile.role}</p>
+                    `;
+                }
+            } catch (err) {
+                document.getElementById('userInfo').innerHTML = 'Profile Exception: ' + err.message;
+            }
+        }
+        
+        // Check initial session
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+                document.getElementById('status').innerHTML = 'Already logged in!';
+                loadUserProfile(session.user);
+            } else {
+                document.getElementById('status').innerHTML = 'Not logged in. Ready for testing.';
+            }
+        });
+    </script>
+</body>
+</html>
