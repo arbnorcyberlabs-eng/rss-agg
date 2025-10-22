@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useUIStore } from '../stores/uiStore'
 import { useFeedStore } from '../stores/feedStore'
 import { useAuthStore } from '../stores/authStore'
@@ -64,6 +64,7 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const uiStore = useUIStore()
     const feedStore = useFeedStore()
     const authStore = useAuthStore()
@@ -118,14 +119,20 @@ export default {
       loadingMessage.value = 'Loading feeds...'
       
       try {
+        console.log('=== LOADING ALL FEEDS ===')
+        console.log('Authenticated:', authStore.isAuthenticated)
+        console.log('Force Update:', forceUpdate)
+        
         // Load feed configuration from Supabase
         await feedStore.loadFeeds()
+        console.log(`Total feeds in database: ${feedStore.feeds.length}`)
 
         // Load user preferences if authenticated
         let enabledFeedIds = []
         if (authStore.isAuthenticated) {
           await userPrefStore.loadPreferences()
           enabledFeedIds = userPrefStore.enabledFeedIds
+          console.log(`User enabled feeds: ${enabledFeedIds.length}`, enabledFeedIds)
         }
         
         const allItems = []
@@ -144,6 +151,8 @@ export default {
           return true
         })
         
+        console.log(`Scraped feeds to load: ${scrapedFeeds.length}`, scrapedFeeds.map(f => f.id))
+        
         for (const feed of scrapedFeeds) {
           try {
             loadingMessage.value = `Loading ${feed.title}...`
@@ -156,7 +165,7 @@ export default {
             })
             
             if (!response.ok) {
-              console.warn(`Failed to fetch ${feed.id}: ${response.status}`)
+              console.warn(`❌ Failed to fetch ${feed.id}: ${response.status}`)
               continue
             }
             
@@ -171,9 +180,9 @@ export default {
             }))
             
             allItems.push(...items)
-            console.log(`Loaded ${items.length} items from ${feed.id}`)
+            console.log(`✓ ${feed.id}: ${items.length} items (total so far: ${allItems.length})`)
           } catch (error) {
-            console.error(`Error loading feed ${feed.id}:`, error)
+            console.error(`❌ Error loading feed ${feed.id}:`, error)
           }
         }
         
@@ -190,7 +199,9 @@ export default {
           // For public users, show if enabled
           return true
         })
+        
         if (youtubeFeed) {
+          console.log('Loading YouTube feed...')
           try {
             loadingMessage.value = 'Loading YouTube videos...'
             const youtubeXml = await fetchYouTubeFeed(forceUpdate)
@@ -204,10 +215,12 @@ export default {
             }))
             
             allItems.push(...youtubeItems)
-            console.log(`Loaded ${youtubeItems.length} items from YouTube`)
+            console.log(`✓ youtube_economy: ${youtubeItems.length} items (total: ${allItems.length})`)
           } catch (error) {
-            console.warn('YouTube feed failed, continuing without it:', error)
+            console.warn('❌ YouTube feed failed, continuing without it:', error)
           }
+        } else {
+          console.log('YouTube feed not loaded (disabled or filtered out)')
         }
         
         // Sort by date (newest first)
@@ -219,7 +232,16 @@ export default {
         
         feedStore.setFeedItems(allItems)
         uiStore.setAllItems(allItems)
-        console.log(`✓ Loaded total of ${allItems.length} items from all feeds`)
+        
+        console.log('=== FEED LOADING COMPLETE ===')
+        console.log(`✓ Total items loaded: ${allItems.length}`)
+        console.log(`✓ Feeds processed: ${scrapedFeeds.length} scraped + ${youtubeFeed ? 1 : 0} YouTube`)
+        console.log(`✓ Items in uiStore.allItems: ${uiStore.allItems.length}`)
+        console.log(`✓ Items per page: ${uiStore.itemsPerPage}`)
+        console.log(`✓ Total pages: ${uiStore.totalPages}`)
+        console.log(`✓ Current page: ${uiStore.currentPage}`)
+        console.log(`✓ Paginated items (current page): ${uiStore.paginatedItems.length}`)
+        console.log(`✓ Display items (after public limit): ${displayItems.value.length}`)
         
       } catch (error) {
         console.error('Error loading feeds:', error)
@@ -477,6 +499,32 @@ export default {
     onMounted(() => {
       loadAllFeeds()
     })
+    
+    // Watch for navigation - reload feeds when returning from preferences
+    let previousPath = ref(route.path)
+    watch(
+      () => route.path,
+      (newPath) => {
+        if (previousPath.value === '/preferences' && newPath === '/') {
+          console.log('🔄 Returning from preferences page, reloading feeds with updated preferences')
+          loadAllFeeds(true) // Force reload to apply preference changes
+        }
+        previousPath.value = newPath
+      }
+    )
+    
+    // Watch for preference changes (deep watch)
+    watch(
+      () => userPrefStore.preferences,
+      (newPrefs, oldPrefs) => {
+        // Only reload if preferences actually changed and we're on the home page
+        if (route.path === '/' && oldPrefs && oldPrefs.length > 0) {
+          console.log('🔄 User preferences changed, reloading feeds')
+          loadAllFeeds(true)
+        }
+      },
+      { deep: true }
+    )
     
     return {
       uiStore,

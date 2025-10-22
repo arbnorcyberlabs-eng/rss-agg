@@ -74,14 +74,36 @@ export const useAuthStore = defineStore('auth', () => {
         throw new Error('Signup failed: No user returned')
       }
 
-      user.value = data.user
       console.log('User created:', data.user.id, data.user.email)
+      
+      // Check if email confirmation is required
+      // If session is null, it means email confirmation is enabled
+      const needsConfirmation = data.session === null
+      
+      if (needsConfirmation) {
+        console.log('⚠️ Email confirmation required - user NOT logged in automatically')
+        // Do NOT set user.value - user must confirm email first
+        user.value = null
+        profile.value = null
+        return { 
+          user: data.user, 
+          session: null, 
+          needsConfirmation: true 
+        }
+      }
+      
+      // Email confirmation not required OR already confirmed
+      console.log('✓ Email confirmed or confirmation disabled - logging in user')
+      user.value = data.user
       
       // Try to load profile (it should be auto-created by trigger)
       await loadProfile()
       console.log('Profile loaded:', profile.value)
       
-      return data
+      return { 
+        ...data, 
+        needsConfirmation: false 
+      }
     } catch (error) {
       console.error('Signup error:', error)
       user.value = null

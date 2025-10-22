@@ -20,6 +20,16 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue')
+    },
+    {
+      path: '/auth/confirmed',
+      name: 'email-confirmed',
+      component: () => import('../views/EmailConfirmedView.vue')
+    },
+    {
+      path: '/auth/callback',
+      name: 'auth-callback',
+      redirect: '/auth/confirmed'
     }
   ]
 })

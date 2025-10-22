@@ -99,10 +99,13 @@ export default {
           const result = await this.authStore.signup(this.email, this.password, this.fullName)
           
           // Check if email confirmation is required
-          if (result.user && !result.user.email_confirmed_at && result.user.identities?.length === 0) {
-            this.success = 'Account created! Please check your email to confirm your account.'
+          if (result.needsConfirmation) {
+            this.success = '✅ Account created! Please check your email to confirm your account before logging in.'
+            this.email = ''
+            this.password = ''
+            this.fullName = ''
           } else {
-            this.success = 'Account created! You can now use all features.'
+            this.success = '✅ Account created! You can now use all features.'
             // Redirect to home after successful signup
             setTimeout(() => {
               this.router.push('/')
@@ -111,10 +114,26 @@ export default {
         } else {
           await this.authStore.login(this.email, this.password)
           // Login successful, redirect will happen via auth state change
+          this.success = '✅ Login successful! Redirecting...'
+          setTimeout(() => {
+            this.router.push('/')
+          }, 1000)
         }
       } catch (err) {
         console.error('Auth error:', err)
-        this.error = err.message || (this.isSignup ? 'Signup failed' : 'Login failed')
+        // Handle specific error messages
+        let errorMessage = err.message || (this.isSignup ? 'Signup failed' : 'Login failed')
+        
+        // User-friendly error messages
+        if (errorMessage.includes('Email not confirmed')) {
+          errorMessage = '⚠️ Please confirm your email address before logging in. Check your inbox for the confirmation link.'
+        } else if (errorMessage.includes('Invalid login credentials')) {
+          errorMessage = '⚠️ Invalid email or password. Please try again.'
+        } else if (errorMessage.includes('User already registered')) {
+          errorMessage = '⚠️ This email is already registered. Please login instead.'
+        }
+        
+        this.error = errorMessage
       } finally {
         this.loading = false
       }
