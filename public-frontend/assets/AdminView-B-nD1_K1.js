@@ -1,1 +1,0 @@
-import{_ as o,c as s,a as n,o as a}from"./index-COTNl8OZ.js";const t={name:"AdminView"},i={class:"admin-view"};function d(c,e,r,m,_,l){return a(),s("div",i,[...e[0]||(e[0]=[n("h1",null,"Admin Panel",-1),n("p",null,"Admin view - Coming soon",-1)])])}const f=o(t,[["render",d],["__scopeId","data-v-97a7bf32"]]);export{f as default};

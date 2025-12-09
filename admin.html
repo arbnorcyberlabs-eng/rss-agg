@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSS Admin Dashboard</title>
+  <style>
+    :root {
+      --black: #000;
+      --white: #fff;
+      --gray: #f7f7f7;
+      --accent: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.5;
+      padding: 24px;
+    }
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      border: 2px solid var(--black);
+      padding: 24px;
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--black);
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--black);
+      padding-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+    .pill {
+      padding: 6px 10px;
+      border: 2px solid var(--black);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.75rem;
+      background: var(--gray);
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button, select, input, textarea {
+      font: inherit;
+    }
+    .btn {
+      padding: 10px 14px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+    .btn.primary { background: var(--black); color: var(--white); }
+    .btn.primary:hover { background: var(--white); color: var(--black); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .card {
+      border: 2px solid var(--black);
+      padding: 16px;
+      background: var(--white);
+      min-width: 0; /* allows grid items to shrink without forcing overflow */
+    }
+    .card h2 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .card small { color: var(--muted); display: block; margin-top: 4px; }
+    .list {
+      list-style: disc;
+      margin-left: 18px;
+      display: grid;
+      gap: 6px;
+      padding-left: 6px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+    .col-title { width: 30%; min-width: 220px; }
+    .col-type { width: 12%; min-width: 110px; }
+    .col-status { width: 18%; min-width: 150px; }
+    .col-link { width: 25%; min-width: 200px; }
+    .col-actions { width: 15%; min-width: 180px; }
+    .table th, .table td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 0.92rem;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .table th:nth-child(2), .table td:nth-child(2),
+    .table th:nth-child(3), .table td:nth-child(3) {
+      white-space: nowrap;
+    }
+    .table th {
+      border-bottom: 2px solid var(--black);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .chip {
+      display: inline-block;
+      padding: 4px 8px;
+      border: 2px solid var(--black);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+    .chip.on { background: #0f0; color: #000; }
+    .chip.off { background: #fdd; color: #000; }
+    .status-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    .form {
+      display: grid;
+      gap: 10px;
+    }
+    .form label {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-size: 0.82rem;
+    }
+    .form input, .form textarea, .form select {
+      border: 2px solid var(--black);
+      padding: 10px;
+      width: 100%;
+      background: var(--white);
+    }
+    .form textarea { resize: vertical; min-height: 120px; }
+    .row {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    @media (max-width: 600px) {
+      .row { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+    }
+    .table-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-right: 6px;
+      background: #10b981;
+    }
+    .status-dot.off { background: #ef4444; }
+    .badge {
+      border: 2px solid var(--black);
+      padding: 4px 6px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      background: var(--white);
+    }
+    .auth-card {
+      margin-bottom: 16px;
+    }
+    .auth-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .auth-status {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .hero {
+      text-align: center;
+      color: var(--black);
+      margin-bottom: 20px;
+      padding: 10px 0 6px;
+      border-bottom: 2px solid var(--black);
+    }
+    .hero h1 {
+      font-size: 2em;
+      margin-bottom: 6px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+    .hero .subtitle {
+      font-size: 0.75em;
+      opacity: 0.6;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .info-grid, .helper-grid {
+      display: grid;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .info-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .helper-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .helper-grid .card h2 { display: flex; justify-content: space-between; align-items: center; }
+    .inline-inputs { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    .muted-strong { color: var(--muted); font-weight: 600; }
+    .pill.warning { background: #fff6d6; }
+    .inline-note { font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+    .stacked-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .readonly { opacity: 0.5; pointer-events: none; }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      .shell { padding: 18px; box-shadow: 10px 10px 0 var(--black); }
+      .grid { grid-template-columns: 1fr; }
+      .table { min-width: 560px; }
+      .table th, .table td { padding: 8px; font-size: 0.88rem; }
+      .table-actions { flex-direction: column; align-items: stretch; }
+      .table-actions .btn { width: 100%; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      body { padding: 12px; }
+      .shell { padding: 14px; box-shadow: 8px 8px 0 var(--black); }
+      h1, .hero h1 { font-size: 1.5rem; }
+      .actions { width: 100%; }
+      .actions .btn, .actions .pill { width: 100%; text-align: center; }
+      .table { min-width: 480px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <h1>RSS</h1>
+      <div class="subtitle">Real Simple Syndication</div>
+    </div>
+
+    <div class="card auth-card">
+      <h2>Authentication</h2>
+      <div class="auth-actions">
+        <button class="btn primary" id="googleLoginBtn">Sign in with Google</button>
+        <button class="btn" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <div id="adminContent" style="display:none">
+      <header>
+        <div>
+          <h1>Admin Dashboard</h1>
+          <div class="muted" id="scopeHint">Signed-in users can add personal feeds. Shared/global feeds stay read-only unless you are an admin.</div>
+        </div>
+        <div class="actions">
+          <span class="pill warning" id="signedInPill">Signed in required</span>
+          <button class="btn" id="exportJsonBtn">Export JSON</button>
+          <button class="btn" id="importJsonBtn">Upload JSON</button>
+          <input type="file" id="importJsonInput" accept="application/json" style="display:none">
+        </div>
+        <div class="muted auth-status" id="importJsonStatus"></div>
+      </header>
+
+      <div class="info-grid">
+        <div class="card info-card">
+          <h2>Ways to add feeds (industry-standard)</h2>
+          <ul class="list">
+            <li><strong>Paste RSS/Atom URL:</strong> the quickest path for blogs, podcasts, and newsrooms.</li>
+            <li><strong>Import OPML:</strong> bulk-import exports from other readers (Reeder, Feedly, Inoreader, etc.).</li>
+            <li><strong>YouTube & podcasts:</strong> drop a channel/playlist/show link and we convert it to an RSS feed.</li>
+            <li><strong>Scraped page:</strong> point at a page without RSS and provide CSS selectors for entries.</li>
+            <li><strong>Existing hosted XML:</strong> reuse legacy feeds hosted on GitHub Pages / S3 via direct URL.</li>
+          </ul>
+        </div>
+        <div class="card info-card">
+          <h2>Pre-flight checklist (avoid crashes)</h2>
+          <ul class="list">
+            <li><strong>Unique slug/id</strong>: lowercase, no spaces (used as stable key and URL part).</li>
+            <li><strong>Reachable URL</strong>: HTTPS, no login/captcha; test in a browser first.</li>
+            <li><strong>Type-specific:</strong> RSS/YouTube require a feed URL; Scraped needs url, entrySelector, titleSelector, linkSelector, optional content/date selectors.</li>
+            <li><strong>Output sanity:</strong> check for fewer than ~500 items and avoid heavy pages; set filters to drop ads/sponsored blocks.</li>
+            <li><strong>Rate limits:</strong> keep polling-friendly sources; avoid adding sites that block bots or enforce strict anti-scrape rules.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="helper-grid">
+        <div class="card">
+          <h2>Quick add</h2>
+          <form class="form" id="quickAddForm">
+            <div>
+              <label for="quickAddUrl">RSS/Atom or channel link *</label>
+              <input id="quickAddUrl" name="quickAddUrl" placeholder="https://example.com/feed.xml or https://www.youtube.com/channel/ID" required>
+            </div>
+            <div class="inline-inputs">
+              <div>
+                <label for="quickAddTitle">Title (optional)</label>
+                <input id="quickAddTitle" name="quickAddTitle" placeholder="Defaults to site/slug if empty">
+              </div>
+              <div>
+                <label for="quickAddType">Type</label>
+                <select id="quickAddType" name="quickAddType">
+                  <option value="auto">Auto-detect</option>
+                  <option value="native_rss">Native RSS/Atom</option>
+                  <option value="youtube">YouTube</option>
+                  <option value="scraped_headings">Headings (no RSS)</option>
+                </select>
+              </div>
+            </div>
+            <div class="stacked-actions">
+              <button type="submit" class="btn primary">Save feed</button>
+              <button type="button" class="btn" id="youtubeFillBtn">Convert YouTube link</button>
+            </div>
+            <div class="inline-note" id="quickAddStatus">We’ll generate a slug and enable the feed automatically.</div>
+          </form>
+        </div>
+        <div class="card">
+          <h2>OPML import</h2>
+          <div class="form">
+            <label for="opmlFile">Upload .opml or .xml</label>
+            <input type="file" id="opmlFile" accept=".opml,.xml">
+            <div class="stacked-actions">
+              <button class="btn primary" id="opmlImportBtn" type="button">Import feeds</button>
+              <button class="btn" id="opmlResetBtn" type="button">Clear</button>
+            </div>
+            <div class="inline-note" id="opmlStatus">OPML is the industry standard export/import format for feed readers.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Scrape helper</h2>
+          <div class="form">
+            <p class="muted">Use this when a site has no RSS. Paste selectors, we’ll drop a JSON template into the form.</p>
+            <div class="stacked-actions">
+              <button class="btn primary" type="button" id="scrapeTemplateBtn">Insert selector template</button>
+              <button class="btn" type="button" id="filtersTemplateBtn">Add filter examples</button>
+              <button class="btn" type="button" id="headingTemplateBtn">Headings-only preset</button>
+            </div>
+            <small>Required: url, entrySelector, titleSelector, linkSelector. Optional: contentSelector, dateSelector + dateFormat, filters/matchOneOf/matchAllOf.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" id="adminSection">
+        <div class="card">
+          <h2>Users</h2>
+          <div class="table-wrap">
+            <table class="table" id="userTable">
+              <colgroup>
+                <col class="col-title" />
+                <col class="col-type" />
+                <col class="col-status" />
+                <col class="col-link" />
+                <col class="col-actions" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Roles</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 id="userFormTitle">Add User</h2>
+          <form class="form" id="userForm">
+            <div>
+              <label for="userEmail">Email *</label>
+              <input id="userEmail" name="email" type="email" required placeholder="user@example.com">
+            </div>
+            <div>
+              <label for="userDisplayName">Display name</label>
+              <input id="userDisplayName" name="displayName" placeholder="Optional">
+            </div>
+            <div>
+              <label for="userRoles">Roles</label>
+              <input id="userRoles" name="roles" placeholder="e.g., admin,user">
+            </div>
+            <div>
+              <label for="userPassword">Password <small>(required when creating)</small></label>
+              <input id="userPassword" name="password" type="password" placeholder="Min 8 characters">
+            </div>
+            <label style="display:flex; align-items:center; gap:8px;">
+              <input id="userVerified" name="emailVerified" type="checkbox">
+              Mark email as verified
+            </label>
+            <div class="row">
+              <button type="submit" class="btn primary" id="userSubmitBtn">Add user</button>
+              <button type="button" class="btn" id="userResetBtn">Reset</button>
+            </div>
+            <div class="inline-note" id="userFormNote">Passwords are required when creating a user. Leave blank when editing to keep the existing password.</div>
+          </form>
+        </div>
+
+        <div class="card">
+        <h2>Feeds</h2>
+        <div class="table-wrap">
+          <table class="table" id="feedTable">
+            <colgroup>
+              <col class="col-title" />
+              <col class="col-type" />
+              <col class="col-status" />
+              <col class="col-link" />
+              <col class="col-actions" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Link/URL</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="formTitle">Create Feed</h2>
+        <form class="form" id="feedForm">
+          <div>
+            <label for="feedId">Feed ID *</label>
+            <input id="feedId" name="id" placeholder="e.g., hackernews" required>
+          </div>
+          <div>
+            <label for="feedTitle">Title *</label>
+            <input id="feedTitle" name="title" placeholder="Friendly title" required>
+          </div>
+          <div class="row">
+            <div>
+              <label for="feedType">Type *</label>
+              <select id="feedType" name="type" required>
+                <option value="scraped">Scraped (CSS selectors)</option>
+                <option value="native_rss">Native RSS</option>
+                <option value="youtube">YouTube RSS</option>
+              </select>
+            </div>
+            <div>
+              <label for="feedOrder">Display Order</label>
+              <input id="feedOrder" name="display_order" type="number" min="0" value="0">
+            </div>
+          </div>
+          <div id="rssUrlGroup">
+            <label for="rssUrl">RSS/Atom URL *</label>
+            <input id="rssUrl" name="rss_url" placeholder="https://example.com/feed.xml">
+          </div>
+          <div id="configGroup">
+            <label for="configText">Scrape Config (JSON)</label>
+            <textarea id="configText" name="config" placeholder='{"url":"https://example.com","entrySelector":".item","titleSelector":"h2 a"}'></textarea>
+          </div>
+          <div class="row">
+            <button type="submit" class="btn primary" id="submitBtn">Create</button>
+            <button type="button" class="btn" id="resetBtn">Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/admin.js"></script>
+</body>
+</html>
+
