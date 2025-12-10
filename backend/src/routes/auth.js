@@ -9,7 +9,13 @@ const {
   deleteUserById,
   updateUserProfile
 } = require('../services/userService');
-const { createSession, deleteSession, deleteSessionsForUser, verifySession } = require('../services/authService');
+const {
+  createSession,
+  deleteSession,
+  deleteSessionsForUser,
+  verifySession,
+  buildAccessToken
+} = require('../services/authService');
 const { sendVerificationForUser, resendVerification, verifyEmailToken } = require('../services/emailVerificationService');
 const { requireAuth } = require('../middleware/auth');
 const { buildGoogleAuthUrl, verifyGoogleCode } = require('../services/googleAuthService');
@@ -309,7 +315,8 @@ router.post('/handshake', async (req, res) => {
     }
 
     setSessionCookie(req, res, sid, result.session.expiresAt, { partitioned: true });
-    res.json({ user: formatUser(result.user) });
+    const accessToken = buildAccessToken(result.user, sid);
+    res.json({ user: formatUser(result.user), accessToken });
   } catch (err) {
     console.error('Handshake failed', {
       message: err?.message,

@@ -181,7 +181,11 @@ function resetForm() {
 async function api(path, options = {}) {
   const res = await fetch(`${apiBase}${path}`, {
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+      ...(authToken ? { Authorization: `Bearer ${authToken}` } : {})
+    },
     ...options
   });
   const data = await res.json().catch(() => ({}));
@@ -238,11 +242,36 @@ function setUser(user) {
   }
 }
 
+const AUTH_TOKEN_KEY = 'access_token';
+let authToken = null;
+
+function loadAuthToken() {
+  try {
+    authToken = sessionStorage.getItem(AUTH_TOKEN_KEY);
+  } catch {
+    authToken = null;
+  }
+}
+
+function storeAuthToken(token) {
+  authToken = token || null;
+  try {
+    if (authToken) {
+      sessionStorage.setItem(AUTH_TOKEN_KEY, authToken);
+    } else {
+      sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    }
+  } catch {
+    // ignore
+  }
+}
+
 async function fetchCurrentUser() {
   try {
     const data = await api('/auth/me');
     setUser(data.user);
   } catch {
+    storeAuthToken(null);
     setUser(null);
   }
 }
@@ -252,10 +281,11 @@ async function handleHandshakeFromUrl() {
   const token = url.searchParams.get('handshake');
   if (!token) return;
   try {
-    await api('/auth/handshake', {
+    const res = await api('/auth/handshake', {
       method: 'POST',
       body: JSON.stringify({ token })
     });
+    if (res?.accessToken) storeAuthToken(res.accessToken);
     await fetchCurrentUser();
   } catch (err) {
     console.warn('Handshake failed', err);
@@ -847,6 +877,7 @@ importJsonInput?.addEventListener('change', async e => {
 
 // Init
 toggleConfigFields(typeSelect.value);
+loadAuthToken();
 handleHandshakeFromUrl()
   .catch(() => {})
   .then(() => fetchCurrentUser())

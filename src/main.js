@@ -104,10 +104,38 @@ function formatNumber(num) {
   return n.toString();
 }
 
+const AUTH_TOKEN_KEY = 'access_token';
+let authToken = null;
+
+function loadAuthToken() {
+  try {
+    authToken = sessionStorage.getItem(AUTH_TOKEN_KEY);
+  } catch {
+    authToken = null;
+  }
+}
+
+function storeAuthToken(token) {
+  authToken = token || null;
+  try {
+    if (authToken) {
+      sessionStorage.setItem(AUTH_TOKEN_KEY, authToken);
+    } else {
+      sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    }
+  } catch {
+    // ignore storage errors
+  }
+}
+
 async function api(path, options = {}) {
   const res = await fetch(`${apiBase}${path}`, {
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+      ...(authToken ? { Authorization: `Bearer ${authToken}` } : {})
+    },
     ...options
   });
   const data = await res.json().catch(() => ({}));
@@ -485,6 +513,7 @@ async function fetchCurrentUser() {
     const data = await api('/auth/me');
     updateAuthUI(data.user);
   } catch {
+    storeAuthToken(null);
     updateAuthUI(null);
   }
 }
@@ -547,10 +576,11 @@ async function handleHandshakeFromUrl() {
   const token = url.searchParams.get('handshake');
   if (!token) return;
   try {
-    await api('/auth/handshake', {
+    const res = await api('/auth/handshake', {
       method: 'POST',
       body: JSON.stringify({ token })
     });
+    if (res?.accessToken) storeAuthToken(res.accessToken);
     await fetchCurrentUser();
   } catch (err) {
     console.warn('Handshake failed', err);
@@ -581,6 +611,7 @@ async function handleRegister() {
       authPassword.value = '';
       return;
     }
+    if (res?.accessToken) storeAuthToken(res.accessToken);
     await fetchCurrentUser();
     currentFeed = 'all';
     closeAuthModal();
@@ -604,7 +635,8 @@ async function handleLogin() {
       setAuthError('Email and password are required.');
       return;
     }
-    await api('/auth/login', { method: 'POST', body: JSON.stringify(body) });
+    const res = await api('/auth/login', { method: 'POST', body: JSON.stringify(body) });
+    if (res?.accessToken) storeAuthToken(res.accessToken);
     await fetchCurrentUser();
     setAuthStatus('');
     setAuthInfo('');
@@ -628,6 +660,7 @@ async function handleLogout() {
     setAuthError('');
     setAuthInfo('');
     await api('/auth/logout', { method: 'POST' });
+    storeAuthToken(null);
     updateAuthUI(null);
     gateState = null;
     currentFeed = 'global';
@@ -1315,6 +1348,7 @@ suggestedFeedButtons?.forEach(btn => {
 myFeedsTableBody?.addEventListener('click', handleMyFeedTableClick);
 
 async function init() {
+  loadAuthToken();
   setAuthInfo('');
   try {
     await handleVerificationFromUrl();
