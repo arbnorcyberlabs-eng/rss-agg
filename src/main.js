@@ -1,4 +1,5 @@
-const apiBase = (import.meta?.env && import.meta.env.VITE_API_BASE) || 'http://localhost:4000/api';
+// Default to same-origin /api so production deployments work without env injection.
+const apiBase = (import.meta?.env?.VITE_API_BASE ?? '') || '/api';
 
 let availableFeeds = [];
 let currentFeed = 'global';

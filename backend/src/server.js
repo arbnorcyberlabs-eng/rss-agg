@@ -32,6 +32,13 @@ async function bootstrap() {
   app.use('/api/admin', adminRoutes);
   app.use('/api/feeds', feedRoutes);
   app.use('/api/posts', postRoutes);
+  // Also expose routes without the /api prefix for environments where the
+  // frontend or reverse proxy calls the root path directly.
+  app.use('/health', healthRoutes);
+  app.use('/auth', authRoutes);
+  app.use('/admin', adminRoutes);
+  app.use('/feeds', feedRoutes);
+  app.use('/posts', postRoutes);
 
   // Fallback error handler
   app.use((err, req, res, next) => {
