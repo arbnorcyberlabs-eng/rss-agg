@@ -6,7 +6,8 @@ const {
   verifyUser,
   findOrCreateGoogleUser,
   deleteUserById,
-  updateUserProfile
+  updateUserProfile,
+  getUserByEmail
 } = require('../services/userService');
 const { createSession, deleteSession, deleteSessionsForUser } = require('../services/authService');
 const { sendVerificationForUser, resendVerification, verifyEmailToken } = require('../services/emailVerificationService');
@@ -76,6 +77,18 @@ function decodeState(state) {
 router.post('/register', async (req, res) => {
   try {
     const body = credentialsSchema.parse(req.body);
+    const existing = await getUserByEmail(body.email);
+    if (existing) {
+      if (existing.emailVerified === false) {
+        await sendVerificationForUser(existing);
+        return res.status(200).json({
+          requiresVerification: true,
+          message: 'Account already exists. We sent a new verification email.'
+        });
+      }
+      return res.status(400).json({ error: 'Email already registered' });
+    }
+
     const user = await createUser(body);
     await sendVerificationForUser(user);
     res.status(201).json({
@@ -83,8 +96,7 @@ router.post('/register', async (req, res) => {
       message: 'Check your email to confirm your account.'
     });
   } catch (err) {
-    const status = err.message === 'Email already registered' ? 400 : 500;
-    res.status(status).json({ error: err.message || 'Registration failed' });
+    res.status(500).json({ error: err.message || 'Registration failed' });
   }
 });
 
