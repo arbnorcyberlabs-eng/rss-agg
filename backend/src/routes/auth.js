@@ -53,7 +53,7 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
 
   // On Render/https we always want a secure cookie; on localhost allow non-secure for dev.
   const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
-  const sameSite = isSecure ? 'none' : 'lax';
+  const sameSite = isSecure ? 'None' : 'Lax';
 
   if (!partitioned) {
     res.cookie('session_token', sessionId, {
@@ -71,10 +71,11 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
     'Path=/',
     'HttpOnly',
     `Expires=${expiresAt.toUTCString()}`,
-    `SameSite=${sameSite}`,
+    'SameSite=None',
     'Secure',
     'Partitioned'
   ];
+  console.log('Setting partitioned session cookie', { sameSite: 'None', secure: true, partitioned: true });
   res.setHeader('Set-Cookie', parts.join('; '));
 }
 
