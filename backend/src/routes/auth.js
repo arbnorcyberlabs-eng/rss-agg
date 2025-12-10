@@ -41,10 +41,13 @@ const verifyTokenSchema = z.object({
   });
 
 function setSessionCookie(res, sessionId, expiresAt) {
+  // Cross-site frontend (separate domain) needs SameSite=None and Secure for the cookie to be sent.
+  const isSecure = (env.frontendOrigin || '').startsWith('https://');
+  const sameSite = isSecure ? 'none' : 'lax';
   res.cookie('session_token', sessionId, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: false,
+    sameSite,
+    secure: isSecure,
     expires: expiresAt
   });
 }
