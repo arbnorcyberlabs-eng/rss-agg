@@ -19,6 +19,8 @@ async function bootstrap() {
   await connectMongo();
 
   const app = express();
+  // Respect proxy headers (e.g., x-forwarded-proto) so req.secure is accurate on Render/other proxies.
+  app.set('trust proxy', 1);
   // Normalize CORS origin to avoid trailing-slash mismatches
   const frontendOrigin = (env.frontendOrigin || '*').replace(/\/$/, '');
   app.use(helmet());

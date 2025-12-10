@@ -42,12 +42,14 @@ const verifyTokenSchema = z.object({
 
 function setSessionCookie(req, res, sessionId, expiresAt) {
   // Cross-site frontend (separate domain) needs SameSite=None and Secure for the cookie to be sent.
-  // Prefer env hint, but also fall back to the request proto (Render/other proxies set x-forwarded-proto).
   const forwardedProto = (req.headers['x-forwarded-proto'] || '').split(',')[0];
-  const isHttps = forwardedProto === 'https' || req.secure;
-  const envSecure = (env.frontendOrigin || '').startsWith('https://');
-  const isSecure = envSecure || isHttps;
+  const isForwardedHttps = forwardedProto === 'https';
+  const isLocalFrontend = (env.frontendOrigin || '').includes('localhost');
+
+  // On Render/https we always want a secure cookie; on localhost allow non-secure for dev.
+  const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
   const sameSite = isSecure ? 'none' : 'lax';
+
   res.cookie('session_token', sessionId, {
     httpOnly: true,
     sameSite,
