@@ -49,11 +49,14 @@ function setSessionCookie(req, res, sessionId, expiresAt) {
   // On Render/https we always want a secure cookie; on localhost allow non-secure for dev.
   const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
   const sameSite = isSecure ? 'none' : 'lax';
+  // Chrome is phasing out third-party cookies; partition them so they are accepted cross-site.
+  const partitioned = isSecure && !isLocalFrontend;
 
   res.cookie('session_token', sessionId, {
     httpOnly: true,
     sameSite,
     secure: isSecure,
+    partitioned,
     expires: expiresAt
   });
 }
