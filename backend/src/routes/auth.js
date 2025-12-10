@@ -48,17 +48,22 @@ function setSessionCookie(req, res, sessionId, expiresAt) {
 
   // On Render/https we always want a secure cookie; on localhost allow non-secure for dev.
   const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
-  const sameSite = isSecure ? 'none' : 'lax';
+  const sameSite = isSecure ? 'None' : 'Lax';
   // Chrome is phasing out third-party cookies; partition them so they are accepted cross-site.
   const partitioned = isSecure && !isLocalFrontend;
 
-  res.cookie('session_token', sessionId, {
-    httpOnly: true,
-    sameSite,
-    secure: isSecure,
-    partitioned,
-    expires: expiresAt
-  });
+  // Manually set cookie to guarantee the Partitioned attribute is sent (res.cookie may omit it on older Express/cookie versions).
+  const parts = [
+    `session_token=${encodeURIComponent(sessionId)}`,
+    'Path=/',
+    'HttpOnly',
+    `Expires=${expiresAt.toUTCString()}`,
+    `SameSite=${sameSite}`
+  ];
+  if (isSecure) parts.push('Secure');
+  if (partitioned) parts.push('Partitioned');
+
+  res.setHeader('Set-Cookie', parts.join('; '));
 }
 
 function formatUser(user) {
