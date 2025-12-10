@@ -1,9 +1,15 @@
-// Prefer build-time env; if missing and we're on Render frontend, point to the backend host.
+// Prefer build-time env; otherwise infer a sensible default for local dev.
 const envApiBase = (import.meta?.env?.VITE_API_BASE ?? '').trim();
-const apiBase = envApiBase
-  || (typeof window !== 'undefined' && window.location.hostname.includes('rss-agg-1.onrender.com')
-    ? 'https://rss-agg.onrender.com/api'
-    : '/api');
+const apiBase = (() => {
+  if (envApiBase) return envApiBase.replace(/\/$/, '');
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname || '';
+    if (host.includes('rss-agg-1.onrender.com')) return 'https://rss-agg.onrender.com/api';
+    const isLocal = host === 'localhost' || host === '127.0.0.1';
+    if (isLocal) return 'http://localhost:4000/api';
+  }
+  return '/api';
+})();
 
 let availableFeeds = [];
 let currentFeed = 'global';
