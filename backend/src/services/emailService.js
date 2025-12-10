@@ -16,6 +16,15 @@ async function sendVerificationEmail({ to, token, expiresAt }) {
   const verifyLink = `${safeFrontend}/?verifyToken=${token}`;
   const expiryHours = env.emailVerifyExpiryHours || 24;
 
+  const meta = {
+    to,
+    from: env.smtpFrom || env.smtpUser,
+    host: env.smtpHost,
+    port: env.smtpPort,
+    expiresAt
+  };
+  console.log('[email] Sending verification email', meta);
+
   const html = `
     <p>Hi there,</p>
     <p>Thanks for registering for the RSS Aggregator. Please confirm your email to activate your account.</p>
@@ -40,7 +49,19 @@ If you didn’t request this, you can ignore this email.
     subject: 'Confirm your RSS Aggregator account',
     text,
     html
-  });
+  })
+    .then(info => {
+      console.log('[email] Verification email sent', {
+        to,
+        messageId: info?.messageId,
+        response: info?.response
+      });
+      return info;
+    })
+    .catch(err => {
+      console.error('[email] Verification email failed', { to, error: err.message });
+      throw err;
+    });
 }
 
 module.exports = {

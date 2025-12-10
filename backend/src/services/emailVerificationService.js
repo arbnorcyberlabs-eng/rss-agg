@@ -27,6 +27,12 @@ async function createVerificationToken(user) {
 
 async function sendVerificationForUser(user) {
   const { token, expiresAt } = await createVerificationToken(user);
+  console.log('[verification] Created token for user', {
+    userId: user?._id?.toString(),
+    email: user?.email,
+    expiresAt,
+    tokenSuffix: token.slice(-6)
+  });
   await sendVerificationEmail({ to: user.email, token, expiresAt });
   return { token, expiresAt };
 }
