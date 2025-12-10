@@ -571,23 +571,46 @@ async function handleVerificationFromUrl() {
   }
 }
 
-async function handleHandshakeFromUrl() {
+function getUrlParamsFromHash() {
+  const hash = window.location.hash || '';
+  const trimmed = hash.startsWith('#') ? hash.slice(1) : hash;
+  return new URLSearchParams(trimmed);
+}
+
+function clearAuthParams(url, hashParams) {
+  url.searchParams.delete('handshake');
+  url.searchParams.delete('accessToken');
+  hashParams.delete('handshake');
+  hashParams.delete('accessToken');
+  url.hash = hashParams.toString() ? `#${hashParams.toString()}` : '';
+  window.history.replaceState({}, document.title, url.toString());
+}
+
+async function handleAuthFromUrl() {
   const url = new URL(window.location.href);
-  const token = url.searchParams.get('handshake');
-  if (!token) return;
-  try {
-    const res = await api('/auth/handshake', {
-      method: 'POST',
-      body: JSON.stringify({ token })
-    });
-    if (res?.accessToken) storeAuthToken(res.accessToken);
-    await fetchCurrentUser();
-  } catch (err) {
-    console.warn('Handshake failed', err);
-  } finally {
-    url.searchParams.delete('handshake');
-    window.history.replaceState({}, document.title, url.toString());
+  const hashParams = getUrlParamsFromHash();
+  const searchParams = url.searchParams;
+
+  const handshakeToken = searchParams.get('handshake') || hashParams.get('handshake');
+  const accessTokenFromUrl = hashParams.get('accessToken') || searchParams.get('accessToken');
+
+  if (accessTokenFromUrl) {
+    storeAuthToken(accessTokenFromUrl);
   }
+
+  if (handshakeToken) {
+    try {
+      const res = await api('/auth/handshake', {
+        method: 'POST',
+        body: JSON.stringify({ token: handshakeToken })
+      });
+      if (res?.accessToken) storeAuthToken(res.accessToken);
+    } catch (err) {
+      console.warn('Handshake failed', err);
+    }
+  }
+
+  clearAuthParams(url, hashParams);
 }
 
 async function handleRegister() {
@@ -1352,7 +1375,7 @@ async function init() {
   setAuthInfo('');
   try {
     await handleVerificationFromUrl();
-    await handleHandshakeFromUrl();
+    await handleAuthFromUrl();
     await fetchCurrentUser();
   } catch {
     updateAuthUI(null);

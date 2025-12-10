@@ -272,6 +272,10 @@ router.get('/google/callback', async (req, res) => {
 
     setSessionCookie(req, res, session.sessionId, session.expiresAt);
 
+    // Also build an access token so the frontend can fall back to header auth
+    // even if the cookie is blocked or the partitioned cookie fails to set.
+    const accessToken = buildAccessToken(user, session.sessionId);
+
     // Issue a short-lived handshake token so the frontend can set a partitioned cookie
     // while the top-level site is the frontend origin (needed when 3P cookies are blocked).
     const handshakeToken = jwt.sign(
@@ -283,7 +287,12 @@ router.get('/google/callback', async (req, res) => {
     const parsedState = decodeState(state);
     const baseRedirect = parsedState.redirect || `${env.frontendOrigin.replace(/\/$/, '')}/admin.html`;
     const separator = baseRedirect.includes('?') ? '&' : '?';
-    const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(handshakeToken)}`;
+    // Include both the handshake token (for partitioned cookie) and the access token
+    // (for immediate Authorization header fallback). Access token goes in the hash
+    // so it avoids server logs and referrers; handshake stays in the query.
+    const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(
+      handshakeToken
+    )}#accessToken=${encodeURIComponent(accessToken)}`;
 
     res.redirect(redirectUrl);
   } catch (err) {
