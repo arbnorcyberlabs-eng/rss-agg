@@ -28,7 +28,6 @@ const CHUNK_RENDER_THRESHOLD = 20;
 const authEmail = document.getElementById('authEmail');
 const authPassword = document.getElementById('authPassword');
 const authName = document.getElementById('authName');
-const authForm = document.getElementById('authForm');
 const registerBtn = document.getElementById('registerBtn');
 const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
@@ -1249,11 +1248,6 @@ authOpenBtn?.addEventListener('click', () => {
   } else {
     openAuthModal();
   }
-});
-
-authForm?.addEventListener('submit', (event) => {
-  event.preventDefault();
-  handleLogin();
 });
 
 authCloseBtn?.addEventListener('click', closeAuthModal);
