@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const { z } = require('zod');
 const { env } = require('../config/env');
 const {
@@ -238,6 +239,10 @@ router.get('/google/start', (req, res) => {
 router.get('/google/callback', async (req, res) => {
   const { code, state } = req.query;
   if (!code) return res.status(400).send('Missing code');
+  console.log('Google callback received', {
+    hasCode: Boolean(code),
+    stateLength: state ? String(state).length : 0
+  });
   try {
     const googleUser = await verifyGoogleCode(code);
     if (!googleUser.email) {
@@ -272,7 +277,13 @@ router.get('/google/callback', async (req, res) => {
 
     res.redirect(redirectUrl);
   } catch (err) {
-    console.error('Google auth failed', err);
+    console.error('Google auth failed', {
+      message: err?.message,
+      name: err?.name,
+      code: err?.code,
+      responseError: err?.response?.data?.error,
+      responseDesc: err?.response?.data?.error_description
+    });
     res.status(400).send('Google sign-in failed');
   }
 });
@@ -292,6 +303,10 @@ router.post('/handshake', async (req, res) => {
     setSessionCookie(req, res, sid, result.session.expiresAt, { partitioned: true });
     res.json({ user: formatUser(result.user) });
   } catch (err) {
+    console.error('Handshake failed', {
+      message: err?.message,
+      name: err?.name
+    });
     const status = err.name === 'TokenExpiredError' ? 400 : 401;
     res.status(status).json({ error: 'Handshake failed' });
   }
