@@ -1,5 +1,9 @@
-// Default to same-origin /api so production deployments work without env injection.
-const apiBase = (import.meta?.env?.VITE_API_BASE ?? '') || '/api';
+// Prefer build-time env; if missing and we're on Render frontend, point to the backend host.
+const envApiBase = (import.meta?.env?.VITE_API_BASE ?? '').trim();
+const apiBase = envApiBase
+  || (typeof window !== 'undefined' && window.location.hostname.includes('rss-agg-1.onrender.com')
+    ? 'https://rss-agg.onrender.com/api'
+    : '/api');
 
 let availableFeeds = [];
 let currentFeed = 'global';
