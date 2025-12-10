@@ -27,6 +27,8 @@ const postSchema = new mongoose.Schema(
 
 postSchema.index({ feedId: 1, link: 1 }, { unique: true });
 postSchema.index({ publishedAt: -1 });
+postSchema.index({ feedId: 1, publishedAt: -1 });
+postSchema.index({ title: 'text', summary: 'text' });
 
 module.exports = mongoose.model('Post', postSchema);
 

@@ -18,6 +18,12 @@ let isUpdating = false;
 let gateState = null;
 let currentUser = null;
 let guestPreview = null;
+let currentFetchAbort = null;
+let fetchSeq = 0;
+const postsCache = new Map();
+const POST_CACHE_TTL_MS = 60_000;
+const SEARCH_DEBOUNCE_MS = 250;
+const CHUNK_RENDER_THRESHOLD = 20;
 
 const authEmail = document.getElementById('authEmail');
 const authPassword = document.getElementById('authPassword');
@@ -136,6 +142,25 @@ function setMyFeedsStatus(message = '', isError = false) {
   if (!myFeedsStatus) return;
   myFeedsStatus.textContent = message;
   myFeedsStatus.style.color = isError ? '#b91c1c' : '#666';
+}
+
+function showLoadingSkeleton(count = itemsPerPage) {
+  const feedContent = document.getElementById('feedContent');
+  const skeleton = document.createElement('div');
+  skeleton.className = 'feed-items';
+  for (let i = 0; i < count; i++) {
+    const item = document.createElement('div');
+    item.className = 'feed-item skeleton';
+    item.innerHTML = `
+      <div class="feed-source skeleton-bar"></div>
+      <div class="skeleton-bar title"></div>
+      <div class="skeleton-bar subtitle"></div>
+      <div class="skeleton-bar body"></div>
+    `;
+    skeleton.appendChild(item);
+  }
+  feedContent.innerHTML = '';
+  feedContent.appendChild(skeleton);
 }
 
 function toggleMyFeedFields(type) {
@@ -621,15 +646,21 @@ async function handleMyFeedSubmit(event) {
 
   try {
     setMyFeedsStatus('Saving feed...');
+    let savedFeed = null;
     if (myFeedEditingId) {
-      await api(`/feeds/${myFeedEditingId}`, { method: 'PUT', body: JSON.stringify(payload) });
+      const res = await api(`/feeds/${myFeedEditingId}`, { method: 'PUT', body: JSON.stringify(payload) });
+      savedFeed = res.feed;
     } else {
-      await api('/feeds', { method: 'POST', body: JSON.stringify(payload) });
+      const res = await api('/feeds', { method: 'POST', body: JSON.stringify(payload) });
+      savedFeed = res.feed;
     }
     resetMyFeedForm();
-    await loadMyFeeds();
-    await loadFeedsList();
-    await loadFeed(currentFeed);
+    await Promise.all([loadMyFeeds(), loadFeedsList()]);
+    postsCache.clear();
+    const shouldReload = currentFeed === 'all' || currentFeed === 'global' || (savedFeed?.slug && currentFeed === savedFeed.slug);
+    if (shouldReload) {
+      await loadFeed(currentFeed, false, { allowCached: false });
+    }
     setMyFeedsStatus('Saved.');
   } catch (err) {
     setMyFeedsStatus(err.message || 'Could not save feed.', true);
@@ -653,9 +684,10 @@ async function handleMyFeedTableClick(event) {
     try {
       await api(`/feeds/${id}`, { method: 'DELETE' });
       if (myFeedEditingId === id) resetMyFeedForm();
-      await loadMyFeeds();
-      await loadFeedsList();
-      await loadFeed('all');
+      await Promise.all([loadMyFeeds(), loadFeedsList()]);
+      postsCache.clear();
+      const targetFeed = currentFeed === feed.slug ? 'global' : currentFeed;
+      await loadFeed(targetFeed, false, { allowCached: false });
       setMyFeedsStatus('Feed deleted.');
     } catch (err) {
       setMyFeedsStatus(err.message || 'Could not delete feed.', true);
@@ -802,8 +834,12 @@ function displayCurrentPage() {
     return;
   }
 
-  let html = '<div class="feed-items">';
-  currentItems.forEach(item => {
+  feedContent.innerHTML = '';
+  const listContainer = document.createElement('div');
+  listContainer.className = 'feed-items';
+  feedContent.appendChild(listContainer);
+
+  const buildItemElement = (item) => {
     const title = item.title || 'No title';
     const link = item.link || '#';
     const date = item.publishedAt ? new Date(item.publishedAt).toLocaleString() : '';
@@ -813,50 +849,79 @@ function displayCurrentPage() {
     const thumbnailUrl = item.media?.thumbnail || '';
     const views = item.media?.views || '';
 
+    const wrapper = document.createElement('div');
+    wrapper.className = `feed-item${isVideo && thumbnailUrl ? ' video' : ''}`;
+
     if (isVideo && thumbnailUrl) {
-      html += `
-        <div class="feed-item video">
-          <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">
-            <img src="${escapeHtml(thumbnailUrl)}" alt="${escapeHtml(title)}" class="video-thumbnail">
-          </a>
-          <div class="video-content">
-            <span class="feed-source">${escapeHtml(source)}</span>
-            <h3>
-              <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
-              <span class="video-indicator">▶ Video</span>
-            </h3>
-            ${date ? `<div class="feed-date">${escapeHtml(date)}</div>` : ''}
-            ${truncatedContent ? `<div class="feed-content">${escapeHtml(truncatedContent)}</div>` : ''}
-            ${views ? `
-              <div class="video-stats">
-                <div class="video-stat">
-                  <span>👁 Views:</span>
-                  <span class="video-stat-value">${formatNumber(views)}</span>
-                </div>
-              </div>
-            ` : ''}
-          </div>
-        </div>
-      `;
-    } else {
-      html += `
-        <div class="feed-item">
+      wrapper.innerHTML = `
+        <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">
+          <img src="${escapeHtml(thumbnailUrl)}" alt="${escapeHtml(title)}" class="video-thumbnail">
+        </a>
+        <div class="video-content">
           <span class="feed-source">${escapeHtml(source)}</span>
           <h3>
             <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
+            <span class="video-indicator">▶ Video</span>
           </h3>
           ${date ? `<div class="feed-date">${escapeHtml(date)}</div>` : ''}
           ${truncatedContent ? `<div class="feed-content">${escapeHtml(truncatedContent)}</div>` : ''}
+          ${views ? `
+            <div class="video-stats">
+              <div class="video-stat">
+                <span>👁 Views:</span>
+                <span class="video-stat-value">${formatNumber(views)}</span>
+              </div>
+            </div>
+          ` : ''}
         </div>
       `;
+    } else {
+      wrapper.innerHTML = `
+        <span class="feed-source">${escapeHtml(source)}</span>
+        <h3>
+          <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
+        </h3>
+        ${date ? `<div class="feed-date">${escapeHtml(date)}</div>` : ''}
+        ${truncatedContent ? `<div class="feed-content">${escapeHtml(truncatedContent)}</div>` : ''}
+      `;
     }
-  });
-  html += '</div>';
-  if (!currentUser && guestPreview?.remaining > 0) {
-    html += renderPreviewGate(guestPreview);
+    return wrapper;
+  };
+
+  const appendItemsChunked = (items) => {
+    const fragment = document.createDocumentFragment();
+    let index = 0;
+    const processChunk = () => {
+      const end = Math.min(index + 10, items.length);
+      for (; index < end; index++) {
+        fragment.appendChild(buildItemElement(items[index]));
+      }
+      if (index < items.length) {
+        requestAnimationFrame(processChunk);
+      } else {
+        listContainer.appendChild(fragment);
+      }
+    };
+    processChunk();
+  };
+
+  if (currentItems.length > CHUNK_RENDER_THRESHOLD) {
+    appendItemsChunked(currentItems);
+  } else {
+    const fragment = document.createDocumentFragment();
+    currentItems.forEach(item => fragment.appendChild(buildItemElement(item)));
+    listContainer.appendChild(fragment);
   }
-  html += renderPagination();
-  feedContent.innerHTML = html;
+
+  if (!currentUser && guestPreview?.remaining > 0) {
+    const gateWrap = document.createElement('div');
+    gateWrap.innerHTML = renderPreviewGate(guestPreview);
+    feedContent.appendChild(gateWrap);
+  }
+
+  const paginationWrap = document.createElement('div');
+  paginationWrap.innerHTML = renderPagination();
+  feedContent.appendChild(paginationWrap);
   const gateButtons = [
     document.getElementById('previewGateLogin'),
     document.getElementById('previewGateRegister')
@@ -864,9 +929,27 @@ function displayCurrentPage() {
   gateButtons.forEach(btn => btn?.addEventListener('click', focusAuthPanel));
 }
 
-async function fetchPosts() {
+function getCacheKey() {
+  return `${currentFeed}|${currentPage}|${itemsPerPage}|${searchQuery}`;
+}
+
+function readCache() {
+  const key = getCacheKey();
+  const entry = postsCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.timestamp > POST_CACHE_TTL_MS) {
+    postsCache.delete(key);
+    return null;
+  }
+  return entry.data;
+}
+
+async function fetchPosts({ allowCached = true } = {}) {
+  const cached = allowCached ? readCache() : null;
   const feedContent = document.getElementById('feedContent');
-  feedContent.innerHTML = '<div class="loading">Loading posts...</div>';
+  if (!cached) {
+    showLoadingSkeleton();
+  }
   guestPreview = null;
 
   const params = new URLSearchParams({
@@ -876,10 +959,34 @@ async function fetchPosts() {
   if (currentFeed) params.set('feed', currentFeed);
   if (searchQuery) params.set('search', searchQuery);
 
-  const res = await fetch(`${apiBase}/posts?${params.toString()}`, {
-    credentials: 'include'
-  });
+  const cacheKey = getCacheKey();
+  fetchSeq += 1;
+  const seq = fetchSeq;
+  currentFetchAbort?.abort();
+  currentFetchAbort = new AbortController();
+
+  if (cached) {
+    currentItems = cached.posts || [];
+    currentTotal = cached.total || currentItems.length;
+    gateState = cached.gateState || null;
+    guestPreview = cached.guestPreview || null;
+    updateStats(currentTotal);
+    displayCurrentPage();
+  }
+
+  let res;
+  try {
+    res = await fetch(`${apiBase}/posts?${params.toString()}`, {
+      credentials: 'include',
+      signal: currentFetchAbort.signal
+    });
+  } catch (err) {
+    if (err.name === 'AbortError') return;
+    throw err;
+  }
   const data = await res.json();
+
+  if (seq !== fetchSeq) return; // stale response
 
   if (res.status === 401 || res.status === 429 || data.showSignInGate) {
     gateState = { ...data, showSignInGate: true };
@@ -899,11 +1006,20 @@ async function fetchPosts() {
   guestPreview = data.guestPreview || null;
   currentItems = data.posts || [];
   currentTotal = data.total || currentItems.length;
+  postsCache.set(cacheKey, {
+    timestamp: Date.now(),
+    data: {
+      posts: currentItems,
+      total: currentTotal,
+      guestPreview,
+      gateState
+    }
+  });
   updateStats(currentTotal);
   displayCurrentPage();
 }
 
-async function loadFeed(feedName = currentFeed, forceUpdate = false) {
+async function loadFeed(feedName = currentFeed, forceUpdate = false, options = {}) {
   const updateButton = document.getElementById('updateButton');
   if (forceUpdate) {
     isUpdating = true;
@@ -912,7 +1028,7 @@ async function loadFeed(feedName = currentFeed, forceUpdate = false) {
   }
   currentFeed = feedName;
   try {
-    await fetchPosts();
+    await fetchPosts({ allowCached: !forceUpdate && options.allowCached !== false });
   } catch (error) {
     console.error('Error loading feed:', error);
     document.getElementById('feedContent').innerHTML = `
@@ -944,7 +1060,7 @@ function handleSearch() {
   searchQuery = searchInput.value.toLowerCase().trim();
   clearBtn.classList.toggle('visible', Boolean(searchQuery));
   currentPage = 1;
-  loadFeed(currentFeed);
+  loadFeed(currentFeed, false, { allowCached: false });
 }
 
 function clearSearch() {
@@ -954,12 +1070,22 @@ function clearSearch() {
   handleSearch();
 }
 
+let searchDebounceTimer = null;
+function scheduleSearch() {
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(() => {
+    handleSearch();
+  }, SEARCH_DEBOUNCE_MS);
+}
+
 function changePage(page) {
   const totalPages = Math.max(Math.ceil(currentTotal / itemsPerPage), 1);
   if (page < 1 || page > totalPages) return;
   currentPage = page;
   loadFeed(currentFeed);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (totalPages > 1) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 function buildFeedSelectors(feeds) {
@@ -1108,7 +1234,7 @@ document.getElementById('updateButton').addEventListener('click', () => {
   loadFeed(currentFeed, true);
 });
 
-document.getElementById('searchInput').addEventListener('input', handleSearch);
+document.getElementById('searchInput').addEventListener('input', scheduleSearch);
 document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
 // Expose for inline handlers

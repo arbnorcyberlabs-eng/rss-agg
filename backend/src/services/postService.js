@@ -48,17 +48,39 @@ async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
 
   const query = { feedId: { $in: feedIds } };
   if (search) {
-    query.$or = [
-      { title: { $regex: search, $options: 'i' } },
-      { summary: { $regex: search, $options: 'i' } }
-    ];
+    query.$text = { $search: search };
   }
   const skip = (page - 1) * limit;
+  const projection = {
+    title: 1,
+    link: 1,
+    summary: 1,
+    source: 1,
+    publishedAt: 1,
+    media: 1,
+    feedId: 1,
+    userId: 1
+  };
+  if (search) {
+    projection.score = { $meta: 'textScore' };
+  }
+  const sort = search
+    ? { score: { $meta: 'textScore' }, publishedAt: -1, createdAt: -1 }
+    : { publishedAt: -1, createdAt: -1 };
   const [items, total] = await Promise.all([
-    Post.find(query).sort({ publishedAt: -1, createdAt: -1 }).skip(skip).limit(limit),
+    Post.find(query)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .select(projection)
+      .lean(),
     Post.countDocuments(query)
   ]);
-  return { items, total };
+  const trimmed = items.map(post => ({
+    ...post,
+    summary: post.summary ? post.summary.slice(0, 280) : ''
+  }));
+  return { items: trimmed, total };
 }
 
 async function upsertPostFromFeedItem(feed, item) {
