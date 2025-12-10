@@ -593,9 +593,11 @@ async function handleAuthFromUrl() {
 
   const handshakeToken = searchParams.get('handshake') || hashParams.get('handshake');
   const accessTokenFromUrl = hashParams.get('accessToken') || searchParams.get('accessToken');
+  let didSetToken = false;
 
   if (accessTokenFromUrl) {
     storeAuthToken(accessTokenFromUrl);
+    didSetToken = true;
   }
 
   if (handshakeToken) {
@@ -605,12 +607,23 @@ async function handleAuthFromUrl() {
         body: JSON.stringify({ token: handshakeToken })
       });
       if (res?.accessToken) storeAuthToken(res.accessToken);
+      didSetToken = didSetToken || Boolean(res?.accessToken);
     } catch (err) {
       console.warn('Handshake failed', err);
     }
   }
 
   clearAuthParams(url, hashParams);
+
+  // If we received any token, immediately refresh the user context so that
+  // subsequent requests include Authorization and cookies (if they were set).
+  if (didSetToken) {
+    try {
+      await fetchCurrentUser();
+    } catch {
+      // fetchCurrentUser already handles errors; ignore here
+    }
+  }
 }
 
 async function handleRegister() {
