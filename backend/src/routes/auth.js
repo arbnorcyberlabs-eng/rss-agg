@@ -62,6 +62,8 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
       secure: isSecure,
       expires: expiresAt
     });
+    const headerVal = res.getHeader('Set-Cookie');
+    console.log('Set-Cookie (non-partitioned)', headerVal);
     return;
   }
 
@@ -77,6 +79,7 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
   ];
   console.log('Setting partitioned session cookie', { sameSite: 'None', secure: true, partitioned: true });
   res.setHeader('Set-Cookie', parts.join('; '));
+  console.log('Set-Cookie header (partitioned)', res.getHeader('Set-Cookie'));
 }
 
 function formatUser(user) {
@@ -291,6 +294,10 @@ router.get('/google/callback', async (req, res) => {
 
 router.post('/handshake', async (req, res) => {
   try {
+    console.log('Handshake request headers', {
+      cookie: req.headers.cookie || null,
+      origin: req.headers.origin || null
+    });
     const { token } = handshakeSchema.parse(req.body);
     const payload = jwt.verify(token, env.jwtSecret);
     const { sid, sub } = payload || {};
