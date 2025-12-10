@@ -40,9 +40,13 @@ const verifyTokenSchema = z.object({
   token: z.string().min(10)
   });
 
-function setSessionCookie(res, sessionId, expiresAt) {
+function setSessionCookie(req, res, sessionId, expiresAt) {
   // Cross-site frontend (separate domain) needs SameSite=None and Secure for the cookie to be sent.
-  const isSecure = (env.frontendOrigin || '').startsWith('https://');
+  // Prefer env hint, but also fall back to the request proto (Render/other proxies set x-forwarded-proto).
+  const forwardedProto = (req.headers['x-forwarded-proto'] || '').split(',')[0];
+  const isHttps = forwardedProto === 'https' || req.secure;
+  const envSecure = (env.frontendOrigin || '').startsWith('https://');
+  const isSecure = envSecure || isHttps;
   const sameSite = isSecure ? 'none' : 'lax';
   res.cookie('session_token', sessionId, {
     httpOnly: true,
@@ -103,7 +107,7 @@ router.post('/login', async (req, res) => {
       userAgent: req.headers['user-agent'],
       ipHash: req.ip
     });
-    setSessionCookie(res, session.sessionId, session.expiresAt);
+    setSessionCookie(req, res, session.sessionId, session.expiresAt);
     queueRefreshForUser(user);
     res.json({
       user: formatUser(user),
@@ -123,7 +127,7 @@ router.post('/verify-email', async (req, res) => {
       userAgent: req.headers['user-agent'],
       ipHash: req.ip
     });
-    setSessionCookie(res, session.sessionId, session.expiresAt);
+    setSessionCookie(req, res, session.sessionId, session.expiresAt);
     queueRefreshForUser(user);
     res.json({
       user: formatUser(user),
@@ -229,7 +233,7 @@ router.get('/google/callback', async (req, res) => {
       userAgent: req.headers['user-agent'],
       ipHash: req.ip
     });
-    setSessionCookie(res, session.sessionId, session.expiresAt);
+    setSessionCookie(req, res, session.sessionId, session.expiresAt);
     const parsedState = decodeState(state);
     const redirectUrl = parsedState.redirect || `${env.frontendOrigin.replace(/\/$/, '')}/admin.html`;
     res.redirect(redirectUrl);
