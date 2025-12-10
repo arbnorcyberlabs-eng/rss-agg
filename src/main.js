@@ -542,6 +542,24 @@ async function handleVerificationFromUrl() {
   }
 }
 
+async function handleHandshakeFromUrl() {
+  const url = new URL(window.location.href);
+  const token = url.searchParams.get('handshake');
+  if (!token) return;
+  try {
+    await api('/auth/handshake', {
+      method: 'POST',
+      body: JSON.stringify({ token })
+    });
+    await fetchCurrentUser();
+  } catch (err) {
+    console.warn('Handshake failed', err);
+  } finally {
+    url.searchParams.delete('handshake');
+    window.history.replaceState({}, document.title, url.toString());
+  }
+}
+
 async function handleRegister() {
   try {
     setAuthError('');
@@ -1300,6 +1318,7 @@ async function init() {
   setAuthInfo('');
   try {
     await handleVerificationFromUrl();
+    await handleHandshakeFromUrl();
     await fetchCurrentUser();
   } catch {
     updateAuthUI(null);

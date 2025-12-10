@@ -247,6 +247,24 @@ async function fetchCurrentUser() {
   }
 }
 
+async function handleHandshakeFromUrl() {
+  const url = new URL(window.location.href);
+  const token = url.searchParams.get('handshake');
+  if (!token) return;
+  try {
+    await api('/auth/handshake', {
+      method: 'POST',
+      body: JSON.stringify({ token })
+    });
+    await fetchCurrentUser();
+  } catch (err) {
+    console.warn('Handshake failed', err);
+  } finally {
+    url.searchParams.delete('handshake');
+    window.history.replaceState({}, document.title, url.toString());
+  }
+}
+
 async function loadFeeds() {
   if (!currentUser || !isAdminUser()) return;
   const data = await api('/admin/feeds');
@@ -829,8 +847,11 @@ importJsonInput?.addEventListener('change', async e => {
 
 // Init
 toggleConfigFields(typeSelect.value);
-fetchCurrentUser().then(() => {
-  loadFeeds();
-  loadUsers();
-});
+handleHandshakeFromUrl()
+  .catch(() => {})
+  .then(() => fetchCurrentUser())
+  .then(() => {
+    loadFeeds();
+    loadUsers();
+  });
 

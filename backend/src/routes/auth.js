@@ -8,7 +8,7 @@ const {
   deleteUserById,
   updateUserProfile
 } = require('../services/userService');
-const { createSession, deleteSession, deleteSessionsForUser } = require('../services/authService');
+const { createSession, deleteSession, deleteSessionsForUser, verifySession } = require('../services/authService');
 const { sendVerificationForUser, resendVerification, verifyEmailToken } = require('../services/emailVerificationService');
 const { requireAuth } = require('../middleware/auth');
 const { buildGoogleAuthUrl, verifyGoogleCode } = require('../services/googleAuthService');
@@ -38,9 +38,13 @@ const emailSchema = z.object({
 
 const verifyTokenSchema = z.object({
   token: z.string().min(10)
-  });
+});
 
-function setSessionCookie(req, res, sessionId, expiresAt) {
+const handshakeSchema = z.object({
+  token: z.string().min(10)
+});
+
+function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false } = {}) {
   // Cross-site frontend (separate domain) needs SameSite=None and Secure for the cookie to be sent.
   const forwardedProto = (req.headers['x-forwarded-proto'] || '').split(',')[0];
   const isForwardedHttps = forwardedProto === 'https';
@@ -50,15 +54,27 @@ function setSessionCookie(req, res, sessionId, expiresAt) {
   const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
   const sameSite = isSecure ? 'none' : 'lax';
 
-  // Do NOT use Partitioned here: the top-level site during callback (rss-agg.onrender.com)
-  // differs from the app host (rss-agg-1.onrender.com), so a partitioned cookie would
-  // not be sent on subsequent cross-site requests.
-  res.cookie('session_token', sessionId, {
-    httpOnly: true,
-    sameSite,
-    secure: isSecure,
-    expires: expiresAt
-  });
+  if (!partitioned) {
+    res.cookie('session_token', sessionId, {
+      httpOnly: true,
+      sameSite,
+      secure: isSecure,
+      expires: expiresAt
+    });
+    return;
+  }
+
+  // Manually craft header to include Partitioned (some cookie helpers don’t support it yet).
+  const parts = [
+    `session_token=${encodeURIComponent(sessionId)}`,
+    'Path=/',
+    'HttpOnly',
+    `Expires=${expiresAt.toUTCString()}`,
+    `SameSite=${sameSite}`,
+    'Secure',
+    'Partitioned'
+  ];
+  res.setHeader('Set-Cookie', parts.join('; '));
 }
 
 function formatUser(user) {
@@ -238,13 +254,46 @@ router.get('/google/callback', async (req, res) => {
       userAgent: req.headers['user-agent'],
       ipHash: req.ip
     });
+
     setSessionCookie(req, res, session.sessionId, session.expiresAt);
+
+    // Issue a short-lived handshake token so the frontend can set a partitioned cookie
+    // while the top-level site is the frontend origin (needed when 3P cookies are blocked).
+    const handshakeToken = jwt.sign(
+      { sid: session.sessionId, sub: user._id.toString() },
+      env.jwtSecret,
+      { expiresIn: '5m' }
+    );
+
     const parsedState = decodeState(state);
-    const redirectUrl = parsedState.redirect || `${env.frontendOrigin.replace(/\/$/, '')}/admin.html`;
+    const baseRedirect = parsedState.redirect || `${env.frontendOrigin.replace(/\/$/, '')}/admin.html`;
+    const separator = baseRedirect.includes('?') ? '&' : '?';
+    const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(handshakeToken)}`;
+
     res.redirect(redirectUrl);
   } catch (err) {
     console.error('Google auth failed', err);
     res.status(400).send('Google sign-in failed');
+  }
+});
+
+router.post('/handshake', async (req, res) => {
+  try {
+    const { token } = handshakeSchema.parse(req.body);
+    const payload = jwt.verify(token, env.jwtSecret);
+    const { sid, sub } = payload || {};
+    if (!sid || !sub) return res.status(400).json({ error: 'Invalid handshake token' });
+
+    const result = await verifySession(sid);
+    if (!result || result.user._id.toString() !== sub) {
+      return res.status(401).json({ error: 'Session expired' });
+    }
+
+    setSessionCookie(req, res, sid, result.session.expiresAt, { partitioned: true });
+    res.json({ user: formatUser(result.user) });
+  } catch (err) {
+    const status = err.name === 'TokenExpiredError' ? 400 : 401;
+    res.status(status).json({ error: 'Handshake failed' });
   }
 });
 
