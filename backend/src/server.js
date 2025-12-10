@@ -19,8 +19,10 @@ async function bootstrap() {
   await connectMongo();
 
   const app = express();
+  // Normalize CORS origin to avoid trailing-slash mismatches
+  const frontendOrigin = (env.frontendOrigin || '*').replace(/\/$/, '');
   app.use(helmet());
-  app.use(cors({ origin: env.frontendOrigin, credentials: true }));
+  app.use(cors({ origin: frontendOrigin, credentials: true }));
   app.use(express.json());
   app.use(cookieParser());
   app.use(morgan('dev'));
