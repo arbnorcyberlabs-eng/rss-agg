@@ -714,6 +714,22 @@
             border-bottom: 1px solid #e8e8e8;
             transition: all 0.15s ease;
         }
+        .feed-item.skeleton { pointer-events: none; }
+        .skeleton-bar {
+            display: block;
+            height: 10px;
+            background: linear-gradient(90deg, #f1f1f1 0%, #e5e5e5 50%, #f1f1f1 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.2s ease-in-out infinite;
+            margin: 6px 0;
+        }
+        .skeleton-bar.title { height: 16px; width: 70%; }
+        .skeleton-bar.subtitle { width: 45%; }
+        .skeleton-bar.body { width: 90%; }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
         .feed-item:last-child { border-bottom: 2px solid #000000; }
         .feed-item:hover { background: #fafafa; padding-left: 12px; }
         .feed-item h3 {
