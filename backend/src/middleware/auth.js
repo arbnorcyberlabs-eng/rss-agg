@@ -4,6 +4,12 @@ const { verifySession } = require('../services/authService');
 
 async function attachUser(req, res, next) {
   try {
+    if (req.originalUrl?.startsWith('/api/auth/me')) {
+      console.log('attachUser /auth/me', {
+        cookieHeader: req.headers.cookie || null,
+        authHeader: req.headers.authorization || null
+      });
+    }
     const bearer = req.headers.authorization;
     const rawToken = bearer?.startsWith('Bearer ') ? bearer.slice(7) : req.cookies?.session_token;
     if (!rawToken) return next();
