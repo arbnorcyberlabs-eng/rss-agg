@@ -3,24 +3,13 @@ const Feed = require('../models/feed');
 const { upsertPostFromFeedItem } = require('./postService');
 const { listFeedsForUser } = require('./feedService');
 const { scrapeFeed } = require('./scrapeService');
-const { resolveYoutubeFeedUrl } = require('./youtubeResolver');
 
-const DEFAULT_HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (compatible; rss-agg/1.0; +https://example.com)',
-  Accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.8'
-};
-
-const parser = new Parser({
-  requestOptions: {
-    headers: DEFAULT_HEADERS,
-    timeout: 15000
-  }
-});
+const parser = new Parser();
 
 // Default public feeds; keep seeded for all users.
 const defaultFeeds = [
-  // Tech/news
   {
+    // Use slugified title for consistency with UI / requests (allows "hacker-news").
     slug: 'hacker-news',
     title: 'Hacker News',
     type: 'native_rss',
@@ -30,53 +19,23 @@ const defaultFeeds = [
     displayOrder: 1
   },
   {
-    slug: 'arxiv-cs-ai',
-    title: 'arXiv CS: AI',
-    type: 'native_rss',
-    rssUrl: 'https://export.arxiv.org/rss/cs.AI',
+    slug: 'economymedia',
+    title: 'Economy Media',
+    type: 'youtube',
+    rssUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCc8q4B1bj-668LMHyNXnTxQ',
     config: null,
     enabled: true,
     displayOrder: 2
-  },
-  {
-    slug: 'stratechery',
-    title: 'Stratechery (free)',
-    type: 'native_rss',
-    rssUrl: 'https://stratechery.com/feed/',
-    config: null,
-    enabled: true,
-    displayOrder: 3
-  },
-  // Podcasts / longform
-  {
-    slug: 'lex-fridman',
-    title: 'Lex Fridman Podcast',
-    type: 'native_rss',
-    rssUrl: 'https://lexfridman.com/feed/podcast/',
-    config: null,
-    enabled: true,
-    displayOrder: 4
-  },
-  {
-    slug: 'dwarkesh-patel',
-    title: 'Dwarkesh Podcast (YouTube)',
-    type: 'youtube',
-    rssUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9DThZ_wHc6ySsiQxzLXYxQ',
-    config: null,
-    enabled: true,
-    displayOrder: 5
   }
 ];
 
 async function ensureFeedsSeeded() {
   for (const seed of defaultFeeds) {
     // Migrate legacy slugs (e.g., "hackernews" -> "hacker-news") for global feeds.
-    const legacyByTitle = await Feed.findOne({ title: seed.title, userId: null });
-    if (legacyByTitle && legacyByTitle.slug !== seed.slug) {
-      legacyByTitle.slug = seed.slug;
-      legacyByTitle.rssUrl = seed.rssUrl;
-      legacyByTitle.type = seed.type;
-      await legacyByTitle.save();
+    const legacy = await Feed.findOne({ title: seed.title, userId: null });
+    if (legacy && legacy.slug !== seed.slug) {
+      legacy.slug = seed.slug;
+      await legacy.save();
       continue;
     }
 
@@ -104,29 +63,9 @@ async function parseWithFallback(feed) {
     candidates.push({ url: defaultSeed.rssUrl, label: 'default' });
   }
   let lastError = null;
-
-  async function fetchAndParse(url) {
-    // First attempt: parser.parseURL with headers (configured in parser above).
-    try {
-      return await parser.parseURL(url);
-    } catch (primaryErr) {
-      lastError = primaryErr;
-      // Fallback: manual fetch with permissive headers, then parse string.
-      try {
-        const res = await fetch(url, { headers: DEFAULT_HEADERS, redirect: 'follow' });
-        if (!res.ok) throw new Error(`status ${res.status}`);
-        const text = await res.text();
-        return await parser.parseString(text);
-      } catch (secondaryErr) {
-        lastError = secondaryErr;
-        throw secondaryErr;
-      }
-    }
-  }
-
   for (const candidate of candidates) {
     try {
-      const parsed = await fetchAndParse(candidate.url);
+      const parsed = await parser.parseURL(candidate.url);
       return { parsed, usedUrl: candidate.url };
     } catch (err) {
       lastError = err;
@@ -134,36 +73,6 @@ async function parseWithFallback(feed) {
     }
   }
   return { parsed: null, usedUrl: null, lastError };
-}
-
-async function recoverYoutubeFeed(feed) {
-  if (!feed?.rssUrl) return null;
-  const url = feed.rssUrl;
-  // If already a feed URL, attempt to resolve again from a channel/playlist handle.
-  if (/feeds\/videos\.xml/.test(url)) {
-    // Try to derive a channel page and re-resolve (handles channel ID rotations or legacy handles).
-    const channelIdMatch = url.match(/channel_id=([^&]+)/i);
-    const playlistIdMatch = url.match(/playlist_id=([^&]+)/i);
-    const candidatePages = [];
-    if (channelIdMatch?.[1]) candidatePages.push(`https://www.youtube.com/channel/${channelIdMatch[1]}`);
-    if (playlistIdMatch?.[1]) candidatePages.push(`https://www.youtube.com/playlist?list=${playlistIdMatch[1]}`);
-    // As a fallback, try the existing URL directly via resolver.
-    candidatePages.push(url);
-
-    for (const pageUrl of candidatePages) {
-      try {
-        const resolved = await resolveYoutubeFeedUrl(pageUrl);
-        if (resolved && resolved !== feed.rssUrl) {
-          feed.rssUrl = resolved;
-          await feed.save();
-          return resolved;
-        }
-      } catch {
-        continue;
-      }
-    }
-  }
-  return null;
 }
 
 async function fetchFeedsForRefresh(user, feedIds) {
@@ -253,17 +162,7 @@ async function refreshFeeds({ user = null, feedIds = null } = {}) {
           totalUpserted += 1;
         }
       } else {
-        let { parsed, lastError, usedUrl } = await parseWithFallback(feed);
-        // For YouTube feeds that failed, try to re-resolve and parse again.
-        if (!parsed && feed.type === 'youtube') {
-          const recovered = await recoverYoutubeFeed(feed);
-          if (recovered) {
-            const retry = await parseWithFallback(feed);
-            parsed = retry.parsed;
-            lastError = retry.lastError;
-            usedUrl = retry.usedUrl;
-          }
-        }
+        const { parsed, lastError, usedUrl } = await parseWithFallback(feed);
         // #region agent log
         fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
           method: 'POST',

@@ -1,8 +1,6 @@
 const express = require('express');
 const { guestGate } = require('../middleware/guestGate');
 const { listPosts } = require('../services/postService');
-const Feed = require('../models/feed');
-const { queueRefreshForUser, refreshFeeds } = require('../services/feedRefreshService');
 
 const router = express.Router();
 
@@ -26,38 +24,13 @@ router.get('/', guestGate, async (req, res) => {
     : requestedLimit;
   const effectivePage = isGuest ? 1 : page;
 
-  let { items, total: fullTotal } = await listPosts({
+  const { items, total: fullTotal } = await listPosts({
     user: req.user,
     page: effectivePage,
     limit: effectiveLimit,
     search,
     feedSlug: feedFilterSlug
   });
-
-  // If a specific feed was requested and nothing was returned, proactively queue a refresh
-  // for that feed to self-heal in cases where ingestion hasn’t run yet. If still empty,
-  // perform a synchronous refresh and retry once.
-  if (feedFilterSlug && feedFilterSlug !== 'global' && feedFilterSlug !== 'all' && (!items || items.length === 0)) {
-    const feed = await Feed.findOne({ slug: feedFilterSlug, enabled: true });
-    if (feed) {
-      queueRefreshForUser(req.user, [feed._id]);
-      try {
-        // Synchronous retry to avoid user seeing empty feed after manual refresh.
-        await refreshFeeds({ user: req.user, feedIds: [feed._id] });
-        const retry = await listPosts({
-          user: req.user,
-          page: effectivePage,
-          limit: effectiveLimit,
-          search,
-          feedSlug: feedFilterSlug
-        });
-        items = retry.items;
-        fullTotal = retry.total;
-      } catch {
-        // Best-effort; ignore errors so the route still responds.
-      }
-    }
-  }
 
   const previewRemaining = isGuest && guestPreviewLimit
     ? Math.max(fullTotal - guestPreviewLimit, 0)

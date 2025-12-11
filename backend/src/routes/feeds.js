@@ -2,7 +2,7 @@ const express = require('express');
 const { z } = require('zod');
 const { requireAuth } = require('../middleware/auth');
 const { listFeedsForUser, createFeed, updateFeed, deleteFeed } = require('../services/feedService');
-const { queueRefreshForUser, refreshFeeds } = require('../services/feedRefreshService');
+const { queueRefreshForUser } = require('../services/feedRefreshService');
 const { resolveYoutubeFeedUrl } = require('../services/youtubeResolver');
 
 const router = express.Router();
@@ -74,12 +74,7 @@ router.post('/', requireAuth, async (req, res) => {
         await req.user.save();
       }
     }
-    // Populate immediately so the user sees posts right after creating a feed.
-    try {
-      await refreshFeeds({ user: req.user, feedIds: [feed._id] });
-    } catch {
-      queueRefreshForUser(req.user, [feed._id]);
-    }
+    queueRefreshForUser(req.user, [feed._id]);
     res.status(201).json({ feed });
   } catch (err) {
     res.status(400).json({ error: err.message || 'Could not create feed' });
@@ -96,12 +91,7 @@ router.put('/:id', requireAuth, async (req, res) => {
       prepared.rssUrl = resolved;
     }
     const feed = await updateFeed(req.params.id, prepared, req.user);
-    // Populate immediately after updates as well.
-    try {
-      await refreshFeeds({ user: req.user, feedIds: [feed._id] });
-    } catch {
-      queueRefreshForUser(req.user, [feed._id]);
-    }
+    queueRefreshForUser(req.user, [feed._id]);
     res.json({ feed });
   } catch (err) {
     const status = err.statusCode || 400;
