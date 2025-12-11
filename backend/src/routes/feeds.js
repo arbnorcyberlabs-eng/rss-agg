@@ -39,10 +39,12 @@ router.get('/', requireAuth, async (req, res) => {
   res.json({ feeds });
 });
 
-// Public view: enabled global feeds only
+// Public view: restrict guests to a small safe set of shared feeds.
+const PUBLIC_FEED_SLUGS = ['hacker-news', 'economymedia'];
 router.get('/public', async (req, res) => {
   const feeds = await listFeedsForUser(null, { includeShared: true });
-  res.json({ feeds });
+  const filtered = feeds.filter(f => f?.slug && PUBLIC_FEED_SLUGS.includes(f.slug));
+  res.json({ feeds: filtered });
 });
 
 // Queue a refresh of the authenticated user's accessible feeds.

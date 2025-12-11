@@ -41,14 +41,18 @@ async function listAccessibleFeedIds(user, { scope = 'mixed' } = {}) {
 async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
   let scope = 'mixed';
   if (feedSlug === 'global') scope = 'global';
-  if (feedSlug === 'all') scope = 'personal';
+  if (feedSlug === 'all') scope = 'mixed';
 
   let feedIds = await listAccessibleFeedIds(user, { scope });
 
   if (feedSlug && feedSlug !== 'global' && feedSlug !== 'all') {
     const candidates = buildSlugCandidates(feedSlug);
-    const feed = await Feed.findOne({ slug: { $in: candidates }, enabled: true });
-    if (feed && feedIds.some(id => id.toString() === feed._id.toString())) {
+    const feed = await Feed.findOne({
+      _id: { $in: feedIds },
+      slug: { $in: candidates },
+      enabled: true
+    });
+    if (feed) {
       feedIds = [feed._id];
     } else {
       feedIds = [];
@@ -85,6 +89,31 @@ async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
       .lean(),
     Post.countDocuments(query)
   ]);
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H2',
+      location: 'postService.js:listPosts',
+      message: 'posts queried',
+      data: {
+        feedSlug,
+        scope,
+        feedIdCount: feedIds.length,
+        feedIdsSample: feedIds.slice(0, 3).map(id => id.toString()),
+        page,
+        limit,
+        search: Boolean(search),
+        returned: items.length,
+        total
+      },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
   const trimmed = items.map(post => ({
     ...post,
     summary: post.summary ? post.summary.slice(0, 280) : ''
