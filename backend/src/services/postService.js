@@ -85,8 +85,40 @@ async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
 
 async function upsertPostFromFeedItem(feed, item) {
   const link = item.link || item.id;
-  if (!link) return null;
+  if (!link) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'pre-fix',
+        hypothesisId: 'H3',
+        location: 'postService.js:upsertPostFromFeedItem',
+        message: 'skipping item without link',
+        data: { feedId: feed._id, slug: feed.slug, itemKeys: Object.keys(item || {}) },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
+    return null;
+  }
   if (feed.type === 'youtube' && /\/shorts\//i.test(link)) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'pre-fix',
+        hypothesisId: 'H3',
+        location: 'postService.js:upsertPostFromFeedItem',
+        message: 'skipping youtube short',
+        data: { feedId: feed._id, slug: feed.slug, link },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
     return null; // skip YouTube Shorts
   }
   const payload = {
@@ -99,11 +131,27 @@ async function upsertPostFromFeedItem(feed, item) {
     source: feed.title,
     publishedAt: item.isoDate ? new Date(item.isoDate) : new Date()
   };
-  return Post.findOneAndUpdate(
+  const result = await Post.findOneAndUpdate(
     { feedId: feed._id, link },
     payload,
     { upsert: true, new: true, setDefaultsOnInsert: true }
   );
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H3',
+      location: 'postService.js:upsertPostFromFeedItem',
+      message: 'post upserted',
+      data: { feedId: feed._id, slug: feed.slug, link },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
+  return result;
 }
 
 module.exports = {

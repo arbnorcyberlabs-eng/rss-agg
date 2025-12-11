@@ -78,14 +78,74 @@ async function fetchFeedsForRefresh(user, feedIds) {
 
 async function refreshFeeds({ user = null, feedIds = null } = {}) {
   await ensureFeedsSeeded();
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H1',
+      location: 'feedRefreshService.js:refreshFeeds',
+      message: 'refreshFeeds invoked',
+      data: { feedIds, userId: user?._id || null },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
   const feeds = await fetchFeedsForRefresh(user, feedIds);
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H1',
+      location: 'feedRefreshService.js:refreshFeeds',
+      message: 'feeds fetched for refresh',
+      data: { count: feeds.length, ids: feeds.map(f => f._id), slugs: feeds.map(f => f.slug) },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
   let totalUpserted = 0;
   let feedsParsed = 0;
 
   for (const feed of feeds) {
     try {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId: 'pre-fix',
+          hypothesisId: 'H2',
+          location: 'feedRefreshService.js:refreshFeeds',
+          message: 'processing feed',
+          data: { feedId: feed._id, slug: feed.slug, type: feed.type },
+          timestamp: Date.now()
+        })
+      }).catch(() => {});
+      // #endregion
       if (feed.type === 'scraped') {
         const { items } = await scrapeFeed(feed);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: 'debug-session',
+            runId: 'pre-fix',
+            hypothesisId: 'H3',
+            location: 'feedRefreshService.js:scraped',
+            message: 'scrape results',
+            data: { feedId: feed._id, slug: feed.slug, itemCount: items ? items.length : 0 },
+            timestamp: Date.now()
+          })
+        }).catch(() => {});
+        // #endregion
         if (!items || !items.length) continue;
         feedsParsed += 1;
         for (const item of items) {
@@ -93,7 +153,22 @@ async function refreshFeeds({ user = null, feedIds = null } = {}) {
           totalUpserted += 1;
         }
       } else {
-        const { parsed, lastError } = await parseWithFallback(feed);
+        const { parsed, lastError, usedUrl } = await parseWithFallback(feed);
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: 'debug-session',
+            runId: 'pre-fix',
+            hypothesisId: 'H2',
+            location: 'feedRefreshService.js:parseWithFallback',
+            message: 'parse result',
+            data: { feedId: feed._id, slug: feed.slug, usedUrl, itemCount: parsed?.items?.length || 0, error: lastError ? lastError.message : null },
+            timestamp: Date.now()
+          })
+        }).catch(() => {});
+        // #endregion
         if (!parsed) {
           console.warn(`Skipped ${feed.title}: ${lastError ? lastError.message : 'no usable URL'}`);
           continue;
