@@ -21,8 +21,39 @@ const { requireAuth } = require('../middleware/auth');
 const { buildGoogleAuthUrl, verifyGoogleCode } = require('../services/googleAuthService');
 const { queueRefreshForUser } = require('../services/feedRefreshService');
 const { listFeedsForUser } = require('../services/feedService');
+const fs = require('fs');
+const path = require('path');
 
 const router = express.Router();
+
+const DEBUG_LOG_PATH = path.resolve(__dirname, '..', '..', '..', '.cursor', 'debug.log');
+
+function agentLog(payload) {
+  const body = {
+    sessionId: 'debug-session',
+    runId: payload.runId || 'pre-fix',
+    ...payload,
+    timestamp: Date.now()
+  };
+  // Send to ingest server
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).catch(() => {});
+  // Also append locally in case remote ingest is unreachable
+  try {
+    fs.appendFileSync(DEBUG_LOG_PATH, JSON.stringify(body) + '\n');
+  } catch {
+    // ignore local logging errors
+  }
+  // Always emit to stdout so Render logs capture it
+  try {
+    console.log('[agentLog]', JSON.stringify(body));
+  } catch {
+    // ignore console errors
+  }
+}
 
 const credentialsSchema = z.object({
   email: z.string().email(),
@@ -61,6 +92,23 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
   const isSecure = isForwardedHttps || req.secure || !isLocalFrontend;
   const sameSite = isSecure ? 'None' : 'Lax';
 
+  // #region agent log
+  agentLog({
+    hypothesisId: 'H2',
+    location: 'routes/auth.js:setSessionCookie',
+    message: 'setSessionCookie options computed',
+    data: {
+      partitioned,
+      sameSite,
+      isSecure,
+      forwardedProto: forwardedProto || null,
+      reqSecure: req.secure || false,
+      frontendOrigin: env.frontendOrigin || null,
+      sessionIdSuffix: sessionId ? String(sessionId).slice(-6) : null
+    }
+  });
+  // #endregion
+
   if (!partitioned) {
     res.cookie('session_token', sessionId, {
       httpOnly: true,
@@ -70,6 +118,20 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
     });
     const headerVal = res.getHeader('Set-Cookie');
     console.log('Set-Cookie (non-partitioned)', headerVal);
+    // #region agent log
+    agentLog({
+      hypothesisId: 'H2',
+      location: 'routes/auth.js:setSessionCookie',
+      message: 'Set-Cookie non-partitioned',
+      data: {
+        header: headerVal,
+        partitioned: false,
+        sameSite,
+        isSecure,
+        sessionIdSuffix: sessionId ? String(sessionId).slice(-6) : null
+      }
+    });
+    // #endregion
     return;
   }
 
@@ -86,6 +148,20 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
   console.log('Setting partitioned session cookie', { sameSite: 'None', secure: true, partitioned: true });
   res.setHeader('Set-Cookie', parts.join('; '));
   console.log('Set-Cookie header (partitioned)', res.getHeader('Set-Cookie'));
+  // #region agent log
+  agentLog({
+    hypothesisId: 'H2',
+    location: 'routes/auth.js:setSessionCookie',
+    message: 'Set-Cookie partitioned',
+    data: {
+      header: res.getHeader('Set-Cookie'),
+      partitioned: true,
+      sameSite: 'None',
+      isSecure: true,
+      sessionIdSuffix: sessionId ? String(sessionId).slice(-6) : null
+    }
+  });
+  // #endregion
 }
 
 function formatUser(user) {
@@ -251,13 +327,28 @@ router.get('/google/callback', async (req, res) => {
   if (!code) return res.status(400).send('Missing code');
   console.log('Google callback received', {
     hasCode: Boolean(code),
-    stateLength: state ? String(state).length : 0
+    stateLength: state ? String(state).length : 0,
+    host: req.headers.host || null,
+    forwardedProto: req.headers['x-forwarded-proto'] || null
   });
   try {
     const googleUser = await verifyGoogleCode(code);
     if (!googleUser.email) {
       return res.status(400).send('Google account missing email');
     }
+    // #region agent log
+    agentLog({
+      hypothesisId: 'H1',
+      location: 'routes/auth.js:google/callback',
+      message: 'Google code verified',
+      data: {
+        email: googleUser.email || null,
+        emailVerified: googleUser.emailVerified,
+        hasPicture: Boolean(googleUser.picture),
+        stateLength: state ? String(state).length : 0
+      }
+    });
+    // #endregion
     const emailLower = googleUser.email.toLowerCase();
     const roles = emailLower === env.adminGoogleEmail.toLowerCase() ? ['admin'] : ['user'];
     const user = await findOrCreateGoogleUser({
@@ -283,6 +374,21 @@ router.get('/google/callback', async (req, res) => {
       env.jwtSecret,
       { expiresIn: '5m' }
     );
+    // #region agent log
+    agentLog({
+      hypothesisId: 'H3',
+      location: 'routes/auth.js:google/callback',
+      message: 'Session and tokens created',
+      data: {
+        userId: user?._id?.toString() || null,
+        roles,
+        sessionSuffix: session.sessionId.slice(-6),
+        expiresAt: session.expiresAt?.toISOString?.() || null,
+        handshakeIssued: Boolean(handshakeToken),
+        redirectState: decodeState(state)
+      }
+    });
+    // #endregion
 
     const parsedState = decodeState(state);
     const baseRedirect = parsedState.redirect || `${env.frontendOrigin.replace(/\/$/, '')}/admin.html`;
@@ -293,6 +399,20 @@ router.get('/google/callback', async (req, res) => {
     const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(
       handshakeToken
     )}#accessToken=${encodeURIComponent(accessToken)}`;
+
+    // #region agent log
+    agentLog({
+      hypothesisId: 'H3',
+      location: 'routes/auth.js:google/callback',
+      message: 'Redirect prepared',
+      data: {
+        baseRedirect,
+        hasHandshake: Boolean(handshakeToken),
+        hasAccessToken: Boolean(accessToken),
+        redirectUrlLength: redirectUrl.length
+      }
+    });
+    // #endregion
 
     res.redirect(redirectUrl);
   } catch (err) {
@@ -311,7 +431,9 @@ router.post('/handshake', async (req, res) => {
   try {
     console.log('Handshake request headers', {
       cookie: req.headers.cookie || null,
-      origin: req.headers.origin || null
+      origin: req.headers.origin || null,
+      host: req.headers.host || null,
+      forwardedProto: req.headers['x-forwarded-proto'] || null
     });
     const { token } = handshakeSchema.parse(req.body);
     const payload = jwt.verify(token, env.jwtSecret);
@@ -324,6 +446,19 @@ router.post('/handshake', async (req, res) => {
     }
 
     setSessionCookie(req, res, sid, result.session.expiresAt, { partitioned: true });
+    // #region agent log
+    agentLog({
+      hypothesisId: 'H4',
+      location: 'routes/auth.js:handshake',
+      message: 'Handshake session verified',
+      data: {
+        sidSuffix: sid ? String(sid).slice(-6) : null,
+        userId: result.user?._id?.toString() || null,
+        roles: result.user?.roles || [],
+        partitionedCookie: true
+      }
+    });
+    // #endregion
     const accessToken = buildAccessToken(result.user, sid);
     res.json({ user: formatUser(result.user), accessToken });
   } catch (err) {
