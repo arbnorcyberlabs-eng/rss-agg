@@ -472,4 +472,3 @@ router.post('/handshake', async (req, res) => {
 });
 
 module.exports = router;
-
