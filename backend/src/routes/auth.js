@@ -146,7 +146,10 @@ function setSessionCookie(req, res, sessionId, expiresAt, { partitioned = false 
     'Partitioned'
   ];
   console.log('Setting partitioned session cookie', { sameSite: 'None', secure: true, partitioned: true });
-  res.setHeader('Set-Cookie', parts.join('; '));
+  const existing = res.getHeader('Set-Cookie');
+  const arr = Array.isArray(existing) ? existing : existing ? [existing] : [];
+  arr.push(parts.join('; '));
+  res.setHeader('Set-Cookie', arr);
   console.log('Set-Cookie header (partitioned)', res.getHeader('Set-Cookie'));
   // #region agent log
   agentLog({
@@ -399,6 +402,9 @@ router.get('/google/callback', async (req, res) => {
     const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(
       handshakeToken
     )}#accessToken=${encodeURIComponent(accessToken)}`;
+
+    // Proactively set a partitioned cookie as well to survive 3P cookie blocking.
+    setSessionCookie(req, res, session.sessionId, session.expiresAt, { partitioned: true });
 
     // #region agent log
     agentLog({
