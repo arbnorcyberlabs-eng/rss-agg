@@ -41,6 +41,14 @@ async function createFeed(data, user) {
     slug: inferSlug(data),
     userId
   };
+  if (payload.slug) {
+    const exists = await Feed.findOne({ userId, slug: payload.slug });
+    if (exists) {
+      const err = new Error('Feed already exists');
+      err.statusCode = 409;
+      throw err;
+    }
+  }
   if (!payload.slug && payload.title) {
     payload.slug = canonicalizeSlug(payload.title);
   }
