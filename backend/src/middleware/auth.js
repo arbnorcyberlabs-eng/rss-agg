@@ -26,20 +26,25 @@ async function attachUser(req, res, next) {
     let userId = null;
 
     // Prefer Authorization header (JWT) if present.
-    if (bearerToken && bearerToken.split('.').length === 3) {
+    const isJwtLike = bearerToken && bearerToken.split('.').length === 3;
+    let jwtFailed = false;
+    if (isJwtLike) {
       try {
         const decoded = jwt.verify(bearerToken, env.jwtSecret);
         sessionId = decoded.sid;
         userId = decoded.sub;
       } catch {
-        // fall back to cookie/session token when JWT verification fails
+        // Invalid JWT: ignore it entirely (do not reuse as session id), but still
+        // allow cookie-based auth to proceed for a smoother client experience.
+        jwtFailed = true;
       }
     }
 
-    // Non-JWT bearer tokens (sid) or fallback to cookie token.
-    if (!sessionId && bearerToken) {
+    // Only non-JWT bearer tokens are treated as raw session IDs.
+    if (!sessionId && bearerToken && !isJwtLike) {
       sessionId = bearerToken;
     }
+    // Allow cookie fallback even if a JWT was present but invalid.
     if (!sessionId && cookieToken) {
       sessionId = cookieToken;
     }
