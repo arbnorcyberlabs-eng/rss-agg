@@ -73,6 +73,21 @@ async function updateFeed(feedId, data, user) {
   Object.assign(feed, data);
   if (!feed.slug) feed.slug = inferSlug(feed);
   feed.slug = canonicalizeSlug(feed.slug);
+
+  // Prevent duplicate slugs for the same owner/global scope.
+  if (feed.slug) {
+    const clash = await Feed.findOne({
+      _id: { $ne: feedId },
+      userId: feed.userId,
+      slug: feed.slug
+    });
+    if (clash) {
+      const err = new Error('Feed already exists');
+      err.statusCode = 409;
+      throw err;
+    }
+  }
+
   await feed.save();
   return feed;
 }

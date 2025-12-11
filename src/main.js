@@ -63,8 +63,6 @@ const saveNameBtn = document.getElementById('saveNameBtn');
 const profileLogoutBtn = document.getElementById('profileLogoutBtn');
 const deleteAccountBtn = document.getElementById('deleteAccountBtn');
 const profileError = document.getElementById('profileError');
-const feedPreferencesList = document.getElementById('feedPreferencesList');
-const saveFeedPrefsBtn = document.getElementById('saveFeedPrefsBtn');
 const resendVerificationBtn = document.getElementById('resendVerificationBtn');
 const myFeedsTableBody = document.querySelector('#myFeedsTable tbody');
 const myFeedsStatus = document.getElementById('myFeedsStatus');
@@ -339,7 +337,6 @@ function updateProfileUI(user) {
     closeProfileModal();
   }
   setProfileError('');
-  renderFeedPreferences();
 }
 
 function toggleNameEditing(enabled) {
@@ -352,61 +349,12 @@ function toggleNameEditing(enabled) {
   if (saveNameBtn) saveNameBtn.style.display = enabled ? 'inline-flex' : 'none';
 }
 
-function getPreferredFeedSlugs(user = currentUser) {
-  const prefs = user?.settings?.preferredFeeds;
-  return Array.isArray(prefs) ? prefs : [];
-}
-
 function getVisibleFeeds() {
-  const preferred = getPreferredFeedSlugs();
-  if (preferred.length) {
-    const preferredSet = new Set(preferred);
-    const filtered = availableFeeds.filter(feed => preferredSet.has(feed.slug));
-    if (filtered.length) return filtered;
-  }
   return availableFeeds;
 }
 
 function renderFeedPreferences() {
-  if (!feedPreferencesList) return;
-  feedPreferencesList.innerHTML = '';
-
-  if (!currentUser) {
-    feedPreferencesList.innerHTML = '<div class="profile-note">Sign in to choose feeds.</div>';
-    return;
-  }
-
-  if (!availableFeeds.length) {
-    feedPreferencesList.innerHTML = '<div class="profile-note">No feeds available yet.</div>';
-    return;
-  }
-
-  const preferred = new Set(getPreferredFeedSlugs());
-  const defaultChecked = preferred.size === 0;
-
-  availableFeeds.forEach(feed => {
-    if (!feed?.slug) return;
-    const wrapper = document.createElement('label');
-    wrapper.className = 'feed-pref';
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = feed.slug;
-    checkbox.checked = defaultChecked || preferred.has(feed.slug);
-
-    const label = document.createElement('div');
-    label.className = 'feed-pref-label';
-    const title = document.createElement('span');
-    title.textContent = feed.title || feed.slug;
-    const meta = document.createElement('small');
-    meta.textContent = feed.slug;
-    label.appendChild(title);
-    label.appendChild(meta);
-
-    wrapper.appendChild(checkbox);
-    wrapper.appendChild(label);
-    feedPreferencesList.appendChild(wrapper);
-  });
+  // Visibility preferences removed: all accessible feeds are shown.
 }
 
 function resetMyFeedForm() {
@@ -1435,7 +1383,6 @@ async function loadFeedsList() {
     }).catch(() => {});
     // #endregion
     buildFeedSelectors(getVisibleFeeds());
-    renderFeedPreferences();
     return;
   }
   const data = await res.json();
@@ -1461,45 +1408,10 @@ async function loadFeedsList() {
   }).catch(() => {});
   // #endregion
   buildFeedSelectors(getVisibleFeeds());
-  renderFeedPreferences();
 }
 
-async function handleSaveFeedPreferences() {
-  if (!currentUser) {
-    openAuthModal();
-    return;
-  }
-  if (!feedPreferencesList || isSavingFeedPrefs) return;
-
-  const selected = Array.from(feedPreferencesList.querySelectorAll('input[type="checkbox"]'))
-    .filter(cb => cb.checked && cb.value)
-    .map(cb => cb.value);
-
-  try {
-    isSavingFeedPrefs = true;
-    if (saveFeedPrefsBtn) {
-      saveFeedPrefsBtn.classList.add('updating');
-      saveFeedPrefsBtn.textContent = 'Saving...';
-    }
-    setProfileError('');
-    const res = await api('/auth/me', {
-      method: 'PATCH',
-      body: JSON.stringify({ preferredFeeds: selected })
-    });
-    updateAuthUI(res.user);
-    await loadFeedsList();
-    currentFeed = 'all';
-    currentPage = 1;
-    await loadFeed(currentFeed);
-  } catch (err) {
-    setProfileError(err.message || 'Could not save feed preferences.');
-  } finally {
-    isSavingFeedPrefs = false;
-    if (saveFeedPrefsBtn) {
-      saveFeedPrefsBtn.classList.remove('updating');
-      saveFeedPrefsBtn.textContent = 'Save feed choices';
-    }
-  }
+function handleSaveFeedPreferences() {
+  // No-op: feed visibility preferences removed.
 }
 
 document.getElementById('updateButton').addEventListener('click', () => {
@@ -1547,7 +1459,7 @@ profileLogoutBtn?.addEventListener('click', handleLogout);
 deleteAccountBtn?.addEventListener('click', handleDeleteAccount);
 editNameBtn?.addEventListener('click', handleEditDisplayName);
 saveNameBtn?.addEventListener('click', handleSaveDisplayName);
-saveFeedPrefsBtn?.addEventListener('click', handleSaveFeedPreferences);
+// feed visibility preferences removed
 resendVerificationBtn?.addEventListener('click', handleResendVerification);
 myFeedForm?.addEventListener('submit', handleMyFeedSubmit);
 myFeedReset?.addEventListener('click', resetMyFeedForm);
