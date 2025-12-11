@@ -1,6 +1,13 @@
 const Post = require('../models/post');
 const Feed = require('../models/feed');
 
+function buildSlugCandidates(slug = '') {
+  const lower = slug.toLowerCase();
+  const dashed = lower.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const collapsed = lower.replace(/[^a-z0-9]/g, '');
+  return Array.from(new Set([slug, lower, dashed, collapsed]));
+}
+
 async function listAccessibleFeedIds(user, { scope = 'mixed' } = {}) {
   let query = { enabled: true };
 
@@ -39,7 +46,8 @@ async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
   let feedIds = await listAccessibleFeedIds(user, { scope });
 
   if (feedSlug && feedSlug !== 'global' && feedSlug !== 'all') {
-    const feed = await Feed.findOne({ slug: feedSlug, enabled: true });
+    const candidates = buildSlugCandidates(feedSlug);
+    const feed = await Feed.findOne({ slug: { $in: candidates }, enabled: true });
     if (feed && feedIds.some(id => id.toString() === feed._id.toString())) {
       feedIds = [feed._id];
     } else {

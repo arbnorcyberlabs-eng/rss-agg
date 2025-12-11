@@ -9,7 +9,8 @@ const parser = new Parser();
 // Default public feeds; keep seeded for all users.
 const defaultFeeds = [
   {
-    slug: 'hackernews',
+    // Use slugified title for consistency with UI / requests (allows "hacker-news").
+    slug: 'hacker-news',
     title: 'Hacker News',
     type: 'native_rss',
     rssUrl: 'https://hnrss.org/frontpage',
@@ -30,6 +31,14 @@ const defaultFeeds = [
 
 async function ensureFeedsSeeded() {
   for (const seed of defaultFeeds) {
+    // Migrate legacy slugs (e.g., "hackernews" -> "hacker-news") for global feeds.
+    const legacy = await Feed.findOne({ title: seed.title, userId: null });
+    if (legacy && legacy.slug !== seed.slug) {
+      legacy.slug = seed.slug;
+      await legacy.save();
+      continue;
+    }
+
     const exists = await Feed.findOne({ slug: seed.slug, userId: null });
     if (!exists) {
       await Feed.create({

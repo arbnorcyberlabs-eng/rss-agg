@@ -1,5 +1,14 @@
 const Feed = require('../models/feed');
 
+function canonicalizeSlug(value) {
+  if (!value) return undefined;
+  return value
+    .toString()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
 async function listFeedsForUser(user, { includeShared = true } = {}) {
   const orConditions = [];
   if (includeShared) {
@@ -11,9 +20,9 @@ async function listFeedsForUser(user, { includeShared = true } = {}) {
 }
 
 function inferSlug(data) {
-  if (data.slug) return data.slug;
-  if (data.id) return data.id;
-  if (data.title) return data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const fromProvided = canonicalizeSlug(data.slug || data.id);
+  if (fromProvided) return fromProvided;
+  if (data.title) return canonicalizeSlug(data.title);
   return undefined;
 }
 
@@ -27,11 +36,15 @@ async function createFeed(data, user) {
       throw err;
     }
   }
-  return Feed.create({
+  const payload = {
     ...data,
     slug: inferSlug(data),
     userId
-  });
+  };
+  if (!payload.slug && payload.title) {
+    payload.slug = canonicalizeSlug(payload.title);
+  }
+  return Feed.create(payload);
 }
 
 async function updateFeed(feedId, data, user) {
@@ -51,6 +64,7 @@ async function updateFeed(feedId, data, user) {
 
   Object.assign(feed, data);
   if (!feed.slug) feed.slug = inferSlug(feed);
+  feed.slug = canonicalizeSlug(feed.slug);
   await feed.save();
   return feed;
 }
