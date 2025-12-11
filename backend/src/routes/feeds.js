@@ -65,6 +65,15 @@ router.post('/', requireAuth, async (req, res) => {
       prepared.rssUrl = resolved;
     }
     const feed = await createFeed(prepared, req.user);
+    // Ensure the creator sees the new feed even if they have preferredFeeds set.
+    if (req.user?.settings) {
+      const prefs = new Set(req.user.settings.preferredFeeds || []);
+      if (feed.slug) {
+        prefs.add(feed.slug);
+        req.user.settings.preferredFeeds = Array.from(prefs);
+        await req.user.save();
+      }
+    }
     queueRefreshForUser(req.user, [feed._id]);
     res.status(201).json({ feed });
   } catch (err) {

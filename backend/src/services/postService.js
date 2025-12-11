@@ -22,9 +22,10 @@ async function listAccessibleFeedIds(user, { scope = 'mixed' } = {}) {
   if (Array.isArray(preferred) && preferred.length) {
     const preferredSet = new Set(preferred);
     const filtered = feeds.filter(feed => feed.slug && preferredSet.has(feed.slug));
-    if (filtered.length) {
-      return filtered.map(f => f._id);
-    }
+    // UX safety: if preferences exist, use them when they intersect feeds,
+    // otherwise fall back to all accessible feeds so newly created feeds
+    // are not hidden until preferences are updated.
+    if (filtered.length) return filtered.map(f => f._id);
   }
 
   return feeds.map(f => f._id);
