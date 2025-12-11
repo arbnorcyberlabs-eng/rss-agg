@@ -73,4 +73,3 @@ function requireRole(role) {
 }
 
 module.exports = { attachUser, requireAuth, requireRole };
-
