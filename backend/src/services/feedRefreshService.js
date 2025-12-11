@@ -4,7 +4,17 @@ const { upsertPostFromFeedItem } = require('./postService');
 const { listFeedsForUser } = require('./feedService');
 const { scrapeFeed } = require('./scrapeService');
 
-const parser = new Parser();
+const DEFAULT_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (compatible; rss-agg/1.0; +https://example.com)',
+  Accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.8'
+};
+
+const parser = new Parser({
+  requestOptions: {
+    headers: DEFAULT_HEADERS,
+    timeout: 15000
+  }
+});
 
 // Default public feeds; keep seeded for all users.
 const defaultFeeds = [
@@ -63,9 +73,29 @@ async function parseWithFallback(feed) {
     candidates.push({ url: defaultSeed.rssUrl, label: 'default' });
   }
   let lastError = null;
+
+  async function fetchAndParse(url) {
+    // First attempt: parser.parseURL with headers (configured in parser above).
+    try {
+      return await parser.parseURL(url);
+    } catch (primaryErr) {
+      lastError = primaryErr;
+      // Fallback: manual fetch with permissive headers, then parse string.
+      try {
+        const res = await fetch(url, { headers: DEFAULT_HEADERS, redirect: 'follow' });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const text = await res.text();
+        return await parser.parseString(text);
+      } catch (secondaryErr) {
+        lastError = secondaryErr;
+        throw secondaryErr;
+      }
+    }
+  }
+
   for (const candidate of candidates) {
     try {
-      const parsed = await parser.parseURL(candidate.url);
+      const parsed = await fetchAndParse(candidate.url);
       return { parsed, usedUrl: candidate.url };
     } catch (err) {
       lastError = err;
