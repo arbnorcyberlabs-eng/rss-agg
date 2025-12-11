@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { env } = require('../config/env');
 const { verifySession } = require('../services/authService');
 
 function pickLatestSessionToken(req) {
@@ -19,23 +20,28 @@ async function attachUser(req, res, next) {
   try {
     const bearer = req.headers.authorization;
     const cookieToken = pickLatestSessionToken(req);
-    const rawToken = bearer?.startsWith('Bearer ') ? bearer.slice(7) : cookieToken;
-    if (!rawToken) return next();
+    const bearerToken = bearer?.startsWith('Bearer ') ? bearer.slice(7) : null;
 
     let sessionId = null;
     let userId = null;
 
-    // Try JWT first
-    if (rawToken.split('.').length === 3) {
+    // Prefer Authorization header (JWT) if present.
+    if (bearerToken && bearerToken.split('.').length === 3) {
       try {
-        const decoded = jwt.verify(rawToken, env.jwtSecret);
+        const decoded = jwt.verify(bearerToken, env.jwtSecret);
         sessionId = decoded.sid;
         userId = decoded.sub;
       } catch {
-        // fall back to session lookup by token
+        // fall back to cookie/session token when JWT verification fails
       }
-    } else {
-      sessionId = rawToken;
+    }
+
+    // Non-JWT bearer tokens (sid) or fallback to cookie token.
+    if (!sessionId && bearerToken) {
+      sessionId = bearerToken;
+    }
+    if (!sessionId && cookieToken) {
+      sessionId = cookieToken;
     }
 
     if (!sessionId) return next();
