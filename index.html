@@ -11,6 +11,7 @@
             background: #ffffff;
             min-height: 100vh;
             padding: 0;
+            overflow-x: hidden;
             color: #000000;
             line-height: 1.4;
             font-size: 14px;
@@ -136,6 +137,10 @@
             font-size: 0.75em;
             letter-spacing: 0.3px;
         }
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
         .mini-table {
             width: 100%;
             border-collapse: collapse;
@@ -144,6 +149,10 @@
             border: 2px solid #000000;
             border-radius: 6px;
             overflow: hidden;
+            table-layout: fixed;
+        }
+        .table-wrap .mini-table {
+            min-width: 100%;
         }
         .mini-table th, .mini-table td {
             border-bottom: 1px solid #e5e7eb;
@@ -151,6 +160,7 @@
             text-align: left;
             font-size: 0.88em;
             vertical-align: top;
+            word-break: break-word;
         }
         .mini-table th {
             text-transform: uppercase;
@@ -882,6 +892,46 @@
             .auth-actions { flex-direction: column; align-items: stretch; }
             .auth-btn { width: 100%; text-align: center; }
             .auth-bar { flex-direction: column; align-items: flex-start; }
+            .account-page { padding: 18px 14px; margin: 12px 0 18px; }
+            .account-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .back-button { width: 100%; justify-content: center; }
+            .account-card { padding: 14px; }
+            .profile-row { flex-direction: column; align-items: stretch; gap: 6px; }
+            .profile-actions { width: 100%; }
+            .profile-actions .auth-btn { flex: 1; min-width: 0; }
+            .feed-form { padding: 12px 10px; }
+            .feed-form .row { grid-template-columns: 1fr; }
+            .table-wrap { overflow-x: visible; }
+            .table-wrap .mini-table { min-width: 100%; }
+            .mini-table { border: none; }
+            .mini-table thead { display: none; }
+            .mini-table tbody { display: grid; gap: 12px; }
+            .mini-table tr {
+                display: grid;
+                gap: 8px;
+                border: 2px solid #000000;
+                border-radius: 8px;
+                padding: 12px;
+                box-shadow: 6px 6px 0 #0000000d;
+                background: #ffffff;
+            }
+            .mini-table td {
+                display: grid;
+                grid-template-columns: minmax(90px, 40%) 1fr;
+                border: none;
+                padding: 0;
+                row-gap: 4px;
+                column-gap: 10px;
+            }
+            .mini-table td::before {
+                content: attr(data-label);
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.35px;
+                color: #444;
+                font-size: 0.72em;
+            }
+            .mini-table .actions { justify-content: flex-start; }
             footer { padding: 20px 15px; margin-top: 25px; }
             footer p { font-size: 0.65em; }
         }
@@ -1022,6 +1072,7 @@
                                 <button class="auth-btn" type="submit" id="myFeedSubmit">Save feed</button>
                                 <button class="auth-btn secondary" type="button" id="myFeedReset">Reset</button>
                             </div>
+                            <p class="profile-note" id="myFeedFormStatus" style="margin-top:6px; visibility:hidden;"></p>
                         </form>
                     <div class="suggested-block">
                         <div class="label">Popular feeds</div>
@@ -1029,8 +1080,10 @@
                             <button class="suggested-btn" data-suggest-feed data-title="Hacker News" data-url="https://hnrss.org/frontpage" data-type="native_rss">Hacker News</button>
                             <button class="suggested-btn" data-suggest-feed data-title="BBC World" data-url="http://feeds.bbci.co.uk/news/world/rss.xml" data-type="native_rss">BBC World</button>
                             <button class="suggested-btn" data-suggest-feed data-title="The Verge" data-url="https://www.theverge.com/rss/index.xml" data-type="native_rss">The Verge</button>
-                            <button class="suggested-btn" data-suggest-feed data-title="Reuters World" data-url="http://feeds.reuters.com/reuters/worldNews" data-type="native_rss">Reuters World</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="NYTimes World" data-url="https://rss.nytimes.com/services/xml/rss/nyt/World.xml" data-type="native_rss">NYTimes World</button>
                             <button class="suggested-btn" data-suggest-feed data-title="TechCrunch" data-url="http://feeds.feedburner.com/TechCrunch/" data-type="native_rss">TechCrunch</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="NPR News" data-url="https://feeds.npr.org/1001/rss.xml" data-type="native_rss">NPR News</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="Ars Technica" data-url="https://feeds.arstechnica.com/arstechnica/index" data-type="native_rss">Ars Technica</button>
                     </div>
                 </div>
                     <div class="suggested-block">
@@ -1046,16 +1099,17 @@
                         <div class="label">AI people (podcasts/video)</div>
                         <div class="suggested-buttons">
                             <button class="suggested-btn" data-suggest-feed data-title="Lex Fridman" data-url="https://lexfridman.com/feed/podcast/" data-type="native_rss">Lex Fridman Podcast</button>
-                            <button class="suggested-btn" data-suggest-feed data-title="Dwarkesh Patel" data-url="https://www.youtube.com/feeds/videos.xml?channel_id=UC9DThZ_wHc6ySsiQxzLXYxQ" data-type="youtube">Dwarkesh Patel (YT)</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="Dwarkesh Patel" data-url="https://www.youtube.com/feeds/videos.xml?channel_id=UCXl4i9dYBrFOabk0xGmbkRA" data-type="youtube">Dwarkesh Patel (YT)</button>
                             <button class="suggested-btn" data-suggest-feed data-title="Machine Learning Street Talk" data-url="https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ" data-type="youtube">ML Street Talk (YT)</button>
             </div>
         </div>
                     <div class="suggested-block">
                         <div class="label">Health</div>
                         <div class="suggested-buttons">
-                            <button class="suggested-btn" data-suggest-feed data-title="WHO News" data-url="https://www.who.int/feeds/entity/mediacentre/news/en/rss.xml" data-type="native_rss">WHO News</button>
-                            <button class="suggested-btn" data-suggest-feed data-title="NIH Research Matters" data-url="https://www.nih.gov/news-events/news-releases/rss.xml" data-type="native_rss">NIH Research</button>
-                            <button class="suggested-btn" data-suggest-feed data-title="Medical News Today" data-url="https://www.medicalnewstoday.com/rss" data-type="native_rss">Medical News Today</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="WHO News (EN)" data-url="https://www.who.int/rss-feeds/news-english.xml" data-type="native_rss">WHO News (EN)</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="BBC Health" data-url="https://feeds.bbci.co.uk/news/health/rss.xml" data-type="native_rss">BBC Health</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="The Lancet" data-url="https://www.thelancet.com/rssfeed/lancet_current.xml" data-type="native_rss">The Lancet</button>
+                            <button class="suggested-btn" data-suggest-feed data-title="ScienceDaily Health" data-url="https://www.sciencedaily.com/rss/top/health.xml" data-type="native_rss">ScienceDaily Health</button>
                         </div>
                     </div>
                     <div class="suggested-block">
