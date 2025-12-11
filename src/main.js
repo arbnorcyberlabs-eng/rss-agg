@@ -68,6 +68,7 @@ const saveFeedPrefsBtn = document.getElementById('saveFeedPrefsBtn');
 const resendVerificationBtn = document.getElementById('resendVerificationBtn');
 const myFeedsTableBody = document.querySelector('#myFeedsTable tbody');
 const myFeedsStatus = document.getElementById('myFeedsStatus');
+const myFeedFormStatus = document.getElementById('myFeedFormStatus');
 const myFeedForm = document.getElementById('myFeedForm');
 const myFeedTitle = document.getElementById('myFeedTitle');
 const myFeedType = document.getElementById('myFeedType');
@@ -174,9 +175,15 @@ function setAuthInfo(message = '') {
 }
 
 function setMyFeedsStatus(message = '', isError = false) {
-  if (!myFeedsStatus) return;
-  myFeedsStatus.textContent = message;
-  myFeedsStatus.style.color = isError ? '#b91c1c' : '#666';
+  if (myFeedsStatus) {
+    myFeedsStatus.textContent = message;
+    myFeedsStatus.style.color = isError ? '#b91c1c' : '#666';
+  }
+  if (myFeedFormStatus) {
+    myFeedFormStatus.textContent = message;
+    myFeedFormStatus.style.color = isError ? '#b91c1c' : '#666';
+    myFeedFormStatus.style.visibility = message ? 'visible' : 'hidden';
+  }
 }
 
 function showLoadingSkeleton(count = itemsPerPage) {
@@ -432,11 +439,11 @@ function renderMyFeeds() {
   feeds.forEach(feed => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><strong>${escapeHtml(feed.title || feed.slug || 'Feed')}</strong></td>
-      <td>${escapeHtml(feed.type || '')}</td>
-      <td class="muted">${escapeHtml(feed.rssUrl || feed.config?.url || '')}</td>
-      <td>${feed.enabled ? 'Enabled' : 'Disabled'}</td>
-      <td>
+      <td data-label="Title"><strong>${escapeHtml(feed.title || feed.slug || 'Feed')}</strong></td>
+      <td data-label="Type">${escapeHtml(feed.type || '')}</td>
+      <td data-label="Link" class="muted">${escapeHtml(feed.rssUrl || feed.config?.url || '')}</td>
+      <td data-label="Status">${feed.enabled ? 'Enabled' : 'Disabled'}</td>
+      <td data-label="Actions">
         <div class="actions">
           <button class="auth-btn secondary" data-action="edit-my-feed" data-id="${feed._id}">Edit</button>
           <button class="auth-btn danger" data-action="delete-my-feed" data-id="${feed._id}">Delete</button>
@@ -448,6 +455,10 @@ function renderMyFeeds() {
   if (myFeedsStatus) {
     myFeedsStatus.textContent = `You have ${feeds.length}/10 feeds.`;
     myFeedsStatus.style.color = feeds.length >= 10 ? '#b91c1c' : '#666';
+  }
+  if (myFeedFormStatus && !myFeedEditingId) {
+    myFeedFormStatus.textContent = '';
+    myFeedFormStatus.style.visibility = 'hidden';
   }
   if (myFeedSubmit) {
     myFeedSubmit.disabled = feeds.length >= 10 && !myFeedEditingId;
@@ -464,7 +475,10 @@ function updateAuthUI(user) {
     itemsPerPage = targetItemsPerPage;
     currentPage = 1;
   }
-  if (!isAuthed && currentFeed === 'all') {
+  if (isAuthed && currentFeed === 'global') {
+    currentFeed = 'all';
+    currentPage = 1;
+  } else if (!isAuthed && currentFeed === 'all') {
     currentFeed = 'global';
   }
   if (authOpenBtn) {
@@ -755,7 +769,14 @@ async function handleMyFeedSubmit(event) {
     if (shouldReload) {
       await loadFeed(currentFeed, false, { allowCached: false });
     }
-    setMyFeedsStatus('Saved.');
+    const totalFeeds = myFeeds.length;
+    if (totalFeeds === 9) {
+      setMyFeedsStatus('Saved. You have 9/10 feeds. One slot left!');
+    } else if (totalFeeds >= 10) {
+      setMyFeedsStatus('Saved. You have reached your 10 feed limit.', true);
+    } else {
+      setMyFeedsStatus('Saved.');
+    }
   } catch (err) {
     setMyFeedsStatus(err.message || 'Could not save feed.', true);
   }
@@ -1072,13 +1093,129 @@ async function fetchPosts({ allowCached = true } = {}) {
   try {
     res = await fetch(`${apiBase}/posts?${params.toString()}`, {
       credentials: 'include',
-      signal: currentFetchAbort.signal
+      signal: currentFetchAbort.signal,
+      cache: 'no-store'
     });
   } catch (err) {
     if (err.name === 'AbortError') return;
     throw err;
   }
-  const data = await res.json();
+
+  if (res.status === 304) {
+    const cached = readCache();
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'pre-fix',
+        hypothesisId: 'H4',
+        location: 'main.js:fetchPosts',
+        message: '304 fallback to cache',
+        data: {
+          feed: currentFeed,
+          page: currentPage,
+          limit: itemsPerPage,
+          hasCache: Boolean(cached),
+          search: searchQuery
+        },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
+    if (cached) {
+      currentItems = cached.posts || [];
+      currentTotal = cached.total || currentItems.length;
+      gateState = cached.gateState || null;
+      guestPreview = cached.guestPreview || null;
+      updateStats(currentTotal);
+      displayCurrentPage();
+    } else {
+      gateState = null;
+      guestPreview = null;
+      currentItems = [];
+      currentTotal = 0;
+      updateStats(0);
+      displayCurrentPage();
+    }
+    return;
+  }
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H2',
+      location: 'main.js:fetchPosts',
+      message: 'posts fetch response meta',
+      data: {
+        status: res.status,
+        etag: res.headers.get('etag'),
+        cacheControl: res.headers.get('cache-control'),
+        feed: currentFeed,
+        page: currentPage,
+        limit: itemsPerPage,
+        search: searchQuery
+      },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
+
+  let data;
+  try {
+    data = await res.clone().json();
+  } catch (parseErr) {
+    const raw = await res.text().catch(() => '');
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'pre-fix',
+        hypothesisId: 'H2',
+        location: 'main.js:fetchPosts',
+        message: 'posts response parse error',
+        data: {
+          status: res.status,
+          error: parseErr.message,
+          rawSample: raw ? raw.slice(0, 200) : '',
+          feed: currentFeed
+        },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
+    throw parseErr;
+  }
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H2',
+      location: 'main.js:fetchPosts',
+      message: 'posts fetch response',
+      data: {
+        status: res.status,
+        feed: currentFeed,
+        page: currentPage,
+        limit: itemsPerPage,
+        search: searchQuery,
+        returned: data?.posts?.length || 0,
+        total: data?.total,
+        gate: data?.showSignInGate || false
+      },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
 
   if (seq !== fetchSeq) return; // stale response
 
@@ -1190,7 +1327,7 @@ function buildFeedSelectors(feeds) {
 
   const baseOptions = [{ slug: 'global', title: 'Global feed' }];
   if (currentUser) {
-    baseOptions.push({ slug: 'all', title: 'My feeds (all)' });
+    baseOptions.push({ slug: 'all', title: 'All feeds' });
   }
   const list = [...baseOptions, ...feeds];
   const visibleSlugs = new Set(list.map(feed => feed.slug));
@@ -1277,9 +1414,52 @@ function buildFeedSelectors(feeds) {
 async function loadFeedsList() {
   // If signed in, show personal + shared feeds; otherwise only public/shared.
   const path = currentUser ? '/feeds' : '/feeds/public';
-  const res = await fetch(`${apiBase}${path}`, { credentials: 'include' });
+  const res = await fetch(`${apiBase}${path}`, { credentials: 'include', cache: 'no-store' });
+  if (res.status === 304) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'pre-fix',
+        hypothesisId: 'H4',
+        location: 'main.js:loadFeedsList',
+        message: '304 feeds fallback to existing list',
+        data: {
+          path,
+          existingCount: availableFeeds.length
+        },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
+    buildFeedSelectors(getVisibleFeeds());
+    renderFeedPreferences();
+    return;
+  }
   const data = await res.json();
   availableFeeds = data.feeds || [];
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'pre-fix',
+      hypothesisId: 'H1',
+      location: 'main.js:loadFeedsList',
+      message: 'feeds list loaded',
+      data: {
+        path,
+        feedCount: availableFeeds.length,
+        slugs: availableFeeds.map(f => f.slug),
+        hasUser: Boolean(currentUser)
+      },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
   buildFeedSelectors(getVisibleFeeds());
   renderFeedPreferences();
 }
