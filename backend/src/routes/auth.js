@@ -401,7 +401,7 @@ router.get('/google/callback', async (req, res) => {
     // so it avoids server logs and referrers; handshake stays in the query.
     const redirectUrl = `${baseRedirect}${separator}handshake=${encodeURIComponent(
       handshakeToken
-    )}#accessToken=${encodeURIComponent(accessToken)}`;
+    )}#accessToken=${encodeURIComponent(accessToken)}&handshake=${encodeURIComponent(handshakeToken)}`;
 
     // Proactively set a partitioned cookie as well to survive 3P cookie blocking.
     setSessionCookie(req, res, session.sessionId, session.expiresAt, { partitioned: true });

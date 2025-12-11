@@ -3,10 +3,11 @@ const envApiBase = (import.meta?.env?.VITE_API_BASE ?? '').trim();
 const apiBase = (() => {
   if (envApiBase) return envApiBase.replace(/\/$/, '');
   if (typeof window !== 'undefined') {
-    const host = window.location.hostname || '';
-    if (host.includes('rss-agg-1.onrender.com')) return 'https://rss-agg.onrender.com/api';
-    const isLocal = host === 'localhost' || host === '127.0.0.1';
+    const { origin, hostname } = window.location;
+    const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
     if (isLocal) return 'http://localhost:4000/api';
+    // When frontend + backend are served on the same domain (Render), call the same-origin API.
+    if (origin) return `${origin.replace(/\/$/, '')}/api`;
   }
   return '/api';
 })();
