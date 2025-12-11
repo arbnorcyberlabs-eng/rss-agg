@@ -41,7 +41,7 @@ async function listAccessibleFeedIds(user, { scope = 'mixed' } = {}) {
 async function listPosts({ user, page = 1, limit = 20, search, feedSlug }) {
   let scope = 'mixed';
   if (feedSlug === 'global') scope = 'global';
-  if (feedSlug === 'all') scope = 'mixed';
+  if (feedSlug === 'all') scope = 'personal';
 
   let feedIds = await listAccessibleFeedIds(user, { scope });
 
