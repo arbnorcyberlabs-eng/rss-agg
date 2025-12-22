@@ -953,19 +953,21 @@
                     </div>
                     <button class="auth-close" id="authCloseBtn" aria-label="Close">✕</button>
                 </div>
-                <div class="auth-grid">
-                    <input type="email" id="authEmail" class="auth-input" placeholder="Email">
-                    <input type="text" id="authName" class="auth-input" placeholder="Display name (optional)">
-                    <input type="password" id="authPassword" class="auth-input" placeholder="Password (min 8 chars)">
-                </div>
-                <div class="auth-actions">
-                    <button class="auth-btn" id="loginBtn" type="button">Login</button>
-                    <button class="auth-btn secondary" id="registerBtn" type="button">Create account</button>
-                    <button class="auth-btn" id="googleSignInBtn" type="button">Sign in with Google</button>
-                    <button class="auth-btn ghost" id="resendVerificationBtn" type="button">Resend confirmation email</button>
-                    <div class="auth-info" id="authInfo" role="status"></div>
-                    <div class="auth-error" id="authError" role="alert"></div>
-                </div>
+                <form id="authForm" autocomplete="on">
+                    <div class="auth-grid">
+                        <input type="email" id="authEmail" class="auth-input" placeholder="Email" autocomplete="email">
+                        <input type="text" id="authName" class="auth-input" placeholder="Display name (optional)" autocomplete="name">
+                        <input type="password" id="authPassword" class="auth-input" placeholder="Password (min 8 chars)" autocomplete="current-password">
+                    </div>
+                    <div class="auth-actions">
+                        <button class="auth-btn" id="loginBtn" type="submit">Login</button>
+                        <button class="auth-btn secondary" id="registerBtn" type="button">Create account</button>
+                        <button class="auth-btn" id="googleSignInBtn" type="button">Sign in with Google</button>
+                        <button class="auth-btn ghost" id="resendVerificationBtn" type="button">Resend confirmation email</button>
+                        <div class="auth-info" id="authInfo" role="status"></div>
+                        <div class="auth-error" id="authError" role="alert"></div>
+                    </div>
+                </form>
                 <div class="auth-note">Use the same account to manage feeds and view more posts.</div>
             </div>
         </div>
