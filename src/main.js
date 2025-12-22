@@ -77,6 +77,7 @@ const myFeedUrlHint = document.getElementById('myFeedUrlHint');
 const myFeedSubmit = document.getElementById('myFeedSubmit');
 const myFeedReset = document.getElementById('myFeedReset');
 const suggestedFeedButtons = document.querySelectorAll('[data-suggest-feed]');
+const authForm = document.getElementById('authForm');
 let isEditingName = false;
 let isSavingFeedPrefs = false;
 let authStatusMessage = (authStatus?.textContent || '').trim();
@@ -869,21 +870,45 @@ function renderPreviewGate(preview) {
 function renderPagination() {
   const totalPages = Math.max(Math.ceil(currentTotal / itemsPerPage), 1);
   if (totalPages <= 1) return '';
-  let html = '<div class="pagination">';
-  html += `<button class="pagination-button" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>`;
+
+  const container = document.createElement('div');
+  container.className = 'pagination';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'pagination-button';
+  prevBtn.textContent = '← Prev';
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.addEventListener('click', () => changePage(currentPage - 1));
+  container.appendChild(prevBtn);
+
   const maxPagesToShow = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
   let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
   if (endPage - startPage < maxPagesToShow - 1) {
     startPage = Math.max(1, endPage - maxPagesToShow + 1);
   }
+
   for (let i = startPage; i <= endPage; i++) {
-    html += `<button class="pagination-button ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+    const pageBtn = document.createElement('button');
+    pageBtn.className = `pagination-button${i === currentPage ? ' active' : ''}`;
+    pageBtn.textContent = i;
+    pageBtn.addEventListener('click', () => changePage(i));
+    container.appendChild(pageBtn);
   }
-  html += `<button class="pagination-button" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>`;
-  html += `<span class="pagination-info">Page ${currentPage} of ${totalPages}</span>`;
-  html += '</div>';
-  return html;
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'pagination-button';
+  nextBtn.textContent = 'Next →';
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.addEventListener('click', () => changePage(currentPage + 1));
+  container.appendChild(nextBtn);
+
+  const pageInfo = document.createElement('span');
+  pageInfo.className = 'pagination-info';
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+  container.appendChild(pageInfo);
+
+  return container;
 }
 
 function displayCurrentPage() {
@@ -982,9 +1007,10 @@ function displayCurrentPage() {
     feedContent.appendChild(gateWrap);
   }
 
-  const paginationWrap = document.createElement('div');
-  paginationWrap.innerHTML = renderPagination();
-  feedContent.appendChild(paginationWrap);
+  const paginationEl = renderPagination();
+  if (paginationEl) {
+    feedContent.appendChild(paginationEl);
+  }
   const gateButtons = [
     document.getElementById('previewGateLogin'),
     document.getElementById('previewGateRegister')
@@ -1051,27 +1077,6 @@ async function fetchPosts({ allowCached = true } = {}) {
 
   if (res.status === 304) {
     const cached = readCache();
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'debug-session',
-        runId: 'pre-fix',
-        hypothesisId: 'H4',
-        location: 'main.js:fetchPosts',
-        message: '304 fallback to cache',
-        data: {
-          feed: currentFeed,
-          page: currentPage,
-          limit: itemsPerPage,
-          hasCache: Boolean(cached),
-          search: searchQuery
-        },
-        timestamp: Date.now()
-      })
-    }).catch(() => {});
-    // #endregion
     if (cached) {
       currentItems = cached.posts || [];
       currentTotal = cached.total || currentItems.length;
@@ -1089,81 +1094,13 @@ async function fetchPosts({ allowCached = true } = {}) {
     }
     return;
   }
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: 'debug-session',
-      runId: 'pre-fix',
-      hypothesisId: 'H2',
-      location: 'main.js:fetchPosts',
-      message: 'posts fetch response meta',
-      data: {
-        status: res.status,
-        etag: res.headers.get('etag'),
-        cacheControl: res.headers.get('cache-control'),
-        feed: currentFeed,
-        page: currentPage,
-        limit: itemsPerPage,
-        search: searchQuery
-      },
-      timestamp: Date.now()
-    })
-  }).catch(() => {});
-  // #endregion
 
   let data;
   try {
     data = await res.clone().json();
   } catch (parseErr) {
-    const raw = await res.text().catch(() => '');
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'debug-session',
-        runId: 'pre-fix',
-        hypothesisId: 'H2',
-        location: 'main.js:fetchPosts',
-        message: 'posts response parse error',
-        data: {
-          status: res.status,
-          error: parseErr.message,
-          rawSample: raw ? raw.slice(0, 200) : '',
-          feed: currentFeed
-        },
-        timestamp: Date.now()
-      })
-    }).catch(() => {});
-    // #endregion
     throw parseErr;
   }
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: 'debug-session',
-      runId: 'pre-fix',
-      hypothesisId: 'H2',
-      location: 'main.js:fetchPosts',
-      message: 'posts fetch response',
-      data: {
-        status: res.status,
-        feed: currentFeed,
-        page: currentPage,
-        limit: itemsPerPage,
-        search: searchQuery,
-        returned: data?.posts?.length || 0,
-        total: data?.total,
-        gate: data?.showSignInGate || false
-      },
-      timestamp: Date.now()
-    })
-  }).catch(() => {});
-  // #endregion
 
   if (seq !== fetchSeq) return; // stale response
 
@@ -1364,49 +1301,11 @@ async function loadFeedsList() {
   const path = currentUser ? '/feeds' : '/feeds/public';
   const res = await fetch(`${apiBase}${path}`, { credentials: 'include', cache: 'no-store' });
   if (res.status === 304) {
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'debug-session',
-        runId: 'pre-fix',
-        hypothesisId: 'H4',
-        location: 'main.js:loadFeedsList',
-        message: '304 feeds fallback to existing list',
-        data: {
-          path,
-          existingCount: availableFeeds.length
-        },
-        timestamp: Date.now()
-      })
-    }).catch(() => {});
-    // #endregion
     buildFeedSelectors(getVisibleFeeds());
     return;
   }
   const data = await res.json();
   availableFeeds = data.feeds || [];
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/3e16f2d6-49d1-4c3c-81fa-a147d8e19c39', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: 'debug-session',
-      runId: 'pre-fix',
-      hypothesisId: 'H1',
-      location: 'main.js:loadFeedsList',
-      message: 'feeds list loaded',
-      data: {
-        path,
-        feedCount: availableFeeds.length,
-        slugs: availableFeeds.map(f => f.slug),
-        hasUser: Boolean(currentUser)
-      },
-      timestamp: Date.now()
-    })
-  }).catch(() => {});
-  // #endregion
   buildFeedSelectors(getVisibleFeeds());
 }
 
@@ -1422,9 +1321,6 @@ document.getElementById('updateButton').addEventListener('click', () => {
 
 document.getElementById('searchInput').addEventListener('input', scheduleSearch);
 document.getElementById('clearSearch').addEventListener('click', clearSearch);
-
-// Expose for inline handlers
-window.changePage = changePage;
 
 authOpenBtn?.addEventListener('click', () => {
   setAuthError('');
@@ -1451,8 +1347,11 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+authForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleLogin();
+});
 registerBtn?.addEventListener('click', handleRegister);
-loginBtn?.addEventListener('click', handleLogin);
 logoutBtn?.addEventListener('click', handleLogout);
 googleSignInBtn?.addEventListener('click', handleGoogleSignIn);
 profileLogoutBtn?.addEventListener('click', handleLogout);
