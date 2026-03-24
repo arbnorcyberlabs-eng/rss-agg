@@ -3,7 +3,7 @@
   <title>Combined Feed - All Sources</title>
   <link href="https://arbnorcyberlabs-eng.github.io/rss-agg/all.xml" rel="self"/>
   <link href="https://arbnorcyberlabs-eng.github.io/rss-agg/"/>
-  <updated>2026-03-23T18:08:10.444Z</updated>
+  <updated>2026-03-24T06:37:19.453Z</updated>
   <id>https://arbnorcyberlabs-eng.github.io/rss-agg/all.xml</id>
   <author>
     <name>RSS Feed Aggregator</name>
@@ -12,709 +12,709 @@
         <title type="html"><![CDATA[How I Solved a Real-World Customer Problem with the Model Context Protocol (MCP)]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.597Z</updated>
+        <updated>2026-03-24T06:37:18.639Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe?source=user_profile_page---------9-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How I Solved a Real-World Customer Problem with the Model Context Protocol (MCP)</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Turning a complex churn-prediction pipeline into a weekend project</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 4, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe?source=user_profile_page---------9-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="24" aria-labelledby="24"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F328da5ac76fe&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe&amp;source=---------9-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How I Solved a Real-World Customer Problem with the Model Context Protocol (MCP)"><div class="by r s"><img alt="How I Solved a Real-World Customer Problem with the Model Context Protocol (MCP)" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*Xadp_kSLE86LC57UD9h5uQ.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How I Solved a Real-World Customer Problem with the Model Context Protocol (MCP)" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*Xadp_kSLE86LC57UD9h5uQ.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 4, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe?source=user_profile_page---------9-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="25" aria-labelledby="25"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F328da5ac76fe&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-i-solved-a-real-world-customer-problem-with-the-model-context-protocol-mcp-328da5ac76fe&amp;source=---------9-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[How 5 AI Agents Turned a 3-Day Monthly Investor Report into a 20-Minute Task]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.595Z</updated>
+        <updated>2026-03-24T06:37:18.635Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1?source=user_profile_page---------8-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How 5 AI Agents Turned a 3-Day Monthly Investor Report into a 20-Minute Task</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Stop wasting entire days on investor reports. Here’s the AI pipeline that automated 90% of my monthly updates, saving time to be…</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 11, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1?source=user_profile_page---------8-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="22" aria-labelledby="22"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fee556208bec1&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1&amp;source=---------8-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How 5 AI Agents Turned a 3-Day Monthly Investor Report into a 20-Minute Task"><div class="by r s"><img alt="How 5 AI Agents Turned a 3-Day Monthly Investor Report into a 20-Minute Task" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*mE8gxQ-pKyHpMMgsBcEwLw.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How 5 AI Agents Turned a 3-Day Monthly Investor Report into a 20-Minute Task" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*mE8gxQ-pKyHpMMgsBcEwLw.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 11, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1?source=user_profile_page---------8-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="23" aria-labelledby="23"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fee556208bec1&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-5-ai-agents-turned-a-3-day-monthly-investor-report-into-a-20-minute-task-ee556208bec1&amp;source=---------8-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[How to Build you Own MCP Server]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.593Z</updated>
+        <updated>2026-03-24T06:37:18.634Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-to-build-a-rag-mcp-server-3c514a265207" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-to-build-a-rag-mcp-server-3c514a265207?source=user_profile_page---------7-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How to Build you Own MCP Server</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Connect your vector database to any AI Agent in 15 minutes.</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-build-a-rag-mcp-server-3c514a265207?source=user_profile_page---------7-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="20" aria-labelledby="20"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F3c514a265207&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-build-a-rag-mcp-server-3c514a265207&amp;source=---------7-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How to Build you Own MCP Server"><div class="by r s"><img alt="How to Build you Own MCP Server" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*kiGjVpDu0gIfo8_SZpJw1A.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How to Build you Own MCP Server" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*kiGjVpDu0gIfo8_SZpJw1A.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-build-a-rag-mcp-server-3c514a265207?source=user_profile_page---------7-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="21" aria-labelledby="21"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F3c514a265207&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-build-a-rag-mcp-server-3c514a265207&amp;source=---------7-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[How Context7 MCP by Upstash Transformed My VSCode and Copilot Workflow]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.592Z</updated>
+        <updated>2026-03-24T06:37:18.633Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4?source=user_profile_page---------6-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How Context7 MCP by Upstash Transformed My VSCode and Copilot Workflow</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">This MCP Server dramatically improved the context of my AI coding assistant</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 26, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4?source=user_profile_page---------6-------------f7824122278f----------------------" data-discover="true"><div><div class="v" role="tooltip" aria-describedby="16" aria-labelledby="16"><div tabindex="-1" class="ba"><div class="v j fd"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6B6B6B" aria-labelledby="response-filled-16px-desc" viewBox="0 0 16 16"><desc id="response-filled-16px-desc">A response icon</desc><path fill="#6B6B6B" d="M12.344 11.458A5.28 5.28 0 0 0 14 7.526C14 4.483 11.391 2 8.051 2S2 4.483 2 7.527c0 3.051 2.712 5.526 6.059 5.526a6.6 6.6 0 0 0 1.758-.236q.255.223.554.414c.784.51 1.626.768 2.512.768a.37.37 0 0 0 .355-.214.37.37 0 0 0-.03-.384 4.7 4.7 0 0 1-.857-1.958v.014z"></path></svg><span>1</span></div></div></div></div></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="17" aria-labelledby="17"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F1658a7826ec4&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4&amp;source=---------6-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How Context7 MCP by Upstash Transformed My VSCode and Copilot Workflow"><div class="by r s"><img alt="How Context7 MCP by Upstash Transformed My VSCode and Copilot Workflow" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*L_NpOIIKh0xIYuGXkega3Q.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How Context7 MCP by Upstash Transformed My VSCode and Copilot Workflow" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*L_NpOIIKh0xIYuGXkega3Q.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Jun 26, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4?source=user_profile_page---------6-------------f7824122278f----------------------" data-discover="true"><div><div class="v" role="tooltip" aria-describedby="18" aria-labelledby="18"><div tabindex="-1" class="ba"><div class="v j fd"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6B6B6B" aria-labelledby="response-filled-16px-desc" viewBox="0 0 16 16"><desc id="response-filled-16px-desc">A response icon</desc><path fill="#6B6B6B" d="M12.344 11.458A5.28 5.28 0 0 0 14 7.526C14 4.483 11.391 2 8.051 2S2 4.483 2 7.527c0 3.051 2.712 5.526 6.059 5.526a6.6 6.6 0 0 0 1.758-.236q.255.223.554.414c.784.51 1.626.768 2.512.768a.37.37 0 0 0 .355-.214.37.37 0 0 0-.03-.384 4.7 4.7 0 0 1-.857-1.958v.014z"></path></svg><span>1</span></div></div></div></div></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="19" aria-labelledby="19"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F1658a7826ec4&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-context7-mcp-by-upstash-transformed-my-vscode-and-copilot-workflow-1658a7826ec4&amp;source=---------6-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[How to Fine-Tune LLMs Locally: The Complete LoRA Guide]]></title>
-        <id>https://medium.com/@matteo28</id>
-        <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.590Z</updated>
-        <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How to Fine-Tune LLMs Locally: The Complete LoRA Guide</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Master LoRA Fine-Tuning on Apple Silicon with minimal memory usage. From setup to deployment in one comprehensive tutorial.</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Oct 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="14" aria-labelledby="14"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F420fe9e1278d&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d&amp;source=---------5-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How to Fine-Tune LLMs Locally: The Complete LoRA Guide"><div class="by r s"><img alt="How to Fine-Tune LLMs Locally: The Complete LoRA Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*mz_rBWABBNR_5cUAnGACIw.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How to Fine-Tune LLMs Locally: The Complete LoRA Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*mz_rBWABBNR_5cUAnGACIw.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Oct 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="15" aria-labelledby="15"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F420fe9e1278d&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d&amp;source=---------5-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[How to Fine-Tune the new DeepSeek OCR model with Unsloth]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.588Z</updated>
+        <updated>2026-03-24T06:37:18.632Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd?source=user_profile_page---------4-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How to Fine-Tune the new DeepSeek OCR model with Unsloth</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">A Complete Guide to Adapting the OCR Model to Your Needs</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Nov 5, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd?source=user_profile_page---------4-------------f7824122278f----------------------" data-discover="true"><div><div class="v" role="tooltip" aria-describedby="10" aria-labelledby="10"><div tabindex="-1" class="ba"><div class="v j fd"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6B6B6B" aria-labelledby="response-filled-16px-desc" viewBox="0 0 16 16"><desc id="response-filled-16px-desc">A response icon</desc><path fill="#6B6B6B" d="M12.344 11.458A5.28 5.28 0 0 0 14 7.526C14 4.483 11.391 2 8.051 2S2 4.483 2 7.527c0 3.051 2.712 5.526 6.059 5.526a6.6 6.6 0 0 0 1.758-.236q.255.223.554.414c.784.51 1.626.768 2.512.768a.37.37 0 0 0 .355-.214.37.37 0 0 0-.03-.384 4.7 4.7 0 0 1-.857-1.958v.014z"></path></svg><span>2</span></div></div></div></div></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="11" aria-labelledby="11"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F3964c01f39bd&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd&amp;source=---------4-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How to Fine-Tune the new DeepSeek OCR model with Unsloth"><div class="by r s"><img alt="How to Fine-Tune the new DeepSeek OCR model with Unsloth" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*PpE0jXZbsv3z6DsrQMUFLw.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How to Fine-Tune the new DeepSeek OCR model with Unsloth" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*PpE0jXZbsv3z6DsrQMUFLw.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Nov 5, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd?source=user_profile_page---------4-------------f7824122278f----------------------" data-discover="true"><div><div class="v" role="tooltip" aria-describedby="12" aria-labelledby="12"><div tabindex="-1" class="ba"><div class="v j fd"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6B6B6B" aria-labelledby="response-filled-16px-desc" viewBox="0 0 16 16"><desc id="response-filled-16px-desc">A response icon</desc><path fill="#6B6B6B" d="M12.344 11.458A5.28 5.28 0 0 0 14 7.526C14 4.483 11.391 2 8.051 2S2 4.483 2 7.527c0 3.051 2.712 5.526 6.059 5.526a6.6 6.6 0 0 0 1.758-.236q.255.223.554.414c.784.51 1.626.768 2.512.768a.37.37 0 0 0 .355-.214.37.37 0 0 0-.03-.384 4.7 4.7 0 0 1-.857-1.958v.014z"></path></svg><span>2</span></div></div></div></div></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="13" aria-labelledby="13"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F3964c01f39bd&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-the-new-deepseek-ocr-model-with-unsloth-3964c01f39bd&amp;source=---------4-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[How to Fine-Tune LLMs Locally: The Complete LoRA Guide]]></title>
+        <id>https://medium.com/@matteo28</id>
+        <link href="https://medium.com/@matteo28"/>
+        <updated>2026-03-24T06:37:18.632Z</updated>
+        <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">How to Fine-Tune LLMs Locally: The Complete LoRA Guide</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Master LoRA Fine-Tuning on Apple Silicon with minimal memory usage. From setup to deployment in one comprehensive tutorial.</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Oct 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="14" aria-labelledby="14"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F420fe9e1278d&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d&amp;source=---------5-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="How to Fine-Tune LLMs Locally: The Complete LoRA Guide"><div class="by r s"><img alt="How to Fine-Tune LLMs Locally: The Complete LoRA Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*mz_rBWABBNR_5cUAnGACIw.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="How to Fine-Tune LLMs Locally: The Complete LoRA Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*mz_rBWABBNR_5cUAnGACIw.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Oct 18, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/how-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d?source=user_profile_page---------5-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="15" aria-labelledby="15"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F420fe9e1278d&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fhow-to-fine-tune-llms-locally-the-complete-lora-guide-420fe9e1278d&amp;source=---------5-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[My Startup’s Website is Generated by AI. So What?]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.587Z</updated>
+        <updated>2026-03-24T06:37:18.628Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/my-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/my-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd?source=user_profile_page---------3-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">My Startup’s Website is Generated by AI. So What?</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">It’s a feature, not a bug.</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Dec 8, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/my-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd?source=user_profile_page---------3-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="8" aria-labelledby="8"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F7bebdbbef9fd&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fmy-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd&amp;source=---------3-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="My Startup’s Website is Generated by AI. So What?"><div class="by r s"><img alt="My Startup’s Website is Generated by AI. So What?" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/0*87NrO0tkcyGnii2Q.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="My Startup’s Website is Generated by AI. So What?" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/0*87NrO0tkcyGnii2Q.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Dec 8, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/my-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd?source=user_profile_page---------3-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="9" aria-labelledby="9"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F7bebdbbef9fd&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fmy-startups-website-is-generated-by-ai-so-what-7bebdbbef9fd&amp;source=---------3-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[QLoRA Fine-Tuning with Unsloth: A Complete Guide]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.586Z</updated>
+        <updated>2026-03-24T06:37:18.626Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/qlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/qlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3?source=user_profile_page---------2-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">QLoRA Fine-Tuning with Unsloth: A Complete Guide</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Learn how to fine-tune a 3B parameter model using just 8GB of VRAM with 4-bit quantization and optimized LoRA adapters</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Dec 17, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/qlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3?source=user_profile_page---------2-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="6" aria-labelledby="6"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F8652c9c7edb3&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fqlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3&amp;source=---------2-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="QLoRA Fine-Tuning with Unsloth: A Complete Guide"><div class="by r s"><img alt="QLoRA Fine-Tuning with Unsloth: A Complete Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*RKHhYeRXObctzHD3vK9QxQ.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="QLoRA Fine-Tuning with Unsloth: A Complete Guide" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*RKHhYeRXObctzHD3vK9QxQ.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Dec 17, 2025</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/qlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3?source=user_profile_page---------2-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="7" aria-labelledby="7"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F8652c9c7edb3&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fqlora-fine-tuning-with-unsloth-a-complete-guide-8652c9c7edb3&amp;source=---------2-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Stop Treating AI Like a Toy: How to Build a Multi-Agent Architecture That Actually Scales]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.584Z</updated>
+        <updated>2026-03-24T06:37:18.620Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/stop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/stop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e?source=user_profile_page---------1-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">Stop Treating AI Like a Toy: How to Build a Multi-Agent Architecture That Actually Scales</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Most companies are wasting money on AI proof-of-concepts that vanish into thin air. Here’s the infrastructure approach that turns agents…</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Feb 16</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/stop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e?source=user_profile_page---------1-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="4" aria-labelledby="4"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Faf56e79ce56e&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fstop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e&amp;source=---------1-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="Stop Treating AI Like a Toy: How to Build a Multi-Agent Architecture That Actually Scales"><div class="by r s"><img alt="Stop Treating AI Like a Toy: How to Build a Multi-Agent Architecture That Actually Scales" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*WZuyddym4kbf0ae_EyGNtA.png" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="Stop Treating AI Like a Toy: How to Build a Multi-Agent Architecture That Actually Scales" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*WZuyddym4kbf0ae_EyGNtA.png" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Feb 16</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/stop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e?source=user_profile_page---------1-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="5" aria-labelledby="5"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Faf56e79ce56e&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fstop-treating-ai-like-a-toy-how-to-build-a-multi-agent-architecture-that-actually-scales-af56e79ce56e&amp;source=---------1-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Why Your AI Strategy Is Failing (and How to Turn It into Real Business Capital)]]></title>
         <id>https://medium.com/@matteo28</id>
         <link href="https://medium.com/@matteo28"/>
-        <updated>2026-03-23T18:08:09.582Z</updated>
+        <updated>2026-03-24T06:37:18.619Z</updated>
         <content type="html"><![CDATA[<div class="ke e"><div class="bd dp"><div class="e"><div class="kg kh v j ki"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16" class="ds bx"><path fill="currentColor" fill-rule="evenodd" d="M9.788 1.027a.5.5 0 1 0-.707.707l.59.589-3.32 3.319a2.17 2.17 0 0 1-1.346.626l-2.442.21a.833.833 0 0 0-.518 1.42l2.676 2.675-3.418 3.417a.5.5 0 1 0 .707.707l3.418-3.417 2.675 2.675a.833.833 0 0 0 1.42-.518l.209-2.441c.044-.51.266-.986.627-1.347l3.318-3.32.59.59a.5.5 0 0 0 .707-.707l-.943-.943-3.3-3.3zm-3.653 9.546 2.422 2.422.179-2.085c.063-.743.388-1.44.916-1.968l3.318-3.32-2.593-2.592L7.06 6.349a3.17 3.17 0 0 1-1.969.916l-2.084.178 2.422 2.422z" clip-rule="evenodd"></path></svg><div class="bb b dt u ds v kf fv">Pinned</div></div><div class="bd e"><div style="position:relative;display:flex" role="link" data-href="https://medium.com/@matteo28/why-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3" tabindex="0"><div class="bd kj kk kl km"><div class="kn ko kp kq kr v j ks kt"></div><div class="v"><div class="e ca gs"><div class="ku kv kw kx ky kz la lb lc ld"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/@matteo28/why-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3?source=user_profile_page---------0-------------f7824122278f----------------------" data-discover="true"><h2 class="bb le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my bg">Why Your AI Strategy Is Failing (and How to Turn It into Real Business Capital)</h2><div class="mz"><h3 class="bb b gv u fv na nb nc nd ne my ds">Stop building disposable “toys.” It’s time for a standard architecture to govern, version, and scale your digital workforce.</h3></div></a></div><div class="au bt"><div class="nf ng nh ni nj nk nl nm nn no e"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Feb 2</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/why-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3?source=user_profile_page---------0-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="2" aria-labelledby="2"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Ffe33edb70bd3&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fwhy-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3&amp;source=---------0-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="ny nz oa ob oc e"><div aria-label="Why Your AI Strategy Is Failing (and How to Turn It into Real Business Capital)"><div class="by r s"><img alt="Why Your AI Strategy Is Failing (and How to Turn It into Real Business Capital)" class="bs od" src="https://miro.medium.com/v2/resize:fill:160:106/1*d2YdB_QRLeY1Z12Rozu3Gw.jpeg" width="80" height="53" loading="lazy"></div><div class="au bt"><img alt="Why Your AI Strategy Is Failing (and How to Turn It into Real Business Capital)" class="bs od" src="https://miro.medium.com/v2/resize:fill:320:214/1*d2YdB_QRLeY1Z12Rozu3Gw.jpeg" width="160" height="107" loading="lazy"></div></div></div></div><div class="oe by r s"><span class="bb b dt u ds"><div class="np v ks y"><div class="v j kt"><span class="e fg"><span>Feb 2</span></span><div class="au bt by r s"><div class="dq nq nr v j"><div class="fr ns nt v j kt"><div class="fb nr cp e gf"></div></div><a class="fr jv nt v j kt" tabindex="-1" rel="noopener follow" href="/@matteo28/why-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3?source=user_profile_page---------0-------------f7824122278f----------------------" data-discover="true"></a></div></div></div><div class="v j nu nv"><div class="au bt by r s"><div><div class="bi" role="tooltip" aria-describedby="3" aria-labelledby="3"><div tabindex="-1" class="ba"><span data-dd-action-name="Susi presentation tracker bookmark_preview"><a class="z ab ac fc af ag ah ai aj ak al am an ao ap" rel="noopener follow" href="/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Ffe33edb70bd3&amp;operation=register&amp;redirect=https%3A%2F%2Fmedium.com%2F%40matteo28%2Fwhy-your-ai-strategy-is-failing-and-how-to-turn-it-into-real-business-capital-fe33edb70bd3&amp;source=---------0-------------f7824122278f----bookmark_preview------------------" data-discover="true"><span class="nw"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25" class="ds nx" aria-label="Add to list bookmark button"><path fill="currentColor" d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .805.396L12.5 17l5.695 4.396A.5.5 0 0 0 19 21v-8.5a.5.5 0 0 0-1 0v7.485l-5.195-4.012a.5.5 0 0 0-.61 0L7 19.985z"></path></svg></span></a></span></div></div></div></div></div></div></span></div></div></div><div class="of bd k og oh oi oj ok"></div></div></div></div></div>]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[GrapheneOS refuses to comply with new age verification laws for operating system]]></title>
-        <id>https://www.tomshardware.com/software/operating-systems/grapheneos-refuses-to-comply-with-age-verification-laws</id>
-        <link href="https://www.tomshardware.com/software/operating-systems/grapheneos-refuses-to-comply-with-age-verification-laws"/>
-        <updated>2026-03-23T18:08:04.704Z</updated>
-        <content type="html"><![CDATA[GrapheneOS refuses to comply with new age verification laws for operating system]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Some things just take time]]></title>
-        <id>https://lucumr.pocoo.org/2026/3/20/some-things-just-take-time/</id>
-        <link href="https://lucumr.pocoo.org/2026/3/20/some-things-just-take-time/"/>
-        <updated>2026-03-23T18:08:04.703Z</updated>
-        <content type="html"><![CDATA[Some things just take time]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Why Expanding Roads Fails to Reduce Traffic Congestion]]></title>
-        <id>https://www.nominalnews.com/p/expanding-roads-traffic-congestion</id>
-        <link href="https://www.nominalnews.com/p/expanding-roads-traffic-congestion"/>
-        <updated>2026-03-23T18:08:04.701Z</updated>
-        <content type="html"><![CDATA[Why Expanding Roads Fails to Reduce Traffic Congestion]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Node.js worker threads are problematic, but they work great for us]]></title>
-        <id>https://www.inngest.com/blog/node-worker-threads</id>
-        <link href="https://www.inngest.com/blog/node-worker-threads"/>
-        <updated>2026-03-23T18:08:04.700Z</updated>
-        <content type="html"><![CDATA[Node.js worker threads are problematic, but they work great for us]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[The three pillars of JavaScript bloat]]></title>
-        <id>https://43081j.com/2026/03/three-pillars-of-javascript-bloat</id>
-        <link href="https://43081j.com/2026/03/three-pillars-of-javascript-bloat"/>
-        <updated>2026-03-23T18:08:04.699Z</updated>
-        <content type="html"><![CDATA[The three pillars of JavaScript bloat]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Bayesian statistics for confused data scientists]]></title>
-        <id>https://nchagnet.pages.dev/blog/bayesian-statistics-for-confused-data-scientists/</id>
-        <link href="https://nchagnet.pages.dev/blog/bayesian-statistics-for-confused-data-scientists/"/>
-        <updated>2026-03-23T18:08:04.696Z</updated>
-        <content type="html"><![CDATA[Bayesian statistics for confused data scientists]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Theodosian Land Walls of Constantinople (2025)]]></title>
-        <id>https://turkisharchaeonews.net/object/theodosian-land-walls-constantinople</id>
-        <link href="https://turkisharchaeonews.net/object/theodosian-land-walls-constantinople"/>
-        <updated>2026-03-23T18:08:04.691Z</updated>
-        <content type="html"><![CDATA[Theodosian Land Walls of Constantinople (2025)]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[HopTab – Open source macOS app switcher and tiler that replaces Cmd+Tab]]></title>
-        <id>https://www.royalbhati.com/hoptab</id>
-        <link href="https://www.royalbhati.com/hoptab"/>
-        <updated>2026-03-23T18:08:04.690Z</updated>
-        <content type="html"><![CDATA[HopTab – Open source macOS app switcher and tiler that replaces Cmd+Tab]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Intuitions for Tranformer Circuits]]></title>
-        <id>https://www.connorjdavis.com/p/intuitions-for-transformer-circuits</id>
-        <link href="https://www.connorjdavis.com/p/intuitions-for-transformer-circuits"/>
-        <updated>2026-03-23T18:08:04.688Z</updated>
-        <content type="html"><![CDATA[Intuitions for Tranformer Circuits]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[JavaScript Is Enough]]></title>
-        <id>https://geajs.com/</id>
-        <link href="https://geajs.com/"/>
-        <updated>2026-03-23T18:08:04.687Z</updated>
-        <content type="html"><![CDATA[JavaScript Is Enough]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Vectorization of Verilog Designs and its Effects on Verification and Synthesis]]></title>
-        <id>https://arxiv.org/abs/2603.17099</id>
-        <link href="https://arxiv.org/abs/2603.17099"/>
-        <updated>2026-03-23T18:08:04.686Z</updated>
-        <content type="html"><![CDATA[Vectorization of Verilog Designs and its Effects on Verification and Synthesis]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Cloudflare flags archive.today as "C&C/Botnet"; no longer resolves via 1.1.1.2]]></title>
-        <id>https://radar.cloudflare.com/domains/domain/archive.today</id>
-        <link href="https://radar.cloudflare.com/domains/domain/archive.today"/>
-        <updated>2026-03-23T18:08:04.684Z</updated>
-        <content type="html"><![CDATA[Cloudflare flags archive.today as "C&amp;C/Botnet"; no longer resolves via 1.1.1.2]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[OpenClaw is a security nightmare dressed up as a daydream]]></title>
-        <id>https://composio.dev/content/openclaw-security-and-vulnerabilities</id>
-        <link href="https://composio.dev/content/openclaw-security-and-vulnerabilities"/>
-        <updated>2026-03-23T18:08:04.683Z</updated>
-        <content type="html"><![CDATA[OpenClaw is a security nightmare dressed up as a daydream]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[A case against currying]]></title>
-        <id>https://emi-h.com/articles/a-case-against-currying.html</id>
-        <link href="https://emi-h.com/articles/a-case-against-currying.html"/>
-        <updated>2026-03-23T18:08:04.682Z</updated>
-        <content type="html"><![CDATA[A case against currying]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Show HN: Revise – An AI Editor for Documents]]></title>
-        <id>https://revise.io/</id>
-        <link href="https://revise.io/"/>
-        <updated>2026-03-23T18:08:04.679Z</updated>
-        <content type="html"><![CDATA[Show HN: Revise – An AI Editor for Documents]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[TypeScript 6.0]]></title>
-        <id>https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/</id>
-        <link href="https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/"/>
-        <updated>2026-03-23T18:08:04.678Z</updated>
-        <content type="html"><![CDATA[TypeScript 6.0]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Brute-forcing my algorithmic ignorance]]></title>
-        <id>http://blog.dominikrudnik.pl/my-google-recruitment-journey-part-1</id>
-        <link href="http://blog.dominikrudnik.pl/my-google-recruitment-journey-part-1"/>
-        <updated>2026-03-23T18:08:04.676Z</updated>
-        <content type="html"><![CDATA[Brute-forcing my algorithmic ignorance]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Show HN: Codala, a social network built on scanning barcodes]]></title>
-        <id>https://play.google.com/store/apps/details?id=com.hsynkrkye.codala&amp;hl=en</id>
-        <link href="https://play.google.com/store/apps/details?id=com.hsynkrkye.codala&amp;hl=en"/>
-        <updated>2026-03-23T18:08:04.675Z</updated>
-        <content type="html"><![CDATA[Show HN: Codala, a social network built on scanning barcodes]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Apply video compression on KV cache to 10,000x less error at Q4 quant]]></title>
-        <id>https://github.com/cenconq25/delta-compress-llm</id>
-        <link href="https://github.com/cenconq25/delta-compress-llm"/>
-        <updated>2026-03-23T18:08:04.673Z</updated>
-        <content type="html"><![CDATA[Apply video compression on KV cache to 10,000x less error at Q4 quant]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Lyme Disease Vaccine Candidate Demonstrates Strong Efficacy in Phase 3 Trial]]></title>
-        <id>https://www.pfizer.com/news/press-release/press-release-detail/pfizer-and-valneva-announce-lyme-disease-vaccine-candidate</id>
-        <link href="https://www.pfizer.com/news/press-release/press-release-detail/pfizer-and-valneva-announce-lyme-disease-vaccine-candidate"/>
-        <updated>2026-03-23T18:08:04.672Z</updated>
-        <content type="html"><![CDATA[Lyme Disease Vaccine Candidate Demonstrates Strong Efficacy in Phase 3 Trial]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[DoorDash Tasks]]></title>
-        <id>https://about.doordash.com/en-us/news/introducing-doordash-tasks</id>
-        <link href="https://about.doordash.com/en-us/news/introducing-doordash-tasks"/>
-        <updated>2026-03-23T18:08:04.670Z</updated>
-        <content type="html"><![CDATA[DoorDash Tasks]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Show HN: Agent Kernel – Three Markdown files that make any AI agent stateful]]></title>
-        <id>https://github.com/oguzbilgic/agent-kernel</id>
-        <link href="https://github.com/oguzbilgic/agent-kernel"/>
-        <updated>2026-03-23T18:08:04.669Z</updated>
-        <content type="html"><![CDATA[Show HN: Agent Kernel – Three Markdown files that make any AI agent stateful]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[First and Lego Education Partnership Update]]></title>
-        <id>https://community.firstinspires.org/first-lego-education-partnership-update</id>
-        <link href="https://community.firstinspires.org/first-lego-education-partnership-update"/>
-        <updated>2026-03-23T18:08:04.668Z</updated>
-        <content type="html"><![CDATA[First and Lego Education Partnership Update]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[355 Issues of the UK music magazine NME from 1969-1983]]></title>
-        <id>https://archive.org/search?query=creator%3A%22NME+-+New+Musical+Express%22&amp;sort=-addeddate</id>
-        <link href="https://archive.org/search?query=creator%3A%22NME+-+New+Musical+Express%22&amp;sort=-addeddate"/>
-        <updated>2026-03-23T18:08:04.666Z</updated>
-        <content type="html"><![CDATA[355 Issues of the UK music magazine NME from 1969-1983]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Teaching Claude to QA a mobile app]]></title>
-        <id>https://christophermeiklejohn.com/ai/zabriskie/development/android/ios/2026/03/22/teaching-claude-to-qa-a-mobile-app.html</id>
-        <link href="https://christophermeiklejohn.com/ai/zabriskie/development/android/ios/2026/03/22/teaching-claude-to-qa-a-mobile-app.html"/>
-        <updated>2026-03-23T18:08:04.664Z</updated>
-        <content type="html"><![CDATA[Teaching Claude to QA a mobile app]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Windows native app development is a mess]]></title>
-        <id>https://domenic.me/windows-native-dev/</id>
-        <link href="https://domenic.me/windows-native-dev/"/>
-        <updated>2026-03-23T18:08:04.663Z</updated>
-        <content type="html"><![CDATA[Windows native app development is a mess]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[My first patch to the Linux kernel]]></title>
-        <id>https://pooladkhay.com/posts/first-kernel-patch/</id>
-        <link href="https://pooladkhay.com/posts/first-kernel-patch/"/>
-        <updated>2026-03-23T18:08:04.662Z</updated>
-        <content type="html"><![CDATA[My first patch to the Linux kernel]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Bored of eating your own dogfood? Try smelling your own farts]]></title>
-        <id>https://shkspr.mobi/blog/2026/03/bored-of-eating-your-own-dogfood-try-smelling-your-own-farts/</id>
-        <link href="https://shkspr.mobi/blog/2026/03/bored-of-eating-your-own-dogfood-try-smelling-your-own-farts/"/>
-        <updated>2026-03-23T18:08:04.661Z</updated>
-        <content type="html"><![CDATA[Bored of eating your own dogfood? Try smelling your own farts]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Apple's intentional crippling of Mobile Safari]]></title>
-        <id>https://pwa.gripe/</id>
-        <link href="https://pwa.gripe/"/>
-        <updated>2026-03-23T18:08:04.661Z</updated>
-        <content type="html"><![CDATA[Apple's intentional crippling of Mobile Safari]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Unlocking 25 Gigabit/S on 10 GbE Direct Attach Copper]]></title>
-        <id>https://kohlschuetter.github.io/blog/posts/2026/03/22/unlock25/</id>
-        <link href="https://kohlschuetter.github.io/blog/posts/2026/03/22/unlock25/"/>
-        <updated>2026-03-23T18:08:04.661Z</updated>
-        <content type="html"><![CDATA[Unlocking 25 Gigabit/S on 10 GbE Direct Attach Copper]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[The world just lived through the 11 hottest years on record]]></title>
-        <id>https://www.nature.com/articles/d41586-026-00946-6</id>
-        <link href="https://www.nature.com/articles/d41586-026-00946-6"/>
-        <updated>2026-03-23T18:08:04.124Z</updated>
-        <content type="html"><![CDATA[The world just lived through the 11 hottest years on record]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Huel Joins Danone]]></title>
-        <id>https://huel.com/pages/huel-joins-danone</id>
-        <link href="https://huel.com/pages/huel-joins-danone"/>
-        <updated>2026-03-23T18:08:04.123Z</updated>
-        <content type="html"><![CDATA[Huel Joins Danone]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[MAUI Is Coming to Linux]]></title>
-        <id>https://avaloniaui.net/blog/maui-avalonia-preview-1</id>
-        <link href="https://avaloniaui.net/blog/maui-avalonia-preview-1"/>
-        <updated>2026-03-23T18:08:04.121Z</updated>
-        <content type="html"><![CDATA[MAUI Is Coming to Linux]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Migrating the American express payment network, twice]]></title>
-        <id>https://americanexpress.io/migrating-the-payments-network-twice/</id>
-        <link href="https://americanexpress.io/migrating-the-payments-network-twice/"/>
-        <updated>2026-03-23T18:08:04.120Z</updated>
-        <content type="html"><![CDATA[Migrating the American express payment network, twice]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[How to attract AI bots to your open source project]]></title>
-        <id>https://nesbitt.io/2026/03/21/how-to-attract-ai-bots-to-your-open-source-project.html</id>
-        <link href="https://nesbitt.io/2026/03/21/how-to-attract-ai-bots-to-your-open-source-project.html"/>
-        <updated>2026-03-23T18:08:04.118Z</updated>
-        <content type="html"><![CDATA[How to attract AI bots to your open source project]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Show HN: Lockpaw One hotkey to cover your Mac screen without putting it to sleep]]></title>
-        <id>https://github.com/sorkila/lockpaw</id>
-        <link href="https://github.com/sorkila/lockpaw"/>
-        <updated>2026-03-23T18:08:04.117Z</updated>
-        <content type="html"><![CDATA[Show HN: Lockpaw One hotkey to cover your Mac screen without putting it to sleep]]></content>
+        <title type="html"><![CDATA[A Review of Dice that came with The White Castle (2025)]]></title>
+        <id>https://boardgamegeek.com/thread/3533812/a-review-of-dice-that-came-with-the-white-castle</id>
+        <link href="https://boardgamegeek.com/thread/3533812/a-review-of-dice-that-came-with-the-white-castle"/>
+        <updated>2026-03-24T06:37:14.106Z</updated>
+        <content type="html"><![CDATA[A Review of Dice that came with The White Castle (2025)]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[They’re vibe-coding spam now]]></title>
         <id>https://tedium.co/2026/02/25/vibe-coded-email-spam/</id>
         <link href="https://tedium.co/2026/02/25/vibe-coded-email-spam/"/>
-        <updated>2026-03-23T18:08:04.116Z</updated>
+        <updated>2026-03-24T06:37:14.104Z</updated>
         <content type="html"><![CDATA[They’re vibe-coding spam now]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[The IBM scientist who rewrote the rules of information just won a Turing Award]]></title>
-        <id>https://www.ibm.com/think/news/ibm-scientist-charles-bennett-turing-award</id>
-        <link href="https://www.ibm.com/think/news/ibm-scientist-charles-bennett-turing-award"/>
-        <updated>2026-03-23T18:08:04.113Z</updated>
-        <content type="html"><![CDATA[The IBM scientist who rewrote the rules of information just won a Turing Award]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[A Copy-Paste Bug That Broke PSpice AES-256 Encryption]]></title>
-        <id>https://jtsylve.blog/post/2026/03/18/PSpice-Encryption-Weakness</id>
-        <link href="https://jtsylve.blog/post/2026/03/18/PSpice-Encryption-Weakness"/>
-        <updated>2026-03-23T18:08:04.108Z</updated>
-        <content type="html"><![CDATA[A Copy-Paste Bug That Broke PSpice AES-256 Encryption]]></content>
+        <title type="html"><![CDATA[How to attract AI bots to your open source project]]></title>
+        <id>https://nesbitt.io/2026/03/21/how-to-attract-ai-bots-to-your-open-source-project.html</id>
+        <link href="https://nesbitt.io/2026/03/21/how-to-attract-ai-bots-to-your-open-source-project.html"/>
+        <updated>2026-03-24T06:37:14.102Z</updated>
+        <content type="html"><![CDATA[How to attract AI bots to your open source project]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[LLMs predict my coffee]]></title>
         <id>https://dynomight.net/coffee/</id>
         <link href="https://dynomight.net/coffee/"/>
-        <updated>2026-03-23T18:08:04.107Z</updated>
+        <updated>2026-03-24T06:37:14.100Z</updated>
         <content type="html"><![CDATA[LLMs predict my coffee]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Fyn: An uv fork with new features, bug fixes, stripped telemetry]]></title>
-        <id>https://github.com/duriantaco/fyn</id>
-        <link href="https://github.com/duriantaco/fyn"/>
-        <updated>2026-03-23T18:08:04.105Z</updated>
-        <content type="html"><![CDATA[Fyn: An uv fork with new features, bug fixes, stripped telemetry]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Ordered dithering with arbitrary or irregular colour palettes (2023)]]></title>
-        <id>https://matejlou.blog/2023/12/06/ordered-dithering-for-arbitrary-or-irregular-palettes/</id>
-        <link href="https://matejlou.blog/2023/12/06/ordered-dithering-for-arbitrary-or-irregular-palettes/"/>
-        <updated>2026-03-23T18:08:04.104Z</updated>
-        <content type="html"><![CDATA[Ordered dithering with arbitrary or irregular colour palettes (2023)]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[The LCA problem revisited [pdf]]]></title>
-        <id>https://www3.cs.stonybrook.edu/~bender/talks/BenderFa00-lca-talk.pdf</id>
-        <link href="https://www3.cs.stonybrook.edu/~bender/talks/BenderFa00-lca-talk.pdf"/>
-        <updated>2026-03-23T18:08:04.103Z</updated>
-        <content type="html"><![CDATA[The LCA problem revisited [pdf]]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[More common mistakes to avoid when creating system architecture diagrams]]></title>
-        <id>https://www.ilograph.com/blog/posts/more-common-diagram-mistakes/</id>
-        <link href="https://www.ilograph.com/blog/posts/more-common-diagram-mistakes/"/>
-        <updated>2026-03-23T18:08:04.101Z</updated>
-        <content type="html"><![CDATA[More common mistakes to avoid when creating system architecture diagrams]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Five years of running a systems reading group at Microsoft]]></title>
-        <id>https://armaansood.com/posts/systems-reading-group/</id>
-        <link href="https://armaansood.com/posts/systems-reading-group/"/>
-        <updated>2026-03-23T18:08:04.100Z</updated>
-        <content type="html"><![CDATA[Five years of running a systems reading group at Microsoft]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Mark Zuckerberg Is Building an AI Agent to Help Him Be CEO]]></title>
-        <id>https://www.wsj.com/tech/ai/mark-zuckerberg-is-building-an-ai-agent-to-help-him-be-ceo-eddab2d5</id>
-        <link href="https://www.wsj.com/tech/ai/mark-zuckerberg-is-building-an-ai-agent-to-help-him-be-ceo-eddab2d5"/>
-        <updated>2026-03-23T18:08:04.098Z</updated>
-        <content type="html"><![CDATA[Mark Zuckerberg Is Building an AI Agent to Help Him Be CEO]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Student beauty and grades under in-person and remote teaching]]></title>
-        <id>https://www.sciencedirect.com/science/article/pii/S016517652200283X</id>
-        <link href="https://www.sciencedirect.com/science/article/pii/S016517652200283X"/>
-        <updated>2026-03-23T18:08:04.097Z</updated>
-        <content type="html"><![CDATA[Student beauty and grades under in-person and remote teaching]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Building an FPGA 3dfx Voodoo with Modern RTL Tools]]></title>
-        <id>https://noquiche.fyi/voodoo</id>
-        <link href="https://noquiche.fyi/voodoo"/>
-        <updated>2026-03-23T18:08:04.095Z</updated>
-        <content type="html"><![CDATA[Building an FPGA 3dfx Voodoo with Modern RTL Tools]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[GrapheneOS will remain usable by anyone without requiring personal information]]></title>
-        <id>https://grapheneos.social/@GrapheneOS/116261301913660830</id>
-        <link href="https://grapheneos.social/@GrapheneOS/116261301913660830"/>
-        <updated>2026-03-23T18:08:04.094Z</updated>
-        <content type="html"><![CDATA[GrapheneOS will remain usable by anyone without requiring personal information]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Dataframe 1.0.0.0]]></title>
-        <id>https://discourse.haskell.org/t/ann-dataframe-1-0-0-0/13834</id>
-        <link href="https://discourse.haskell.org/t/ann-dataframe-1-0-0-0/13834"/>
-        <updated>2026-03-23T18:08:04.091Z</updated>
-        <content type="html"><![CDATA[Dataframe 1.0.0.0]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Diverse perspectives on AI from Rust contributors and maintainers]]></title>
-        <id>https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html</id>
-        <link href="https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html"/>
-        <updated>2026-03-23T18:08:04.088Z</updated>
-        <content type="html"><![CDATA[Diverse perspectives on AI from Rust contributors and maintainers]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Coke fires worker injured on the job, keeping him would be hard on the company]]></title>
-        <id>https://www.cbc.ca/news/gopublic/go-public-coke-coca-cola-factory-injury-wcb-frustrated-empoloyement-disability-9.7133409</id>
-        <link href="https://www.cbc.ca/news/gopublic/go-public-coke-coca-cola-factory-injury-wcb-frustrated-empoloyement-disability-9.7133409"/>
-        <updated>2026-03-23T18:08:04.086Z</updated>
-        <content type="html"><![CDATA[Coke fires worker injured on the job, keeping him would be hard on the company]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Study: 'Security Fatigue' May Weaken Digital Defenses]]></title>
-        <id>https://www.albany.edu/news-center/news/2026-study-security-fatigue-may-weaken-digital-defenses</id>
-        <link href="https://www.albany.edu/news-center/news/2026-study-security-fatigue-may-weaken-digital-defenses"/>
-        <updated>2026-03-23T18:08:04.085Z</updated>
-        <content type="html"><![CDATA[Study: 'Security Fatigue' May Weaken Digital Defenses]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[What young workers are doing to AI-proof themselves]]></title>
-        <id>https://www.wsj.com/economy/jobs/ai-jobs-young-people-careers-14282284</id>
-        <link href="https://www.wsj.com/economy/jobs/ai-jobs-young-people-careers-14282284"/>
-        <updated>2026-03-23T18:08:04.083Z</updated>
-        <content type="html"><![CDATA[What young workers are doing to AI-proof themselves]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Fear and Fragility: The Glass Delusion and Its History]]></title>
-        <id>https://publicdomainreview.org/essay/fear-and-fragility-the-glass-delusion-and-its-history</id>
-        <link href="https://publicdomainreview.org/essay/fear-and-fragility-the-glass-delusion-and-its-history"/>
-        <updated>2026-03-23T18:08:04.082Z</updated>
-        <content type="html"><![CDATA[Fear and Fragility: The Glass Delusion and Its History]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Show HN: The King Wen Permutation: [52, 10, 2]]]></title>
-        <id>https://gzw1987-bit.github.io/iching-math/</id>
-        <link href="https://gzw1987-bit.github.io/iching-math/"/>
-        <updated>2026-03-23T18:08:04.080Z</updated>
-        <content type="html"><![CDATA[Show HN: The King Wen Permutation: [52, 10, 2]]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[America tells private firms to "hack back"]]></title>
-        <id>https://www.economist.com/united-states/2026/03/22/america-tells-private-firms-to-hack-back</id>
-        <link href="https://www.economist.com/united-states/2026/03/22/america-tells-private-firms-to-hack-back"/>
-        <updated>2026-03-23T18:08:04.079Z</updated>
-        <content type="html"><![CDATA[America tells private firms to "hack back"]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Flash-MoE: Running a 397B Parameter Model on a Laptop]]></title>
-        <id>https://github.com/danveloper/flash-moe</id>
-        <link href="https://github.com/danveloper/flash-moe"/>
-        <updated>2026-03-23T18:08:04.078Z</updated>
-        <content type="html"><![CDATA[Flash-MoE: Running a 397B Parameter Model on a Laptop]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[The way CTRL-C in Postgres CLI cancels queries is incredibly hack-y]]></title>
-        <id>https://neon.com/blog/ctrl-c-in-psql-gives-me-the-heebie-jeebies</id>
-        <link href="https://neon.com/blog/ctrl-c-in-psql-gives-me-the-heebie-jeebies"/>
-        <updated>2026-03-23T18:08:04.076Z</updated>
-        <content type="html"><![CDATA[The way CTRL-C in Postgres CLI cancels queries is incredibly hack-y]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[You are not your job]]></title>
-        <id>https://jry.io/writing/you-are-not-your-job/</id>
-        <link href="https://jry.io/writing/you-are-not-your-job/"/>
-        <updated>2026-03-23T18:08:04.074Z</updated>
-        <content type="html"><![CDATA[You are not your job]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Project Nomad – Knowledge That Never Goes Offline]]></title>
-        <id>https://www.projectnomad.us/</id>
-        <link href="https://www.projectnomad.us/"/>
-        <updated>2026-03-23T18:08:03.498Z</updated>
-        <content type="html"><![CDATA[Project Nomad – Knowledge That Never Goes Offline]]></content>
+        <title type="html"><![CDATA[Dusking is a trend aimed at helping people switch off at the end of the day]]></title>
+        <id>https://theconversation.com/dusking-is-a-trend-aimed-at-helping-people-switch-off-at-the-end-of-the-day-how-does-it-work-277814</id>
+        <link href="https://theconversation.com/dusking-is-a-trend-aimed-at-helping-people-switch-off-at-the-end-of-the-day-how-does-it-work-277814"/>
+        <updated>2026-03-24T06:37:14.099Z</updated>
+        <content type="html"><![CDATA[Dusking is a trend aimed at helping people switch off at the end of the day]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Why I love NixOS]]></title>
         <id>https://www.birkey.co/2026-03-22-why-i-love-nixos.html</id>
         <link href="https://www.birkey.co/2026-03-22-why-i-love-nixos.html"/>
-        <updated>2026-03-23T18:08:03.497Z</updated>
+        <updated>2026-03-24T06:37:14.097Z</updated>
         <content type="html"><![CDATA[Why I love NixOS]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[GoGoGrandparent (YC S16) is hiring Back end Engineers]]></title>
-        <id>https://www.ycombinator.com/companies/gogograndparent/jobs/2vbzAw8-backend-engineer</id>
-        <link href="https://www.ycombinator.com/companies/gogograndparent/jobs/2vbzAw8-backend-engineer"/>
-        <updated>2026-03-23T18:08:03.496Z</updated>
-        <content type="html"><![CDATA[GoGoGrandparent (YC S16) is hiring Back end Engineers]]></content>
+        <title type="html"><![CDATA[Australia and European Union to sign free trade agreement]]></title>
+        <id>https://www.abc.net.au/news/2026-03-24/eu-australia-free-trade-agreement-reached/106488438</id>
+        <link href="https://www.abc.net.au/news/2026-03-24/eu-australia-free-trade-agreement-reached/106488438"/>
+        <updated>2026-03-24T06:37:14.096Z</updated>
+        <content type="html"><![CDATA[Australia and European Union to sign free trade agreement]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Cyberattack on vehicle breathalyzer company leaves drivers stranded in the US]]></title>
-        <id>https://techcrunch.com/2026/03/20/cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-across-the-us/</id>
-        <link href="https://techcrunch.com/2026/03/20/cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-across-the-us/"/>
-        <updated>2026-03-23T18:08:03.494Z</updated>
-        <content type="html"><![CDATA[Cyberattack on vehicle breathalyzer company leaves drivers stranded in the US]]></content>
+        <title type="html"><![CDATA[Project Nomad – Knowledge That Never Goes Offline]]></title>
+        <id>https://www.projectnomad.us/</id>
+        <link href="https://www.projectnomad.us/"/>
+        <updated>2026-03-24T06:37:14.095Z</updated>
+        <content type="html"><![CDATA[Project Nomad – Knowledge That Never Goes Offline]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Nanopositioning Metrology, Gödel, and Bootstraps]]></title>
-        <id>https://www.pi-usa.us/en/tech-blog/nanopositioning-metrology-goedel-and-bootstraps</id>
-        <link href="https://www.pi-usa.us/en/tech-blog/nanopositioning-metrology-goedel-and-bootstraps"/>
-        <updated>2026-03-23T18:08:03.492Z</updated>
-        <content type="html"><![CDATA[Nanopositioning Metrology, Gödel, and Bootstraps]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Can you get root with only a cigarette lighter? (2024)]]></title>
-        <id>https://www.da.vidbuchanan.co.uk/blog/dram-emfi.html</id>
-        <link href="https://www.da.vidbuchanan.co.uk/blog/dram-emfi.html"/>
-        <updated>2026-03-23T18:08:03.490Z</updated>
-        <content type="html"><![CDATA[Can you get root with only a cigarette lighter? (2024)]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[The future of version control]]></title>
-        <id>https://bramcohen.com/p/manyana</id>
-        <link href="https://bramcohen.com/p/manyana"/>
-        <updated>2026-03-23T18:08:03.488Z</updated>
-        <content type="html"><![CDATA[The future of version control]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[Reports of code's death are greatly exaggerated]]></title>
-        <id>https://stevekrouse.com/precision</id>
-        <link href="https://stevekrouse.com/precision"/>
-        <updated>2026-03-23T18:08:03.486Z</updated>
-        <content type="html"><![CDATA[Reports of code's death are greatly exaggerated]]></content>
-    </entry>
-  <entry>
-        <title type="html"><![CDATA[“Collaboration” is bullshit]]></title>
-        <id>https://www.joanwestenberg.com/collaboration-is-bullshit/</id>
-        <link href="https://www.joanwestenberg.com/collaboration-is-bullshit/"/>
-        <updated>2026-03-23T18:08:03.483Z</updated>
-        <content type="html"><![CDATA[“Collaboration” is bullshit]]></content>
+        <title type="html"><![CDATA[Show HN: WhyThere.life – Compare cities side-by-side to decide where to move]]></title>
+        <id>https://whythere.life/</id>
+        <link href="https://whythere.life/"/>
+        <updated>2026-03-24T06:37:14.093Z</updated>
+        <content type="html"><![CDATA[Show HN: WhyThere.life – Compare cities side-by-side to decide where to move]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Tin Can, a 'landline' for kids]]></title>
         <id>https://www.businessinsider.com/tin-can-landline-kids-cellphone-cell-alternative-how-2025-9</id>
         <link href="https://www.businessinsider.com/tin-can-landline-kids-cellphone-cell-alternative-how-2025-9"/>
-        <updated>2026-03-23T18:08:03.481Z</updated>
+        <updated>2026-03-24T06:37:14.092Z</updated>
         <content type="html"><![CDATA[Tin Can, a 'landline' for kids]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[The gold standard of optimization: A look under the hood of RollerCoaster Tycoon]]></title>
-        <id>https://larstofus.com/2026/03/22/the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon/</id>
-        <link href="https://larstofus.com/2026/03/22/the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon/"/>
-        <updated>2026-03-23T18:08:03.480Z</updated>
-        <content type="html"><![CDATA[The gold standard of optimization: A look under the hood of RollerCoaster Tycoon]]></content>
+        <title type="html"><![CDATA[Study: 'Security Fatigue' May Weaken Digital Defenses]]></title>
+        <id>https://www.albany.edu/news-center/news/2026-study-security-fatigue-may-weaken-digital-defenses</id>
+        <link href="https://www.albany.edu/news-center/news/2026-study-security-fatigue-may-weaken-digital-defenses"/>
+        <updated>2026-03-24T06:37:14.091Z</updated>
+        <content type="html"><![CDATA[Study: 'Security Fatigue' May Weaken Digital Defenses]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[General Motors is assisting with the restoration of a rare EV1]]></title>
-        <id>https://evinfo.net/2026/03/general-motors-is-assisting-with-the-restoration-of-an-1996-ev1/</id>
-        <link href="https://evinfo.net/2026/03/general-motors-is-assisting-with-the-restoration-of-an-1996-ev1/"/>
-        <updated>2026-03-23T18:08:03.479Z</updated>
-        <content type="html"><![CDATA[General Motors is assisting with the restoration of a rare EV1]]></content>
+        <title type="html"><![CDATA[I reverse-engineered Claude Code]]></title>
+        <id>https://github.com/SeifBenayed/claude-code-sdk</id>
+        <link href="https://github.com/SeifBenayed/claude-code-sdk"/>
+        <updated>2026-03-24T06:37:14.086Z</updated>
+        <content type="html"><![CDATA[I reverse-engineered Claude Code]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[GitHub appears to be struggling with measly three nines availability]]></title>
-        <id>https://www.theregister.com/2026/02/10/github_outages/</id>
-        <link href="https://www.theregister.com/2026/02/10/github_outages/"/>
-        <updated>2026-03-23T18:08:03.477Z</updated>
-        <content type="html"><![CDATA[GitHub appears to be struggling with measly three nines availability]]></content>
+        <title type="html"><![CDATA[The IBM scientist who rewrote the rules of information just won a Turing Award]]></title>
+        <id>https://www.ibm.com/think/news/ibm-scientist-charles-bennett-turing-award</id>
+        <link href="https://www.ibm.com/think/news/ibm-scientist-charles-bennett-turing-award"/>
+        <updated>2026-03-24T06:37:14.084Z</updated>
+        <content type="html"><![CDATA[The IBM scientist who rewrote the rules of information just won a Turing Award]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Walmart: ChatGPT checkout converted 3x worse than website]]></title>
-        <id>https://searchengineland.com/walmart-chatgpt-checkout-converted-worse-472071</id>
-        <link href="https://searchengineland.com/walmart-chatgpt-checkout-converted-worse-472071"/>
-        <updated>2026-03-23T18:08:03.476Z</updated>
-        <content type="html"><![CDATA[Walmart: ChatGPT checkout converted 3x worse than website]]></content>
+        <title type="html"><![CDATA[Driverless Big Rigs Are Coming to American Highways, and Soon]]></title>
+        <id>https://www.nytimes.com/2026/03/17/business/self-driving-semi-trucks-texas-us.html</id>
+        <link href="https://www.nytimes.com/2026/03/17/business/self-driving-semi-trucks-texas-us.html"/>
+        <updated>2026-03-24T06:37:14.083Z</updated>
+        <content type="html"><![CDATA[Driverless Big Rigs Are Coming to American Highways, and Soon]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Two pilots dead after plane and ground vehicle collide at LaGuardia]]></title>
-        <id>https://www.bbc.com/news/articles/cy01g522ww4o</id>
-        <link href="https://www.bbc.com/news/articles/cy01g522ww4o"/>
-        <updated>2026-03-23T18:08:03.475Z</updated>
-        <content type="html"><![CDATA[Two pilots dead after plane and ground vehicle collide at LaGuardia]]></content>
+        <title type="html"><![CDATA[Ordered dithering with arbitrary or irregular colour palettes (2023)]]></title>
+        <id>https://matejlou.blog/2023/12/06/ordered-dithering-for-arbitrary-or-irregular-palettes/</id>
+        <link href="https://matejlou.blog/2023/12/06/ordered-dithering-for-arbitrary-or-irregular-palettes/"/>
+        <updated>2026-03-24T06:37:14.082Z</updated>
+        <content type="html"><![CDATA[Ordered dithering with arbitrary or irregular colour palettes (2023)]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[POSSE – Publish on your Own Site, Syndicate Elsewhere]]></title>
-        <id>https://indieweb.org/POSSE</id>
-        <link href="https://indieweb.org/POSSE"/>
-        <updated>2026-03-23T18:08:03.475Z</updated>
-        <content type="html"><![CDATA[POSSE – Publish on your Own Site, Syndicate Elsewhere]]></content>
+        <title type="html"><![CDATA[Show HN: Littlebird – Screenreading is the missing link in AI]]></title>
+        <id>https://littlebird.ai/</id>
+        <link href="https://littlebird.ai/"/>
+        <updated>2026-03-24T06:37:14.080Z</updated>
+        <content type="html"><![CDATA[Show HN: Littlebird – Screenreading is the missing link in AI]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[PC Gamer recommends RSS readers in a 37mb article that just keeps downloading]]></title>
-        <id>https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/</id>
-        <link href="https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/"/>
-        <updated>2026-03-23T18:08:03.472Z</updated>
-        <content type="html"><![CDATA[PC Gamer recommends RSS readers in a 37mb article that just keeps downloading]]></content>
+        <title type="html"><![CDATA[Blackburn AI Bill Repeals Section 230, Expands AI Liability, Age Verification]]></title>
+        <id>https://reclaimthenet.org/trump-america-ai-act-section-230-repeal-ai-liability-age-verification</id>
+        <link href="https://reclaimthenet.org/trump-america-ai-act-section-230-repeal-ai-liability-age-verification"/>
+        <updated>2026-03-24T06:37:14.079Z</updated>
+        <content type="html"><![CDATA[Blackburn AI Bill Repeals Section 230, Expands AI Liability, Age Verification]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Side-Effectful Expressions in C (2023)]]></title>
-        <id>https://blog.xoria.org/expr-stmt-c/</id>
-        <link href="https://blog.xoria.org/expr-stmt-c/"/>
-        <updated>2026-03-23T18:08:03.470Z</updated>
-        <content type="html"><![CDATA[Side-Effectful Expressions in C (2023)]]></content>
+        <title type="html"><![CDATA[California bill to stop 'dominant platforms' from blocking competition]]></title>
+        <id>https://yro.slashdot.org/story/26/03/22/2025249/tech-leaders-support-california-bill-to-stop-dominant-platforms-from-blocking-competition</id>
+        <link href="https://yro.slashdot.org/story/26/03/22/2025249/tech-leaders-support-california-bill-to-stop-dominant-platforms-from-blocking-competition"/>
+        <updated>2026-03-24T06:37:14.077Z</updated>
+        <content type="html"><![CDATA[California bill to stop 'dominant platforms' from blocking competition]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Migrating to the EU]]></title>
-        <id>https://rz01.org/eu-migration/</id>
-        <link href="https://rz01.org/eu-migration/"/>
-        <updated>2026-03-23T18:08:03.468Z</updated>
-        <content type="html"><![CDATA[Migrating to the EU]]></content>
+        <title type="html"><![CDATA[Nanopositioning Metrology, Gödel, and Bootstraps]]></title>
+        <id>https://www.pi-usa.us/en/tech-blog/nanopositioning-metrology-goedel-and-bootstraps</id>
+        <link href="https://www.pi-usa.us/en/tech-blog/nanopositioning-metrology-goedel-and-bootstraps"/>
+        <updated>2026-03-24T06:37:14.074Z</updated>
+        <content type="html"><![CDATA[Nanopositioning Metrology, Gödel, and Bootstraps]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[LLMs learn what programmers create, not how programmers work]]></title>
+        <id>https://news.ycombinator.com/item?id=47494696</id>
+        <link href="https://news.ycombinator.com/item?id=47494696"/>
+        <updated>2026-03-24T06:37:14.073Z</updated>
+        <content type="html"><![CDATA[LLMs learn what programmers create, not how programmers work]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[The future of version control]]></title>
+        <id>https://bramcohen.com/p/manyana</id>
+        <link href="https://bramcohen.com/p/manyana"/>
+        <updated>2026-03-24T06:37:14.071Z</updated>
+        <content type="html"><![CDATA[The future of version control]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Chat GPT 5.2 cannot explain the German word "geschniegelt"]]></title>
+        <id>https://old.reddit.com/r/ChatGPT/comments/1r4goxh/chat_gpt_52_cannot_explain_the_word_geschniegelt/</id>
+        <link href="https://old.reddit.com/r/ChatGPT/comments/1r4goxh/chat_gpt_52_cannot_explain_the_word_geschniegelt/"/>
+        <updated>2026-03-24T06:37:14.069Z</updated>
+        <content type="html"><![CDATA[Chat GPT 5.2 cannot explain the German word "geschniegelt"]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Diverse perspectives on AI from Rust contributors and maintainers]]></title>
+        <id>https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html</id>
+        <link href="https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html"/>
+        <updated>2026-03-24T06:37:14.068Z</updated>
+        <content type="html"><![CDATA[Diverse perspectives on AI from Rust contributors and maintainers]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[How Do US Men and Women Spend Their Time?]]></title>
+        <id>https://www.pewresearch.org/social-trends/feature/how-do-u-s-men-and-women-spend-their-time/</id>
+        <link href="https://www.pewresearch.org/social-trends/feature/how-do-u-s-men-and-women-spend-their-time/"/>
+        <updated>2026-03-24T06:37:14.067Z</updated>
+        <content type="html"><![CDATA[How Do US Men and Women Spend Their Time?]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Reports of code's death are greatly exaggerated]]></title>
+        <id>https://stevekrouse.com/precision</id>
+        <link href="https://stevekrouse.com/precision"/>
+        <updated>2026-03-24T06:37:14.065Z</updated>
+        <content type="html"><![CDATA[Reports of code's death are greatly exaggerated]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[If DSPy is so great, why isn't anyone using it?]]></title>
         <id>https://skylarbpayne.com/posts/dspy-engineering-patterns/</id>
         <link href="https://skylarbpayne.com/posts/dspy-engineering-patterns/"/>
-        <updated>2026-03-23T18:08:03.467Z</updated>
+        <updated>2026-03-24T06:37:14.064Z</updated>
         <content type="html"><![CDATA[If DSPy is so great, why isn't anyone using it?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[I built an AI receptionist for a mechanic shop]]></title>
-        <id>https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/</id>
-        <link href="https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/"/>
-        <updated>2026-03-23T18:08:03.465Z</updated>
-        <content type="html"><![CDATA[I built an AI receptionist for a mechanic shop]]></content>
+        <title type="html"><![CDATA[Cyberattack on vehicle breathalyzer company leaves drivers stranded in the US]]></title>
+        <id>https://techcrunch.com/2026/03/20/cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-across-the-us/</id>
+        <link href="https://techcrunch.com/2026/03/20/cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-across-the-us/"/>
+        <updated>2026-03-24T06:37:14.062Z</updated>
+        <content type="html"><![CDATA[Cyberattack on vehicle breathalyzer company leaves drivers stranded in the US]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[An unsolicited guide to being a researcher [pdf]]]></title>
-        <id>https://emerge-lab.github.io/papers/an-unsolicited-guide-to-good-research.pdf</id>
-        <link href="https://emerge-lab.github.io/papers/an-unsolicited-guide-to-good-research.pdf"/>
-        <updated>2026-03-23T18:08:03.463Z</updated>
-        <content type="html"><![CDATA[An unsolicited guide to being a researcher [pdf]]]></content>
+        <title type="html"><![CDATA[The gold standard of optimization: A look under the hood of RollerCoaster Tycoon]]></title>
+        <id>https://larstofus.com/2026/03/22/the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon/</id>
+        <link href="https://larstofus.com/2026/03/22/the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon/"/>
+        <updated>2026-03-24T06:37:14.060Z</updated>
+        <content type="html"><![CDATA[The gold standard of optimization: A look under the hood of RollerCoaster Tycoon]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Bombadil: Property-based testing for web UIs]]></title>
-        <id>https://github.com/antithesishq/bombadil</id>
-        <link href="https://github.com/antithesishq/bombadil"/>
-        <updated>2026-03-23T18:08:03.461Z</updated>
-        <content type="html"><![CDATA[Bombadil: Property-based testing for web UIs]]></content>
+        <title type="html"><![CDATA[Single ATC controller was managing LaGuardia Airport at time of Air Canada crash [video]]]></title>
+        <id>https://www.youtube.com/watch?v=Pbm-QJAAzNY</id>
+        <link href="https://www.youtube.com/watch?v=Pbm-QJAAzNY"/>
+        <updated>2026-03-24T06:37:14.059Z</updated>
+        <content type="html"><![CDATA[Single ATC controller was managing LaGuardia Airport at time of Air Canada crash [video]]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[The way CTRL-C in Postgres CLI cancels queries is incredibly hack-y]]></title>
+        <id>https://neon.com/blog/ctrl-c-in-psql-gives-me-the-heebie-jeebies</id>
+        <link href="https://neon.com/blog/ctrl-c-in-psql-gives-me-the-heebie-jeebies"/>
+        <updated>2026-03-24T06:37:14.055Z</updated>
+        <content type="html"><![CDATA[The way CTRL-C in Postgres CLI cancels queries is incredibly hack-y]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[“Collaboration” is bullshit]]></title>
+        <id>https://www.joanwestenberg.com/collaboration-is-bullshit/</id>
+        <link href="https://www.joanwestenberg.com/collaboration-is-bullshit/"/>
+        <updated>2026-03-24T06:37:13.507Z</updated>
+        <content type="html"><![CDATA[“Collaboration” is bullshit]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Outworked – An Open Source Office UI for Claude Code Agents]]></title>
+        <id>https://github.com/outworked/outworked</id>
+        <link href="https://github.com/outworked/outworked"/>
+        <updated>2026-03-24T06:37:13.506Z</updated>
+        <content type="html"><![CDATA[Outworked – An Open Source Office UI for Claude Code Agents]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Side-Effectful Expressions in C (2023)]]></title>
+        <id>https://blog.xoria.org/expr-stmt-c/</id>
+        <link href="https://blog.xoria.org/expr-stmt-c/"/>
+        <updated>2026-03-24T06:37:13.504Z</updated>
+        <content type="html"><![CDATA[Side-Effectful Expressions in C (2023)]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Vibecoders Can't Build for Longevity]]></title>
+        <id>https://blog.d11r.eu/theory-building/</id>
+        <link href="https://blog.d11r.eu/theory-building/"/>
+        <updated>2026-03-24T06:37:13.503Z</updated>
+        <content type="html"><![CDATA[Vibecoders Can't Build for Longevity]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[AI boom risks widening wealth divide, says BlackRock's Larry Fink]]></title>
+        <id>https://www.theguardian.com/technology/2026/mar/23/ai-boom-risks-widening-wealth-divide-blackrock-larry-fink</id>
+        <link href="https://www.theguardian.com/technology/2026/mar/23/ai-boom-risks-widening-wealth-divide-blackrock-larry-fink"/>
+        <updated>2026-03-24T06:37:13.501Z</updated>
+        <content type="html"><![CDATA[AI boom risks widening wealth divide, says BlackRock's Larry Fink]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Is it a pint?]]></title>
         <id>https://isitapint.com/</id>
         <link href="https://isitapint.com/"/>
-        <updated>2026-03-23T18:08:03.459Z</updated>
+        <updated>2026-03-24T06:37:13.499Z</updated>
         <content type="html"><![CDATA[Is it a pint?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Show HN: Threadprocs – executables sharing one address space (0-copy pointers)]]></title>
-        <id>https://github.com/jer-irl/threadprocs</id>
-        <link href="https://github.com/jer-irl/threadprocs"/>
-        <updated>2026-03-23T18:08:03.457Z</updated>
-        <content type="html"><![CDATA[Show HN: Threadprocs – executables sharing one address space (0-copy pointers)]]></content>
+        <title type="html"><![CDATA[StackOverflow's questions per day have fallen 99%]]></title>
+        <id>https://meta.stackoverflow.com/questions/433864/do-you-agree-with-gergely-that-stack-overflow-is-almost-dead</id>
+        <link href="https://meta.stackoverflow.com/questions/433864/do-you-agree-with-gergely-that-stack-overflow-is-almost-dead"/>
+        <updated>2026-03-24T06:37:13.498Z</updated>
+        <content type="html"><![CDATA[StackOverflow's questions per day have fallen 99%]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[I wrote a 750-page guide to self-hosting production apps]]></title>
+        <id>https://selfdeployment.io/</id>
+        <link href="https://selfdeployment.io/"/>
+        <updated>2026-03-24T06:37:13.496Z</updated>
+        <content type="html"><![CDATA[I wrote a 750-page guide to self-hosting production apps]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Pentagon Adopts New Limits for Journalists After Court Loss]]></title>
+        <id>https://www.nytimes.com/2026/03/23/business/media/pentagon-closes-journalists-work-area.html</id>
+        <link href="https://www.nytimes.com/2026/03/23/business/media/pentagon-closes-journalists-work-area.html"/>
+        <updated>2026-03-24T06:37:13.495Z</updated>
+        <content type="html"><![CDATA[Pentagon Adopts New Limits for Journalists After Court Loss]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[GoGoGrandparent (YC S16) is hiring Back end Engineers]]></title>
+        <id>https://www.ycombinator.com/companies/gogograndparent/jobs/2vbzAw8-backend-engineer</id>
+        <link href="https://www.ycombinator.com/companies/gogograndparent/jobs/2vbzAw8-backend-engineer"/>
+        <updated>2026-03-24T06:37:13.494Z</updated>
+        <content type="html"><![CDATA[GoGoGrandparent (YC S16) is hiring Back end Engineers]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Show HN: The King Wen Permutation: [52, 10, 2]]]></title>
+        <id>https://gzw1987-bit.github.io/iching-math/</id>
+        <link href="https://gzw1987-bit.github.io/iching-math/"/>
+        <updated>2026-03-24T06:37:13.489Z</updated>
+        <content type="html"><![CDATA[Show HN: The King Wen Permutation: [52, 10, 2]]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Iran War Live Updates: U.S. and Iran Send Conflicting Signals on Peace Prospects]]></title>
+        <id>https://www.nytimes.com/live/2026/03/23/world/iran-war-oil-trump</id>
+        <link href="https://www.nytimes.com/live/2026/03/23/world/iran-war-oil-trump"/>
+        <updated>2026-03-24T06:37:13.487Z</updated>
+        <content type="html"><![CDATA[Iran War Live Updates: U.S. and Iran Send Conflicting Signals on Peace Prospects]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[PC Gamer recommends RSS readers in a 37mb article that just keeps downloading]]></title>
+        <id>https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/</id>
+        <link href="https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/"/>
+        <updated>2026-03-24T06:37:13.486Z</updated>
+        <content type="html"><![CDATA[PC Gamer recommends RSS readers in a 37mb article that just keeps downloading]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Walmart: ChatGPT checkout converted 3x worse than website]]></title>
+        <id>https://searchengineland.com/walmart-chatgpt-checkout-converted-worse-472071</id>
+        <link href="https://searchengineland.com/walmart-chatgpt-checkout-converted-worse-472071"/>
+        <updated>2026-03-24T06:37:13.484Z</updated>
+        <content type="html"><![CDATA[Walmart: ChatGPT checkout converted 3x worse than website]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[GitHub appears to be struggling with measly three nines availability]]></title>
+        <id>https://www.theregister.com/2026/02/10/github_outages/</id>
+        <link href="https://www.theregister.com/2026/02/10/github_outages/"/>
+        <updated>2026-03-24T06:37:13.483Z</updated>
+        <content type="html"><![CDATA[GitHub appears to be struggling with measly three nines availability]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Can you get root with only a cigarette lighter? (2024)]]></title>
+        <id>https://www.da.vidbuchanan.co.uk/blog/dram-emfi.html</id>
+        <link href="https://www.da.vidbuchanan.co.uk/blog/dram-emfi.html"/>
+        <updated>2026-03-24T06:37:13.481Z</updated>
+        <content type="html"><![CDATA[Can you get root with only a cigarette lighter? (2024)]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Explosion at the Valero Oil Refinery in Texas]]></title>
+        <id>https://old.reddit.com/r/TFE/comments/1s208fv/an_explosion_at_the_valero_oil_refinery_of_port/</id>
+        <link href="https://old.reddit.com/r/TFE/comments/1s208fv/an_explosion_at_the_valero_oil_refinery_of_port/"/>
+        <updated>2026-03-24T06:37:13.478Z</updated>
+        <content type="html"><![CDATA[Explosion at the Valero Oil Refinery in Texas]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Amazon says AWS' Bahrain region 'disrupted' following drone activity]]></title>
+        <id>https://www.reuters.com/world/middle-east/amazon-says-awss-bahrain-region-disrupted-following-drone-activity-2026-03-24/</id>
+        <link href="https://www.reuters.com/world/middle-east/amazon-says-awss-bahrain-region-disrupted-following-drone-activity-2026-03-24/"/>
+        <updated>2026-03-24T06:37:13.477Z</updated>
+        <content type="html"><![CDATA[Amazon says AWS' Bahrain region 'disrupted' following drone activity]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[General Motors is assisting with the restoration of a rare EV1]]></title>
+        <id>https://evinfo.net/2026/03/general-motors-is-assisting-with-the-restoration-of-an-1996-ev1/</id>
+        <link href="https://evinfo.net/2026/03/general-motors-is-assisting-with-the-restoration-of-an-1996-ev1/"/>
+        <updated>2026-03-24T06:37:13.475Z</updated>
+        <content type="html"><![CDATA[General Motors is assisting with the restoration of a rare EV1]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Two pilots dead after plane and ground vehicle collide at LaGuardia]]></title>
+        <id>https://www.bbc.com/news/articles/cy01g522ww4o</id>
+        <link href="https://www.bbc.com/news/articles/cy01g522ww4o"/>
+        <updated>2026-03-24T06:37:13.474Z</updated>
+        <content type="html"><![CDATA[Two pilots dead after plane and ground vehicle collide at LaGuardia]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[I created my first AI-assisted pull request]]></title>
+        <id>https://nelson.cloud/i-created-my-first-ai-assisted-pull-request-and-i-feel-like-a-fraud/</id>
+        <link href="https://nelson.cloud/i-created-my-first-ai-assisted-pull-request-and-i-feel-like-a-fraud/"/>
+        <updated>2026-03-24T06:37:13.472Z</updated>
+        <content type="html"><![CDATA[I created my first AI-assisted pull request]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Digs: iOS app that syncs your Discogs collection and lets you browse it offline]]></title>
+        <id>https://lustin.fr/blog/building-digs/</id>
+        <link href="https://lustin.fr/blog/building-digs/"/>
+        <updated>2026-03-24T06:37:13.471Z</updated>
+        <content type="html"><![CDATA[Digs: iOS app that syncs your Discogs collection and lets you browse it offline]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Designing AI for Disruptive Science]]></title>
+        <id>https://www.asimov.press/p/ai-science</id>
+        <link href="https://www.asimov.press/p/ai-science"/>
+        <updated>2026-03-24T06:37:13.463Z</updated>
+        <content type="html"><![CDATA[Designing AI for Disruptive Science]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Scott Hanselman says he's working on Windows local accounts]]></title>
+        <id>https://twitter.com/shanselman/status/2035110958314745891</id>
+        <link href="https://twitter.com/shanselman/status/2035110958314745891"/>
+        <updated>2026-03-24T06:37:13.462Z</updated>
+        <content type="html"><![CDATA[Scott Hanselman says he's working on Windows local accounts]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Power consumption of Game Boy flash cartridges (2021)]]></title>
+        <id>https://gekkio.fi/blog/2021/power-consumption-of-game-boy-flash-cartridges/</id>
+        <link href="https://gekkio.fi/blog/2021/power-consumption-of-game-boy-flash-cartridges/"/>
+        <updated>2026-03-24T06:37:13.459Z</updated>
+        <content type="html"><![CDATA[Power consumption of Game Boy flash cartridges (2021)]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Migrating to the EU]]></title>
+        <id>https://rz01.org/eu-migration/</id>
+        <link href="https://rz01.org/eu-migration/"/>
+        <updated>2026-03-24T06:37:13.457Z</updated>
+        <content type="html"><![CDATA[Migrating to the EU]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[America tells private firms to “hack back”]]></title>
+        <id>https://www.economist.com/united-states/2026/03/22/america-tells-private-firms-to-hack-back</id>
+        <link href="https://www.economist.com/united-states/2026/03/22/america-tells-private-firms-to-hack-back"/>
+        <updated>2026-03-24T06:37:13.456Z</updated>
+        <content type="html"><![CDATA[America tells private firms to “hack back”]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Cuba's Fragile Power Grid Finds a Powerful New Partner]]></title>
+        <id>https://oilprice.com/Energy/Energy-General/Cubas-Fragile-Power-Grid-Finds-a-Powerful-New-Partner.html</id>
+        <link href="https://oilprice.com/Energy/Energy-General/Cubas-Fragile-Power-Grid-Finds-a-Powerful-New-Partner.html"/>
+        <updated>2026-03-24T06:37:13.454Z</updated>
+        <content type="html"><![CDATA[Cuba's Fragile Power Grid Finds a Powerful New Partner]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[US and TotalEnergies reach 'nearly $1B' deal to end offshore wind projects]]></title>
+        <id>https://www.lemonde.fr/en/international/article/2026/03/23/us-and-totalenergies-reach-nearly-1-billion-deal-to-end-offshore-wind-projects_6751739_4.html</id>
+        <link href="https://www.lemonde.fr/en/international/article/2026/03/23/us-and-totalenergies-reach-nearly-1-billion-deal-to-end-offshore-wind-projects_6751739_4.html"/>
+        <updated>2026-03-24T06:37:13.453Z</updated>
+        <content type="html"><![CDATA[US and TotalEnergies reach 'nearly $1B' deal to end offshore wind projects]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Bombadil: Property-based testing for web UIs]]></title>
+        <id>https://github.com/antithesishq/bombadil</id>
+        <link href="https://github.com/antithesishq/bombadil"/>
+        <updated>2026-03-24T06:37:13.452Z</updated>
+        <content type="html"><![CDATA[Bombadil: Property-based testing for web UIs]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[An unsolicited guide to being a researcher [pdf]]]></title>
+        <id>https://emerge-lab.github.io/papers/an-unsolicited-guide-to-good-research.pdf</id>
+        <link href="https://emerge-lab.github.io/papers/an-unsolicited-guide-to-good-research.pdf"/>
+        <updated>2026-03-24T06:37:12.865Z</updated>
+        <content type="html"><![CDATA[An unsolicited guide to being a researcher [pdf]]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[BIO: The Bao I/O Coprocessor]]></title>
         <id>https://www.bunniestudios.com/blog/2026/bio-the-bao-i-o-coprocessor/</id>
         <link href="https://www.bunniestudios.com/blog/2026/bio-the-bao-i-o-coprocessor/"/>
-        <updated>2026-03-23T18:08:03.456Z</updated>
+        <updated>2026-03-24T06:37:12.864Z</updated>
         <content type="html"><![CDATA[BIO: The Bao I/O Coprocessor]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Cyber.mil serving file downloads using TLS certificate which expired 3 days ago]]></title>
-        <id>https://www.cyber.mil/stigs/downloads</id>
-        <link href="https://www.cyber.mil/stigs/downloads"/>
-        <updated>2026-03-23T18:08:03.456Z</updated>
-        <content type="html"><![CDATA[Cyber.mil serving file downloads using TLS certificate which expired 3 days ago]]></content>
+        <title type="html"><![CDATA[I built an AI receptionist for a mechanic shop]]></title>
+        <id>https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/</id>
+        <link href="https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/"/>
+        <updated>2026-03-24T06:37:12.862Z</updated>
+        <content type="html"><![CDATA[I built an AI receptionist for a mechanic shop]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Unix philosophy is dead Long live something else?]]></title>
-        <id>https://sdomi.pl/weblog/27-manifesto-of-a-burnt-out-hacker/</id>
-        <link href="https://sdomi.pl/weblog/27-manifesto-of-a-burnt-out-hacker/"/>
-        <updated>2026-03-23T18:08:03.456Z</updated>
-        <content type="html"><![CDATA[Unix philosophy is dead Long live something else?]]></content>
+        <title type="html"><![CDATA[Microsoft blocks trick to unlock native NVMe driver, but workarounds still exist]]></title>
+        <id>https://www.tomshardware.com/software/windows/microsoft-blocks-the-registry-hack-trick-that-unlocked-native-nvme-performance-on-windows-11</id>
+        <link href="https://www.tomshardware.com/software/windows/microsoft-blocks-the-registry-hack-trick-that-unlocked-native-nvme-performance-on-windows-11"/>
+        <updated>2026-03-24T06:37:12.861Z</updated>
+        <content type="html"><![CDATA[Microsoft blocks trick to unlock native NVMe driver, but workarounds still exist]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[iPhone 17 Pro Demonstrated Running a 400B LLM]]></title>
-        <id>https://twitter.com/anemll/status/2035901335984611412</id>
-        <link href="https://twitter.com/anemll/status/2035901335984611412"/>
-        <updated>2026-03-23T18:08:03.453Z</updated>
-        <content type="html"><![CDATA[iPhone 17 Pro Demonstrated Running a 400B LLM]]></content>
+        <title type="html"><![CDATA[A retro terminal music player inspired by Winamp]]></title>
+        <id>https://github.com/bjarneo/cliamp</id>
+        <link href="https://github.com/bjarneo/cliamp"/>
+        <updated>2026-03-24T06:37:12.860Z</updated>
+        <content type="html"><![CDATA[A retro terminal music player inspired by Winamp]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Trivy under attack again: Widespread GitHub Actions tag compromise secrets]]></title>
         <id>https://socket.dev/blog/trivy-under-attack-again-github-actions-compromise</id>
         <link href="https://socket.dev/blog/trivy-under-attack-again-github-actions-compromise"/>
-        <updated>2026-03-23T18:08:03.453Z</updated>
+        <updated>2026-03-24T06:37:12.858Z</updated>
         <content type="html"><![CDATA[Trivy under attack again: Widespread GitHub Actions tag compromise secrets]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Local Stack Archived their GitHub repo and requires an account to run]]></title>
+        <id>https://github.com/localstack/localstack</id>
+        <link href="https://github.com/localstack/localstack"/>
+        <updated>2026-03-24T06:37:12.857Z</updated>
+        <content type="html"><![CDATA[Local Stack Archived their GitHub repo and requires an account to run]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Windows 3.1 tiled background .bmp archive]]></title>
+        <id>https://github.com/andreasjansson/win-3.1-backgrounds</id>
+        <link href="https://github.com/andreasjansson/win-3.1-backgrounds"/>
+        <updated>2026-03-24T06:37:12.855Z</updated>
+        <content type="html"><![CDATA[Windows 3.1 tiled background .bmp archive]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Ubisoft's Death by a Thousand Cuts]]></title>
+        <id>https://www.thegamebusiness.com/p/ubisofts-death-by-a-thousand-cuts</id>
+        <link href="https://www.thegamebusiness.com/p/ubisofts-death-by-a-thousand-cuts"/>
+        <updated>2026-03-24T06:37:12.854Z</updated>
+        <content type="html"><![CDATA[Ubisoft's Death by a Thousand Cuts]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[An incoherent Rust]]></title>
+        <id>https://www.boxyuwu.blog/posts/an-incoherent-rust/</id>
+        <link href="https://www.boxyuwu.blog/posts/an-incoherent-rust/"/>
+        <updated>2026-03-24T06:37:12.851Z</updated>
+        <content type="html"><![CDATA[An incoherent Rust]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[TI-89 Height-Mapped Raycaster]]></title>
+        <id>https://github.com/dzoba/ti-89-raycasting-with-z</id>
+        <link href="https://github.com/dzoba/ti-89-raycasting-with-z"/>
+        <updated>2026-03-24T06:37:12.850Z</updated>
+        <content type="html"><![CDATA[TI-89 Height-Mapped Raycaster]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Ju Ci: The Art of Repairing Porcelain]]></title>
+        <id>https://thesublimeblog.org/2025/03/13/ju-ci-the-ancient-art-of-repairing-porcelain/</id>
+        <link href="https://thesublimeblog.org/2025/03/13/ju-ci-the-ancient-art-of-repairing-porcelain/"/>
+        <updated>2026-03-24T06:37:12.848Z</updated>
+        <content type="html"><![CDATA[Ju Ci: The Art of Repairing Porcelain]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Finding all regex matches has always been O(n²)]]></title>
+        <id>https://iev.ee/blog/the-quadratic-problem-nobody-fixed/</id>
+        <link href="https://iev.ee/blog/the-quadratic-problem-nobody-fixed/"/>
+        <updated>2026-03-24T06:37:12.846Z</updated>
+        <content type="html"><![CDATA[Finding all regex matches has always been O(n²)]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[How I'm Productive with Claude Code]]></title>
+        <id>https://neilkakkar.com/productive-with-claude-code.html</id>
+        <link href="https://neilkakkar.com/productive-with-claude-code.html"/>
+        <updated>2026-03-24T06:37:12.845Z</updated>
+        <content type="html"><![CDATA[How I'm Productive with Claude Code]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Sunsetting the Techempower Framework Benchmarks]]></title>
+        <id>https://github.com/TechEmpower/FrameworkBenchmarks/issues/10932</id>
+        <link href="https://github.com/TechEmpower/FrameworkBenchmarks/issues/10932"/>
+        <updated>2026-03-24T06:37:12.843Z</updated>
+        <content type="html"><![CDATA[Sunsetting the Techempower Framework Benchmarks]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[The Resolv hack: How one compromised key printed $23M]]></title>
+        <id>https://www.chainalysis.com/blog/lessons-from-the-resolv-hack/</id>
+        <link href="https://www.chainalysis.com/blog/lessons-from-the-resolv-hack/"/>
+        <updated>2026-03-24T06:37:12.840Z</updated>
+        <content type="html"><![CDATA[The Resolv hack: How one compromised key printed $23M]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Dune3d: A parametric 3D CAD application]]></title>
+        <id>https://github.com/dune3d/dune3d</id>
+        <link href="https://github.com/dune3d/dune3d"/>
+        <updated>2026-03-24T06:37:12.837Z</updated>
+        <content type="html"><![CDATA[Dune3d: A parametric 3D CAD application]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Claude Code Cheat Sheet]]></title>
+        <id>https://cc.storyfox.cz/</id>
+        <link href="https://cc.storyfox.cz/"/>
+        <updated>2026-03-24T06:37:12.836Z</updated>
+        <content type="html"><![CDATA[Claude Code Cheat Sheet]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[IRIX 3dfx Voodoo driver and glide2x IRIX port]]></title>
+        <id>https://sdz-mods.com/index.php/2026/03/23/irix-3dfx-voodoo-driver-glide2x-irix-port/</id>
+        <link href="https://sdz-mods.com/index.php/2026/03/23/irix-3dfx-voodoo-driver-glide2x-irix-port/"/>
+        <updated>2026-03-24T06:37:12.834Z</updated>
+        <content type="html"><![CDATA[IRIX 3dfx Voodoo driver and glide2x IRIX port]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Abusing Customizable Selects]]></title>
+        <id>https://css-tricks.com/abusing-customizable-selects/</id>
+        <link href="https://css-tricks.com/abusing-customizable-selects/"/>
+        <updated>2026-03-24T06:37:12.832Z</updated>
+        <content type="html"><![CDATA[Abusing Customizable Selects]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Show HN: Cq – Stack Overflow for AI coding agents]]></title>
+        <id>https://blog.mozilla.ai/cq-stack-overflow-for-agents/</id>
+        <link href="https://blog.mozilla.ai/cq-stack-overflow-for-agents/"/>
+        <updated>2026-03-24T06:37:12.831Z</updated>
+        <content type="html"><![CDATA[Show HN: Cq – Stack Overflow for AI coding agents]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Pompeii's battle scars linked to an ancient 'machine gun']]></title>
+        <id>https://phys.org/news/2026-03-pompeii-scars-linked-ancient-machine.html</id>
+        <link href="https://phys.org/news/2026-03-pompeii-scars-linked-ancient-machine.html"/>
+        <updated>2026-03-24T06:37:12.829Z</updated>
+        <content type="html"><![CDATA[Pompeii's battle scars linked to an ancient 'machine gun']]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Gerd Faltings, who proved the Mordell conjecture, wins the Abel Prize]]></title>
+        <id>https://www.scientificamerican.com/article/gerd-faltings-mathematician-who-proved-the-mordell-conjecture-wins-the-abel/</id>
+        <link href="https://www.scientificamerican.com/article/gerd-faltings-mathematician-who-proved-the-mordell-conjecture-wins-the-abel/"/>
+        <updated>2026-03-24T06:37:12.828Z</updated>
+        <content type="html"><![CDATA[Gerd Faltings, who proved the Mordell conjecture, wins the Abel Prize]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[FCC updates covered list to include foreign-made consumer routers]]></title>
+        <id>https://www.fcc.gov/document/fcc-updates-covered-list-include-foreign-made-consumer-routers</id>
+        <link href="https://www.fcc.gov/document/fcc-updates-covered-list-include-foreign-made-consumer-routers"/>
+        <updated>2026-03-24T06:37:12.824Z</updated>
+        <content type="html"><![CDATA[FCC updates covered list to include foreign-made consumer routers]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[iPhone 17 Pro Demonstrated Running a 400B LLM]]></title>
+        <id>https://twitter.com/anemll/status/2035901335984611412</id>
+        <link href="https://twitter.com/anemll/status/2035901335984611412"/>
+        <updated>2026-03-24T06:37:12.824Z</updated>
+        <content type="html"><![CDATA[iPhone 17 Pro Demonstrated Running a 400B LLM]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Autoresearch on an old research idea]]></title>
+        <id>https://ykumar.me/blog/eclip-autoresearch/</id>
+        <link href="https://ykumar.me/blog/eclip-autoresearch/"/>
+        <updated>2026-03-24T06:37:12.822Z</updated>
+        <content type="html"><![CDATA[Autoresearch on an old research idea]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[BIO – The Bao I/O Co-Processor]]></title>
+        <id>https://www.crowdsupply.com/baochip/dabao/updates/bio-the-bao-i-o-co-processor</id>
+        <link href="https://www.crowdsupply.com/baochip/dabao/updates/bio-the-bao-i-o-co-processor"/>
+        <updated>2026-03-24T06:37:12.821Z</updated>
+        <content type="html"><![CDATA[BIO – The Bao I/O Co-Processor]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Log File Viewer for the Terminal]]></title>
+        <id>https://lnav.org/</id>
+        <link href="https://lnav.org/"/>
+        <updated>2026-03-24T06:37:12.820Z</updated>
+        <content type="html"><![CDATA[Log File Viewer for the Terminal]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Epoch confirms GPT5.4 Pro solved a frontier math open problem]]></title>
+        <id>https://epoch.ai/frontiermath/open-problems/ramsey-hypergraphs</id>
+        <link href="https://epoch.ai/frontiermath/open-problems/ramsey-hypergraphs"/>
+        <updated>2026-03-24T06:37:12.819Z</updated>
+        <content type="html"><![CDATA[Epoch confirms GPT5.4 Pro solved a frontier math open problem]]></content>
+    </entry>
+  <entry>
+        <title type="html"><![CDATA[Box of Secrets: Discreetly modding an apartment intercom to work with Apple Home]]></title>
+        <id>https://www.jackhogan.me/blog/box-of-secrets/</id>
+        <link href="https://www.jackhogan.me/blog/box-of-secrets/"/>
+        <updated>2026-03-24T06:37:12.818Z</updated>
+        <content type="html"><![CDATA[Box of Secrets: Discreetly modding an apartment intercom to work with Apple Home]]></content>
     </entry>
   <entry>
         <title type="html"><![CDATA[Featured Travel Topic]]></title>
         <id>https://en.wikivoyage.org/wiki/Previous_Featured_travel_topics</id>
         <link href="https://en.wikivoyage.org/wiki/Previous_Featured_travel_topics"/>
-        <updated>2026-03-23T18:08:00.797Z</updated>
+        <updated>2026-03-24T06:37:10.317Z</updated>
         <content type="html"><![CDATA[<link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r4523569" about="#mwt11" typeof="mw:Extension/templatestyles mw:Transclusion" data-mw="{&quot;name&quot;:&quot;templatestyles&quot;,&quot;attrs&quot;:{&quot;src&quot;:&quot;Banner/styles.css&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;banner&quot;,&quot;href&quot;:&quot;./Template:Banner&quot;},&quot;params&quot;:{&quot;direction&quot;:{&quot;wt&quot;:&quot;right&quot;},&quot;title&quot;:{&quot;wt&quot;:&quot;Seminole Wars&quot;},&quot;type&quot;:{&quot;wt&quot;:&quot;ftt&quot;},&quot;image&quot;:{&quot;wt&quot;:&quot;SeminoleWarsBanner1.jpg&quot;},&quot;quote&quot;:{&quot;wt&quot;:&quot;A result of American settlement in the contested forests and prairies of colonial Florida, the devastating Seminole Wars fought between U.S. forces and Seminoles in Florida left behind wartime artifacts, forts, and plantation ruins from the 19th century.&quot;}},&quot;i&quot;:0}}]}" id="mwKw"><span about="#mwt11">
-</span><div class="banner-image js-proportonal-resize notheme" about="#mwt11" id="mwLA" style="font-size: 108%;">
+</span><div class="banner-image js-proportonal-resize notheme" about="#mwt11" id="mwLA">
 	<p><span class="mw-default-size nolink interactiveIcon" typeof="mw:File/Frameless"><span><img resource="//en.wikivoyage.org/wiki/File:Interactive_icon.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/250px-Interactive_icon.svg.png" decoding="async" data-file-width="133" data-file-height="200" data-file-type="drawing" height="376" width="250" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 2x" class="mw-file-element"></span></span></p>
 	<div class="mainpage-shadowbox notheme banner-box-2 banner-box-right" style="width:45%">
         <div style="position:relative; float:left; margin:-4px;">
@@ -731,7 +731,7 @@
         <title type="html"><![CDATA[Off the Beaten Path]]></title>
         <id>https://en.wikivoyage.org/wiki/Previously_Off_the_beaten_path</id>
         <link href="https://en.wikivoyage.org/wiki/Previously_Off_the_beaten_path"/>
-        <updated>2026-03-23T18:08:00.793Z</updated>
+        <updated>2026-03-24T06:37:10.315Z</updated>
         <content type="html"><![CDATA[<link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r4523569" about="#mwt9" typeof="mw:Extension/templatestyles mw:Transclusion" data-mw="{&quot;name&quot;:&quot;templatestyles&quot;,&quot;attrs&quot;:{&quot;src&quot;:&quot;Banner/styles.css&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;banner&quot;,&quot;href&quot;:&quot;./Template:Banner&quot;},&quot;params&quot;:{&quot;direction&quot;:{&quot;wt&quot;:&quot;left&quot;},&quot;title&quot;:{&quot;wt&quot;:&quot;Erice&quot;},&quot;type&quot;:{&quot;wt&quot;:&quot;otbp&quot;},&quot;image&quot;:{&quot;wt&quot;:&quot;OtBT-Erice-bannerA.png&quot;},&quot;quote&quot;:{&quot;wt&quot;:&quot;Floating above the clouds on Sicily’s western coast, Erice has been a place of pilgrimage for millennia — from an ancient Temple of Venus to the medieval churches that remain open today.&quot;}},&quot;i&quot;:0}}]}" id="mwJg"><span about="#mwt9">
 </span><div class="banner-image js-proportonal-resize notheme" about="#mwt9" id="mwJw">
 	<p><span class="mw-default-size nolink interactiveIcon" typeof="mw:File/Frameless"><span><img resource="//en.wikivoyage.org/wiki/File:Interactive_icon.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/250px-Interactive_icon.svg.png" decoding="async" data-file-width="133" data-file-height="200" data-file-type="drawing" height="376" width="250" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 2x" class="mw-file-element"></span></span></p>
@@ -750,7 +750,7 @@
         <title type="html"><![CDATA[Destination of the Month]]></title>
         <id>https://en.wikivoyage.org/wiki/Previous_Destinations_of_the_month</id>
         <link href="https://en.wikivoyage.org/wiki/Previous_Destinations_of_the_month"/>
-        <updated>2026-03-23T18:08:00.791Z</updated>
+        <updated>2026-03-24T06:37:10.314Z</updated>
         <content type="html"><![CDATA[<style data-mw-deduplicate="TemplateStyles:r4523569" typeof="mw:Extension/templatestyles mw:Transclusion" about="#mwt7" data-mw="{&quot;name&quot;:&quot;templatestyles&quot;,&quot;attrs&quot;:{&quot;src&quot;:&quot;Banner/styles.css&quot;},&quot;parts&quot;:[{&quot;template&quot;:{&quot;target&quot;:{&quot;wt&quot;:&quot;banner&quot;,&quot;href&quot;:&quot;./Template:Banner&quot;},&quot;params&quot;:{&quot;direction&quot;:{&quot;wt&quot;:&quot;left&quot;},&quot;title&quot;:{&quot;wt&quot;:&quot;Saint-Louis&quot;},&quot;type&quot;:{&quot;wt&quot;:&quot;dotm&quot;},&quot;image&quot;:{&quot;wt&quot;:&quot;SaintLouisBanner1.jpg&quot;},&quot;quote&quot;:{&quot;wt&quot;:&quot;Once the colonial capital of French West Africa, Saint-Louis boasts a world heritage listed old town and lively markets and is a gateway to the Langue de Barbarie National Park.&quot;}},&quot;i&quot;:0}}]}" id="mwIQ">.mw-parser-output .mainpage-shadowbox{color:white;background:rgb(16,16,16);background:rgba(0,0,0,0.3);border-radius:4px}.mw-parser-output .mainpage-shadowbox h2,.mw-parser-output .mainpage-shadowbox h3{color:white;border:none;font-family:sans-serif;line-height:1.2em;margin:0;padding:0}.mw-parser-output .mainpage-shadowbox a{color:white;font-weight:bold}.mw-parser-output .banner-image{position:relative;max-width:1125px;height:auto;margin-bottom:.6em}.mw-parser-output .banner-image img{max-width:100%;height:auto}.mw-parser-output .banner-box-wide{width:80%}.mw-parser-output .banner-box-left,.mw-parser-output .banner-box-right{padding:8px 7px;background:rgb(16,16,16);background:rgba(0,0,0,0.3);border-radius:4px;width:40%}.mw-parser-output .banner-box-left{text-align:left}.mw-parser-output .banner-box-right{text-align:right}.mw-parser-output .banner-box-2{position:absolute;z-index:2;min-width:20em}@media screen and (min-width:720px){.mw-parser-output .banner-image img.nolink{display:none}.mw-parser-output .banner-image span[typeof~="mw:File/Frameless"].nolink{display:none}.mw-parser-output .mainpage-shadowbox h2{font-size:190%}.mw-parser-output .mainpage-shadowbox h3{font-size:150%}.mw-parser-output .banner-image{overflow:hidden}.mw-parser-output .banner-box-left{left:3%}.mw-parser-output .banner-box-right{right:3%}.mw-parser-output .banner-box-2{margin-top:2em}.mw-parser-output .banner-box-2 .quote{font-size:80%;line-height:1.2em}}@media screen and (max-width:720px){.mw-parser-output .banner-image img:not(.nolink){display:none}.mw-parser-output .banner-image span[typeof~="mw:File/Frameless"] img{display:inline-block}.mw-parser-output .banner-image span[typeof~="mw:File/Frameless"]:not(.nolink){display:none}.mw-parser-output .banner-image>.mainpage-shadowbox{width:inherit!important;min-height:100%;margin-left:-150%;margin-right:150%;opacity:0;background:black}.mw-parser-output .mainpage-shadowbox .quote>a:after{content:"\a Tap to learn more.";white-space:pre}.mw-parser-output .jcarousel-item:hover .mainpage-shadowbox{margin:unset;opacity:1;transition:margin 0.5s;bottom:50%}.mw-parser-output .jcarousel-control-prev,.mw-parser-output .jcarousel-control-next{display:none}.mw-parser-output img.interactiveIcon,.mw-parser-output .interactiveIcon img{position:absolute;opacity:0.4;height:75%!important;width:auto;bottom:0;right:0}}</style><span about="#mwt7">
 </span><div class="banner-image js-proportonal-resize notheme" about="#mwt7" id="mwIg">
 	<p><span class="mw-default-size nolink interactiveIcon" typeof="mw:File/Frameless"><span><img resource="//en.wikivoyage.org/wiki/File:Interactive_icon.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/250px-Interactive_icon.svg.png" decoding="async" data-file-width="133" data-file-height="200" data-file-type="drawing" height="376" width="250" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Interactive_icon.svg/500px-Interactive_icon.svg.png 2x" class="mw-file-element"></span></span></p>
@@ -766,66 +766,66 @@
 </div>]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Neil Robertson]]></title>
-        <id>https://en.wikipedia.org/wiki/Neil_Robertson</id>
-        <link href="https://en.wikipedia.org/wiki/Neil_Robertson"/>
-        <updated>2026-03-23T18:07:58.063Z</updated>
-        <content type="html"><![CDATA[... that&nbsp;<b><a href="/wiki/Neil_Robertson" title="Neil Robertson">Neil Robertson</a></b>&nbsp;once missed a tournament after setting his&nbsp;sat-nav&nbsp;to <a href="/wiki/Barnsley,_Gloucestershire" title="Barnsley, Gloucestershire">Barnsley</a> instead of <a href="/wiki/Barnsley_Metrodome" title="Barnsley Metrodome">Barnsley</a>?]]></content>
+        <title type="html"><![CDATA[Make America Go Away]]></title>
+        <id>https://en.wikipedia.org/wiki/Hands_off_Greenland_protests</id>
+        <link href="https://en.wikipedia.org/wiki/Hands_off_Greenland_protests"/>
+        <updated>2026-03-24T06:37:07.922Z</updated>
+        <content type="html"><![CDATA[... that some Greenlanders wear "MAGA" hats reading "<b><a href="/wiki/Hands_off_Greenland_protests" title="Hands off Greenland protests">Make America Go Away</a></b>"?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[siege of Castelnaudary]]></title>
-        <id>https://en.wikipedia.org/wiki/Siege_of_Castelnaudary</id>
-        <link href="https://en.wikipedia.org/wiki/Siege_of_Castelnaudary"/>
-        <updated>2026-03-23T18:07:58.062Z</updated>
-        <content type="html"><![CDATA[... that during the <b><a href="/wiki/Siege_of_Castelnaudary" title="Siege of Castelnaudary">siege of Castelnaudary</a></b> the defenders were caught off guard while eating&nbsp;– and won?]]></content>
+        <title type="html"><![CDATA[Lorinda Roland]]></title>
+        <id>https://en.wikipedia.org/wiki/Lorinda_Roland</id>
+        <link href="https://en.wikipedia.org/wiki/Lorinda_Roland"/>
+        <updated>2026-03-24T06:37:07.920Z</updated>
+        <content type="html"><![CDATA[... that both of <b><a href="/wiki/Lorinda_Roland" title="Lorinda Roland">Lorinda Roland</a></b><span class="nowrap">'s</span> parents, maternal grandparents, and maternal aunts were actors?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Moa Backe Åstot]]></title>
-        <id>https://en.wikipedia.org/wiki/Moa_Backe_%C3%85stot</id>
-        <link href="https://en.wikipedia.org/wiki/Moa_Backe_%C3%85stot"/>
-        <updated>2026-03-23T18:07:58.060Z</updated>
-        <content type="html"><![CDATA[... that young-adult novelist <b><a href="/wiki/Moa_Backe_%C3%85stot" title="Moa Backe Åstot">Moa Backe Åstot</a></b> also owns reindeer?]]></content>
+        <title type="html"><![CDATA[a Spanish tourist train]]></title>
+        <id>https://en.wikipedia.org/wiki/Lemon_Express</id>
+        <link href="https://en.wikipedia.org/wiki/Lemon_Express"/>
+        <updated>2026-03-24T06:37:07.919Z</updated>
+        <content type="html"><![CDATA[... that lemon trees inspired <b><a href="/wiki/Lemon_Express" title="Lemon Express">a Spanish tourist train</a></b>?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Cristero Museum]]></title>
-        <id>https://en.wikipedia.org/wiki/Cristero_Museum</id>
-        <link href="https://en.wikipedia.org/wiki/Cristero_Museum"/>
-        <updated>2026-03-23T18:07:58.058Z</updated>
-        <content type="html"><![CDATA[... that the <b><a href="/wiki/Cristero_Museum" title="Cristero Museum">Cristero Museum</a></b> faced demolition even though it is located within a UNESCO site?]]></content>
+        <title type="html"><![CDATA[a former police officer]]></title>
+        <id>https://en.wikipedia.org/wiki/Nicholas_Tartaglione</id>
+        <link href="https://en.wikipedia.org/wiki/Nicholas_Tartaglione"/>
+        <updated>2026-03-24T06:37:07.917Z</updated>
+        <content type="html"><![CDATA[... that <b><a href="/wiki/Nicholas_Tartaglione" title="Nicholas Tartaglione">a former police officer</a></b> who shared a cell with Jeffrey Epstein had been convicted of a quadruple murder?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Edward W. Hawthorne]]></title>
-        <id>https://en.wikipedia.org/wiki/Edward_W._Hawthorne</id>
-        <link href="https://en.wikipedia.org/wiki/Edward_W._Hawthorne"/>
-        <updated>2026-03-23T18:07:58.057Z</updated>
-        <content type="html"><![CDATA[... that <b><a href="/wiki/Edward_W._Hawthorne" title="Edward W. Hawthorne">Edward W. Hawthorne</a></b> once called his research "a personal vendetta against ignorance"?]]></content>
+        <title type="html"><![CDATA[Nightingales]]></title>
+        <id>https://en.wikipedia.org/wiki/Nightingales_(book)</id>
+        <link href="https://en.wikipedia.org/wiki/Nightingales_(book)"/>
+        <updated>2026-03-24T06:37:07.915Z</updated>
+        <content type="html"><![CDATA[... that the book <i><b><a href="/wiki/Nightingales_(book)" title="Nightingales (book)">Nightingales</a></b></i> argues against the theory that <a href="/wiki/Florence_Nightingale" title="Florence Nightingale">Florence Nightingale</a> was a lesbian?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[J. Verne Smith]]></title>
-        <id>https://en.wikipedia.org/wiki/J._Verne_Smith</id>
-        <link href="https://en.wikipedia.org/wiki/J._Verne_Smith"/>
-        <updated>2026-03-23T18:07:58.055Z</updated>
-        <content type="html"><![CDATA[... that <b><a href="/wiki/J._Verne_Smith" title="J. Verne Smith">J.&nbsp;Verne Smith</a></b> sold tires before becoming a state senator?]]></content>
+        <title type="html"><![CDATA[an International Booker Prize–nominated author]]></title>
+        <id>https://en.wikipedia.org/wiki/Rene_Karabash</id>
+        <link href="https://en.wikipedia.org/wiki/Rene_Karabash"/>
+        <updated>2026-03-24T06:37:07.914Z</updated>
+        <content type="html"><![CDATA[... that <b><a href="/wiki/Rene_Karabash" title="Rene Karabash">an International Booker Prize–nominated author</a></b> has also won several awards as an actress?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Downtown Line]]></title>
-        <id>https://en.wikipedia.org/wiki/Downtown_Line</id>
-        <link href="https://en.wikipedia.org/wiki/Downtown_Line"/>
-        <updated>2026-03-23T18:07:58.055Z</updated>
-        <content type="html"><![CDATA[... that the construction of the <b><a href="/wiki/Downtown_Line" title="Downtown Line">Downtown Line</a></b> required diverting the <a href="/wiki/Singapore_River" title="Singapore River">Singapore River</a>?]]></content>
+        <title type="html"><![CDATA[Queen Plaisance]]></title>
+        <id>https://en.wikipedia.org/wiki/Plaisance_of_Antioch</id>
+        <link href="https://en.wikipedia.org/wiki/Plaisance_of_Antioch"/>
+        <updated>2026-03-24T06:37:07.912Z</updated>
+        <content type="html"><![CDATA[... that <b><a href="/wiki/Plaisance_of_Antioch" title="Plaisance of Antioch">Queen Plaisance</a></b> was chastised for carrying on with another woman's husband in <b><a href="/wiki/Audi_filia_et_vide_and_De_sinu_patris" title="Audi filia et vide and De sinu patris">a letter from the pope</a></b>?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[an Indonesian film]]></title>
-        <id>https://en.wikipedia.org/wiki/Al_Kautsar_(film)</id>
-        <link href="https://en.wikipedia.org/wiki/Al_Kautsar_(film)"/>
-        <updated>2026-03-23T18:07:58.051Z</updated>
-        <content type="html"><![CDATA[... that advertising material for <b><a href="/wiki/Al_Kautsar_(film)" title="Al Kautsar (film)">an Indonesian film</a></b> included an entire chapter of the Quran?]]></content>
+        <title type="html"><![CDATA[Tujiaaspis]]></title>
+        <id>https://en.wikipedia.org/wiki/Tujiaaspis</id>
+        <link href="https://en.wikipedia.org/wiki/Tujiaaspis"/>
+        <updated>2026-03-24T06:37:07.912Z</updated>
+        <content type="html"><![CDATA[... that <i><b><a href="/wiki/Tujiaaspis" title="Tujiaaspis">Tujiaaspis</a></b></i> had a single pair of ridge-like fins that may have been the precursors to human arms and legs?]]></content>
     </entry>
   <entry>
-        <title type="html"><![CDATA[Pellenes nigrociliatus]]></title>
-        <id>https://en.wikipedia.org/wiki/Pellenes_nigrociliatus</id>
-        <link href="https://en.wikipedia.org/wiki/Pellenes_nigrociliatus"/>
-        <updated>2026-03-23T18:07:58.048Z</updated>
-        <content type="html"><![CDATA[... that the jumping spider <i><b><a href="/wiki/Pellenes_nigrociliatus" title="Pellenes nigrociliatus">Pellenes nigrociliatus</a></b></i> <i>(pictured)</i> makes a silk curtain across the entrance of the snail shell that it uses as a nest?]]></content>
+        <title type="html"><![CDATA[Indian Communist Party]]></title>
+        <id>https://en.wikipedia.org/wiki/Indian_Communist_Party_(1987)</id>
+        <link href="https://en.wikipedia.org/wiki/Indian_Communist_Party_(1987)"/>
+        <updated>2026-03-24T06:37:07.910Z</updated>
+        <content type="html"><![CDATA[... that the <b><a href="/wiki/Indian_Communist_Party_(1987)" title="Indian Communist Party (1987)">Indian Communist Party</a></b> distinguished itself from the <a href="/wiki/Communist_Party_of_India" title="Communist Party of India">Communist Party of India</a> by using a yellow hammer and sickle on its flag <i>(pictured)</i><span style="padding-left:0.15em;">?</span>]]></content>
     </entry>
 </feed>
